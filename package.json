@@ -1,0 +1,11 @@
+{
+  "name": "Df Detector",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix client-side\" \"npm run start --prefix server-side\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
