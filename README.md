@@ -1,6 +1,6 @@
 
 
-# Cavernous Hoax Scanner 🎭🔍
+# 🎭 Cavernous Hoax Scanner 🔍
 ### A Project by WHITE LOTUS 🌸
 
 ## Introduction
