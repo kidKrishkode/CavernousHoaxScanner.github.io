@@ -6,7 +6,7 @@
 ## Introduction
 Welcome to **Cavernous Hoax Scanner**, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.
 
-![Cavernous](https://kidkrishkode.github.io/CavernousHoaxScanner.github.io/public/logo1500.png)
+![Cavernous](https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/public/favicon.png)
 ![Streamline Diagnosis](https://kidKrishkode.github.io/Streamline-Diagnosis.github.io/public/favicon.png)
 
 ## Aim 🎯
