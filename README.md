@@ -32,7 +32,7 @@ Our aim is to provide a robust system that:
 - **JavaScript** (React, Node.js)
 - **Python** (Machine Learning Models)
 - **HTML/CSS** (UI/UX Design)
-![JPEN](https://kidkrishkode.github.io/CavernousHoaxScanner.github.io/images/jpen.png)
+![JPEN](https://kidKrishkode.github.io/Streamline-Diagnosis.github.io/images/jpen.png)
 ## Developers 👩‍💻👨‍💻
 - **Frontend Developer/Lead Developer**: Souvik Kar
 - **UI/UX Developer**: Rajanya Chakraborty 
