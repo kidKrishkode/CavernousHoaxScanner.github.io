@@ -1,12 +1,10 @@
-
-
 # 🎭 Cavernous Hoax Scanner 🔍
 ### A Project by WHITE LOTUS 🌸
 
 ## Introduction
 Welcome to **Cavernous Hoax Scanner**, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.
 
-![Cavernous](https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/public/favicon.png)
+![CavernousHoaxScanner](https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/public/favicon.png)
 
 ## Aim 🎯
 Our aim is to provide a robust system that:
@@ -33,6 +31,8 @@ Our aim is to provide a robust system that:
 - **Python** (Machine Learning Models)
 - **HTML/CSS** (UI/UX Design)
 ![JPEN](https://kidKrishkode.github.io/Streamline-Diagnosis.github.io/images/jpen.png)
+The JPEN stack is a technology stack that combines the power of JSON, Python, Embedded JavaScript, and Node.js. JSON (J) is used for level data interchange and storage, providing a lightweight and flexible format for data exchange. Python (P) is used for mechine learning scripting, offering a robust and versatile language for building machine learning empower web applications. Embedded JavaScript (E) allows for dynamic client-side scripting, enabling interactive user experiences. Finally, Node.js (N) provides the runtime environment for executing JavaScript code on the server-side, enabling fast and scalable web development. Together, the JPEN stack enables developers to build scalable, and data driven or deep learning combined web applications.
+
 ## Developers 👩‍💻👨‍💻
 - **Frontend Developer/Lead Developer**: Souvik Kar
 - **UI/UX Developer**: Rajanya Chakraborty 
