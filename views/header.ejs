@@ -1,0 +1,46 @@
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-hame">
+        <button class="navbar-toggler" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation" onclick="navbar_toggle();">
+            <!-- <span class="navbar-toggler-icon"></span> -->
+            <i class="fa fa-navicon"></i>
+        </button>
+    </span>
+    <a class="navbar-brand nav-head" href="/">
+       <img src="../public/favicon.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+    </a>
+    <span class="nav-search">
+        <input type="text" class="form-control" placeholder="Search Cavernous"/>
+    </span>
+</nav>
+<section class="workspace blbg" id="side-menu" onclick="navbar_toggle();">
+    <ul class="nav justify-content-end" id="nav-menu">
+        <li class="nav-item">
+            <a class="nav-link" href="/index"><i class="fa fa-desktop"></i> Main</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/dfdScanner"><i class="fa fa-object-group"></i> DFD Scanner</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/services"><i class="fa fa-magic"></i> Services</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/apiPlug"><i class="fa fa-plug"></i> API Plugins</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about"><i class="fa fa-group"></i> About Us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/blogs"><i class="fa fa-globe"></i> Blogs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link">Change Theme
+                <span class="set-right">
+                    <label class="switch">
+                        <input type="checkbox" checked="true" id="theme1" onchange="system.themeToggle('theme1');">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+            </a>
+        </li>
+    </ul>
+</section>

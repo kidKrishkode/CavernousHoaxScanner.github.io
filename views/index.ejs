@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="../public/logo.png" name="og:image">
+    <meta content="Deepfake detection is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <title version="1.0">Cavernous Hoax Scanner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="icon" href="../public/favicon.png"/>
+</head>
+<body>
+    <header id="header">
+        <%= header %>
+    </header>
+    <section class="workspace" id="dfdPage">
+        <img src="../images/3d_donut.png" alt="chs" class="right-top-des"/>
+        <h2>DeepFake Detector</h2>
+        <div class="underline"></div>
+        <div class="containers">
+            <div class="drop-box">
+                <div class="placeholder"><i class="fa fa-file-image-o" style="font-size: 30px;"></i><br>Drag and drop an image or video, or click to select</div>
+                <div class="preview"></div>
+                <input type="file" id="file-input" accept="image/*, video/*">
+            </div>
+        </div>
+        <div class="flx containers-option">
+            <div class="social-opener">
+                <i class="fa fa-facebook"></i>
+                <i class="fa fa-google"></i>
+            </div>
+            <div class="process-btn">
+                <div class="btn btn-process">Process</div>
+            </div>
+        </div>
+        <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
+        <img src="../images/3d_atom.png" alt="chs" class="right-middle-des"/>
+        <div class="glass-status flx">
+            <span class="head">Media Accecpted:</span><span class="data" id="media-acc">No Media Found!</span>
+        </div>
+        <div class="glass-status">
+            <div class="flx">
+                <span class="head">Media Type:</span><span class="data" id="media-type">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Media Size:</span><span class="data" id="media-size">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Media Duration:</span><span class="data" id="media-due">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Media Dimantion:</span><span class="data" id="media-diamention">Not Selected!</span>
+            </div>
+        </div>
+        <div class="htsi">
+            <h2>How to Use it.</h2>
+            <div class="underline"></div>
+            <div class="card-group flo">
+                <div class="card">
+                    <h4 class="card-title"><span>1</span> Drop your Image or Video</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+                <div class="card">
+                    <h4 class="card-title"><span>2</span> Media Get Permite</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+            </div>
+            <div class="card-group flo">
+                <div class="card">
+                    <h4 class="card-title"><span>3</span> Hit The Process</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+                <div class="card">
+                    <h4 class="card-title"><span>4</span> Download Report</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="../public/App.js"></script>
+<script src="../public/default.min.js"></script>
+<script>
+    pageSet.push('dfdPage');
+    document.getElementById('header').innerHTML = document.getElementById('header').textContent;
+</script>
+</html>

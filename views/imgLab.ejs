@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Pixcel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0%;
+        background: #d4d4d4;
+    }
+    h1{
+        text-align: center;
+        color: #18103d;
+    }
+    button{
+        margin: 10px 40%;
+    }
+    pre{
+        background: #42f58ab5;
+        padding: 4px 8px;
+        border-radius: 10px;
+        width: 100%;
+        margin: 10px 0px;
+    }
+    .fake-img,.foreg-img{
+        margin: 10px auto;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid #000;
+        width: max-content;
+    }
+    .pixcel-set{
+        display: flex;
+        flex-direction: row;
+        height: 1px;
+    }
+    .fake-pixcel{
+        width: 1px;
+        height: 1px;
+        border: none;
+    }
+    .flx{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .flx pre{
+        border: 1px solid navy;
+    }
+</style>
+<body>
+    <h1>Image Lab</h1>
+    <button class="btn btn-primary" id="convert">Convert</button>
+    <div class="fake-img">
+        
+    </div>
+    <div class="foreg-img"></div>
+    <div class="flx">
+        <b>Pixcel</b>
+        <b>Foreground</b>
+        <b>Background</b>
+    </div>
+    <div class="flx">
+        <pre id="pixelData"></pre>
+        <pre id="forgData"></pre>
+        <pre id="backData"></pre>
+    </div>
+</body>
+<script>
+    let list = [];
+    let pixelData, height, width;
+    document.getElementById('convert').addEventListener('click', () => {
+        fetch('/imageInfo').then(response => response.json()).then(data => {
+            document.getElementById('pixelData').textContent = JSON.stringify(data[0], null, 2);
+            pixelData = data[0];
+            height = data[1];
+            width = data[2];
+            fakeImageMaker(data[0],data[1],data[2]);
+            extrafeature();
+        }).catch(error =>{
+            console.error('Error: ',error);
+        });
+    });
+    function extrafeature(){
+        getForgBackg();
+        getface();
+    }
+    function getForgBackg(){
+        fetch('/forgBackg').then(response => response.json()).then(data => {
+            document.getElementById('forgData').textContent = JSON.stringify(data.foreground, null, 2);
+            document.getElementById('backData').textContent = JSON.stringify(data.background, null, 2);
+            foregroundMaker(data.embadded,height,width);
+        }).catch(error =>{
+            console.error('Error: ',error);
+        });
+    }
+    function getface(){
+        fetch('/faceIdentify').then(response => response.json()).then(data => {
+            console.log(data);
+            // document.getElementById('forgData').textContent = JSON.stringify(data[3].face, null, 2);
+            document.getElementById('backData').textContent = JSON.stringify(data.embadded, null, 2);
+            foregroundMaker(data.embadded,height,width);
+        }).catch(error =>{
+            console.error('Error: ',error);
+        });
+    }
+    function fakeImageMaker(data,height,width){
+        let count=0;
+        document.querySelector('.fake-img').style.width = width;
+        document.querySelector('.fake-img').style.height = height;
+        document.querySelector('.fake-img').innerHTML = '';
+        let temp = `<div class="pixcel-set">`;
+        for(let i=0; i<data.length; i++){
+            temp += `<div class="fake-pixcel" style="background: rgba(${data[i].r},${data[i].g},${data[i].b},${data[i].a});"></div>`;
+            if(i % width == 0 && i!=0){
+                temp += `</div><div class="pixcel-set">`;
+            }
+        }
+        temp += '</div>';
+        document.querySelector('.fake-img').innerHTML = temp;
+        console.log(width+'px',height+'px');
+    }
+    function foregroundMaker(data,height,width){
+        let count=0;
+        document.querySelector('.foreg-img').style.width = width;
+        document.querySelector('.foreg-img').style.height = height;
+        let temp = `<div class="pixcel-set">`;
+        for(let i=0; i<data.length; i++){
+            temp += `<div class="fake-pixcel" style="background: rgba(${data[i]});"></div>`;
+            if(i % width == 0 && i!=0){
+                temp += `</div><div class="pixcel-set">`;
+            }
+        }
+        temp += '</div>';
+        document.querySelector('.foreg-img').innerHTML = temp;
+    }
+</script>
+</html>

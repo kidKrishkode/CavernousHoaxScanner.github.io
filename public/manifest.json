@@ -1,0 +1,21 @@
+{
+    "short_name": "Cavernous Hoax Scanner",
+    "name": "Create JPEN Web Sample",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "1500x1500 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "logo1500.png",
+            "type": "image/png",
+            "sizes": "1500x1500"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#22577aff",
+    "background_color": "#ffffff"
+}
+    
