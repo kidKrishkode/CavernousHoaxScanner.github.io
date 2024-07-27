@@ -1,7 +1,7 @@
 {
-  "name": "server-side",
+  "name": "CavernousHoaxScanner.github.io",
   "version": "1.0.0",
-  "description": "A simple deepfake detector using Node.js, Express, Socket.io, and EJS",
+  "description": "A simple deepfake detector using Node.js, Express, Socket.io, Python, and EJS",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
