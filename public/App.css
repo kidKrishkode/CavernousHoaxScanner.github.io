@@ -10,6 +10,8 @@
     --charm: #6e13aff2;
     --eco-lighting: #00ff09;
     --atom-blue: #0c8ff0;
+    --revers-white: #320064;
+    --revers-lavender: #000;
     --loader-back: #fffffff6;
     --loader-font: #320064;
 }
@@ -19,6 +21,7 @@ body{
     max-width: 100%;
     overflow-x: hidden;
     background: var(--bg-color);
+    transition: 1s ease-in-out;
 }
 html{
     scroll-behavior: smooth;
@@ -109,6 +112,7 @@ li .active{
 }
 #side-menu{
     display: none;
+    transition: 1s ease-in-out;
 }
 .hambarger-menu{
     width: 15%;
@@ -118,6 +122,7 @@ li .active{
     background: var(--mit-color);
     border-radius: 10px;
     box-shadow: 0px 0px 2px 1px grey;
+    transition: 1s ease-in-out;
 }
 .hambarger-menu ul{
     display: flex;
@@ -300,6 +305,7 @@ li .active{
     padding: 10px;
     border-radius: 20px;
     background: var(--mit-color);
+    transition: 1s ease-in-out;
 }  
 #dfdPage .containers .drop-box{
     position: relative;
@@ -312,6 +318,7 @@ li .active{
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 1s ease-in-out;
 }  
 #dfdPage .containers .drop-box .placeholder{
     width: 100%;
@@ -368,6 +375,7 @@ li .active{
     display: inline-block;
     width: 50px;
     height: 25px;
+    transition: 1s ease-in-out;
 }
 .switch input{
     opacity: 0;
@@ -382,7 +390,7 @@ li .active{
     right: 0;
     bottom: 0;
     background-color: #260063;
-    transition: 0.6s;
+    transition: 0.6s ease-in-out;
 }
 .slider:before{
     position: absolute;
@@ -393,7 +401,7 @@ li .active{
     bottom: 2px;
     font-size: 12px;
     background: #0c8ff0;
-    transition: 0.6s;
+    transition: 0.6s ease-in-out;
 }
 .switch .slider.round {
     border-radius: 34px;
@@ -444,6 +452,7 @@ li .active{
     border: none;
     padding: 4px 8px;
     color: var(--simple-color);
+    transition: 1s ease-in-out;
 }
 .glass-status .head{
     font-size: 16px;
@@ -480,6 +489,7 @@ li .active{
     border-radius: 10px;
     padding: 6px 8px;
     background: var(--blend-color);
+    transition: 1s ease-in-out;
 }
 .htsi .card-group .card .card-title{
     font-family: sans-serif;
@@ -501,6 +511,150 @@ li .active{
     font-size: 16px;
     text-align: justify;
     margin: 4px 0px 8px 0px;
+}
+
+footer{
+    display: none;
+    width: 100%;
+    background: var(--mit-color);
+    padding: 10px 0px 0px 0px;
+    margin-top: 60px;
+    transition: 1s ease-in-out;
+}
+footer .svg1{
+    transform: rotate(180deg);
+    margin-top: -100px;
+    fill: var(--mit-color);
+    width: 20%;
+    height: 120px;
+}
+footer .svg2{
+    display: none;
+    transform: rotate(180deg);
+    margin-top: -80px;
+    fill: var(--mit-color)!important;
+}
+footer .svg1 path,footer .svg2 path{
+    position: relative;
+    width: 100%;
+}
+footer .top-component,footer .middle-component,footer .bottom-component{
+    width: 100%;
+    padding: 4px 20px;
+}
+footer .top-component h3{
+    color: var(--revers-lavender);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+footer .top-component h6{
+    margin: 20px 0px 2px 0px;
+    font-family: sans-serif;
+    color: #a5a5a5;
+    font-size: 14px;
+}
+footer .top-component button{
+    color: var(--revers-lavender);
+    border-color: var(--revers-lavender);
+}
+footer .top-component button:hover{
+    background: var(--revers-lavender);
+    color: var(--simple-color);
+}
+footer .middle-component .link-boxes{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+footer .middle-component .link-boxes .box{
+    width: calc(100% / 5 - 10px);
+}
+footer .middle-component .link-boxes .box li{
+    margin: 6px 0;
+    list-style: none;
+    transition: 1s ease-in-out;
+}
+footer .middle-component .link-boxes .box li a{
+    color: #a5a5a5;
+}
+footer .middle-component .link-boxes .box li a:hover{
+    color: var(--charm);
+    text-decoration: underline;
+    cursor: pointer;
+}
+footer .middle-component .link-boxes .box .link_name{
+    color: var(--revers-lavender);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    position: relative;
+}
+footer .middle-component .link-boxes .box .link_name::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 35px;
+    background: var(--revers-white);
+}
+footer .middle-component .link-boxes .input-box{
+    width: 50%;
+}
+footer .bottom-component{
+    background: var(--blend-color);
+    color: grey;
+}
+footer .bottom-component .left-side{
+    width: 60%;
+}
+footer .bottom-component .left-side span{
+    margin-right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+footer .bottom-component .right-side{
+    width: 40%;
+    height: 100%;
+    margin: auto 2px;
+}
+footer .bottom-component .right-side a{
+    color: var(--revers-lavender);
+    font-size: 18px;
+}
+.organization-list{
+    width: 100%;
+    padding: 4px 8px;
+    margin: 20px 0px 0px 0px;
+}
+.organization-list h6{
+    color: grey;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.organization-list ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 100%;
+    max-height: 50px;
+    padding: 0px;
+    overflow-y: auto;
+}
+.organization-list ul li{
+    height: 50px;
+    margin-right: 40px;
+}
+.organization-list ul li img{
+    position: relative;
+    height: 100%;
+    filter: grayscale(1);
+    transition: 1s ease-in-out;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 900px){
@@ -573,5 +727,34 @@ li .active{
     .htsi .card-group .card{
         width: 90%;
         margin: 5px 5%;
+    }
+    footer .svg2{
+        display: block;
+    }
+    footer .svg1{
+        display: none;
+    }
+    footer .middle-component .top{
+        flex-direction: column;
+    }
+    footer .middle-component .link-boxes{
+        flex-wrap: wrap;
+    }
+    footer .middle-component .link-boxes .box{
+        width: calc(100% / 2 - 10px);
+        padding-left: 0px;
+    }
+    footer .middle-component .link-boxes .input-box{
+        width: 100%;
+    }
+    footer .bottom-component{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    footer .bottom-component .left-side,footer .bottom-component .right-side{
+        width: 100%;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        text-align: center;
     }
 }
