@@ -25,7 +25,7 @@
             <div class="drop-box">
                 <div class="placeholder"><i class="fa fa-file-image-o" style="font-size: 30px;"></i><br>Drag and drop an image or video, or click to select</div>
                 <div class="preview"></div>
-                <input type="file" id="file-input" accept="image/*, video/*">
+                <input type="file" id="file-input" accept="image/*, video/*" name="file-input">
             </div>
         </div>
         <div class="flx containers-option">
@@ -81,11 +81,15 @@
             </div>
         </div>
     </section>
+    <footer id="footer">
+        <%= footer %>
+    </footer>
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('dfdPage');
+    pageSet.push('dfdPage','footer');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
+    document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
 </script>
 </html>
