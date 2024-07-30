@@ -28,12 +28,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    ejs.renderFile('./views/header.ejs').then(header => {
-        ejs.renderFile('./views/footer.ejs').then(footer => {
-            ejs.renderFile('./views/service.ejs').then(services => {
-                res.status(200).render('index',{header, services, footer});
-            });
-        });
+    const promises = [
+        ejs.renderFile('./views/header.ejs'),
+        ejs.renderFile('./views/footer.ejs'),
+        ejs.renderFile('./views/service.ejs')
+    ];
+    Promise.all(promises).then(([header,footer,services]) => {
+        res.status(200).render('index',{header, services, footer});
     });
 });
 
@@ -43,7 +44,7 @@ app.get('/imageInfo', async (req, res) => {
         const image = await jimp.read(imagePath);
         width = image.bitmap.width;
         height = image.bitmap.height;
-        await callPythonProcess(imagePath, height, width, 'resizer').then(result => {
+        await callPythonProcess([imagePath, height, width], 'resizer').then(result => {
             imagePath = result.path=="Image size under conditions"?imagePath:result.path;
         }).catch(error => {
             console.error('Error:', error.message);
@@ -66,7 +67,7 @@ app.get('/imageInfo', async (req, res) => {
 
 app.get('/forgBackg', async (req, res) => {
     try{
-        await callPythonProcess(imagePath, height, width, 'diffForegBackg').then(result => {
+        await callPythonProcess([imagePath, height, width], 'diffForegBackg').then(result => {
             res.json(result);
         }).catch(error => {
             console.error('Error:', error.message);
@@ -79,7 +80,7 @@ app.get('/forgBackg', async (req, res) => {
 
 app.get('/faceIdentify', async (req, res) => {
     try{
-        await callPythonProcess(imagePath, height, width, 'faceDetect').then(result => {
+        await callPythonProcess([imagePath, height, width], 'faceDetect').then(result => {
             res.json(result);
         }).catch(error => {
             console.error('Error:', error.message);
@@ -110,9 +111,9 @@ function WEB(port){
     this.filename = path.basename(__filename);
 }
 
-function callPythonProcess(imagePath, height, width, functionValue){
+function callPythonProcess(list, functionValue){
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('python', ['./model/main.py', imagePath, height, width, functionValue]);
+        const pythonProcess = spawn('python', ['./model/main.py', list, functionValue]);
         let resultData = '';
         pythonProcess.stdout.on('data', (data) => {
             resultData += data.toString();
