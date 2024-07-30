@@ -15,6 +15,9 @@
 <section class="workspace blbg" id="side-menu" onclick="navbar_toggle();">
     <ul class="nav justify-content-end" id="nav-menu">
         <li class="nav-item">
+            <a class="nav-link"><img src="../public/favicon.png" alt="chs" width="25" height="25" style="margin: 1px 40%;"/></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="/main"><i class="fa fa-desktop"></i> Main</a>
         </li>
         <li class="nav-item">
@@ -32,15 +35,20 @@
         <li class="nav-item">
             <a class="nav-link" href="/blogs"><i class="fa fa-globe"></i> Blogs</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link">Change Theme
-                <span class="set-right">
-                    <label class="switch">
-                        <input type="checkbox" checked="true" id="theme1" onchange="system.themeToggle('theme1');">
-                        <span class="slider round"></span>
-                    </label>
-                </span>
-            </a>
-        </li>
+        <span class="nav-account">
+            <li class="nav-item">
+                <a class="nav-link"><i class="fa fa-tint"></i> Color Theme
+                    <span class="set-right">
+                        <label class="switch">
+                            <input type="checkbox" checked="true" id="theme1" onchange="system.themeToggle('theme1');">
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/PStorebyWhiteLotus/User_Login.html"><i class="fa fa-user-circle-o"></i> Account</a>
+            </li>
+        </span>
     </ul>
 </section>
