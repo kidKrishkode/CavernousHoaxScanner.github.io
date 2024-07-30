@@ -1,8 +1,9 @@
 let nav = 0;
-let theme = 0;
+let theme = 1;
 let system;
 let loader;
 const pageSet = [];
+const appearSet = [];
 function System(){
     try{
         this.listen = window.location;
@@ -17,20 +18,22 @@ function System(){
 function Loader(load){
     this.loaded = load;
 }
-document.addEventListener("DOMContentLoaded",() =>{
+document.addEventListener("DOMContentLoaded",() => {
     loader = new Loader(true);
     loader.creat();
     loader.remove(2000);
     system = new System();
-    system.setTheme();
     document.getElementById('side-menu').innerHTML = '<div class="hambarger-menu"><ul class="nav justify-content-end">'+document.getElementById('nav-menu').innerHTML+'</ul></div>';
+    window.addEventListener("scroll",system.scrollAppear); 
 });
 function navbar_toggle(){
     if(nav==0){
         document.getElementById('side-menu').style.display = "block";
+        document.body.style.overflowY = "hidden";
         nav++;
     }else{
         document.getElementById('side-menu').style.display = "none";
+        document.body.style.overflowY = "auto";
         nav--;
     }
 }
@@ -58,6 +61,23 @@ System.prototype.VisiblePage = function(){
     try{
         for(let i=0; i<pageSet.length; i++){
             document.querySelector("#"+pageSet[i]).style.display = "block";
+        }
+    }catch(e){
+        console.warn("New Problem: ",e);
+    }
+}
+System.prototype.scrollAppear = function(){
+    try{
+        var y = window.scrollY;
+        for(let i=0; i<appearSet.length; i++){
+            let box = document.querySelector(appearSet[i][0]);
+            if(y >= appearSet[i][1]){
+                box.classList.add("show");
+                box.classList.remove("hide");
+            }else{
+                box.classList.add("hide");
+                box.classList.remove("show");
+            }
         }
     }catch(e){
         console.warn("New Problem: ",e);
@@ -115,6 +135,8 @@ const themeSet = [
         ["--charm", "#6e13aff2"],
         ["--eco-lighting", "#00ff09"],
         ["--atom-blue", "#0c8ff0"],
+        ["--revers-lavender", "#320064"],
+        ["--revers-white", "#000"],
         ["--loader-back", "#fffffff6"],
         ["--loader-font", "#320064"]
     ],
@@ -130,6 +152,8 @@ const themeSet = [
         ["--charm", "#6e13aff2"],
         ["--eco-lighting", "#00ff09"],
         ["--atom-blue", "#0c8ff0"],
+        ["--revers-lavender", "#fff"],
+        ["--revers-white", "#fff"],
         ["--loader-back", "#000000"],
         ["--loader-font", "#00ff09"]
     ]

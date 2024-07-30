@@ -1,19 +1,19 @@
 :root{
-    --bg-color: #f6f6f6;
-	--mit-color: #ececec;
-	--simple-color: #ffffff;
-    --blend-color: #e8eae8e1;
-    --dark-color: #e3e0e0be;
-    --venda: #f2f2f2;
-	--lavender: #320064;
-	--eclipse: #230046;
+    --bg-color: #0d1117;
+    --mit-color: #161b22;
+    --simple-color: #000000;
+    --blend-color: #1b263b;
+    --dark-color: #2d2d3493;
+    --venda: #141414;
+    --lavender: #430085;
+    --eclipse: #320a5b;
     --charm: #6e13aff2;
     --eco-lighting: #00ff09;
     --atom-blue: #0c8ff0;
-    --revers-white: #320064;
-    --revers-lavender: #000;
-    --loader-back: #fffffff6;
-    --loader-font: #320064;
+    --revers-lavender: #fff;
+    --revers-white: #fff;
+    --loader-back: #000000;
+    --loader-font: #00ff09;
 }
 body{
     margin: 0;
@@ -68,6 +68,7 @@ li .active{
 }
 #nav-menu{
     display: none;
+    transition: 1s ease-in-out;
 }
 .navbar-brand{
     width: 70%;
@@ -83,7 +84,14 @@ li .active{
     border-radius: 10px;
     border: 1px solid grey;
     background: transparent;
-    padding: 4px 8px;
+    padding: 2px 8px;
+}
+.nav-account{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border-top: 1px solid grey;
 }
 .workspace{
     width: 100%;
@@ -110,17 +118,17 @@ li .active{
     background-color: var(--eclipse);
     border-color: var(--eclipse);
 }
-#side-menu{
+#side-menu,#header{
     display: none;
     transition: 1s ease-in-out;
 }
 .hambarger-menu{
     width: 15%;
+    height: 100%;
     position: absolute;
-    top: 8%;
-    left: 2%;
+    top: 0%;
+    left: 0%;
     background: var(--mit-color);
-    border-radius: 10px;
     box-shadow: 0px 0px 2px 1px grey;
     transition: 1s ease-in-out;
 }
@@ -132,7 +140,7 @@ li .active{
     border-bottom: 1px solid grey;
 }
 .hambarger-menu ul li:last-child{
-    border: none;
+    border-bottom: none;
 }
 #e404{
     height: 100%;
@@ -277,7 +285,7 @@ li .active{
     width: 100%;
 }
 
-#dfdPage{
+#dfdPage,#moreProduct{
     display: none;
 }
 #dfdPage h2{
@@ -478,6 +486,19 @@ li .active{
 }
 .htsi{
     margin: 30px auto;
+    position: relative;
+}
+.appear{
+    position: relative;
+    transition: 1s ease-in-out;
+}
+.hide{
+    opacity: 0;
+    left: -100%
+}
+.show{
+    opacity: 1;
+    left: 0%;
 }
 .htsi .card-group{
     width: 80%;
@@ -656,6 +677,73 @@ footer .bottom-component .right-side a{
     transition: 1s ease-in-out;
     cursor: pointer;
 }
+.image-bg-prod{
+    width: 85%;
+    height: 300px;
+    margin: 20px auto;
+    border-radius: 10px;
+    background-image: linear-gradient(54deg, rgba(0, 195, 255, 0.223), rgba(177, 8, 255, 0.34)), url('../images/img-bg-prod.png');
+    background-size: contain;
+    backdrop-filter: blur(4px);
+    position: relative;
+    text-align: center;
+    padding: 20px auto;
+    cursor: pointer;
+}
+.image-bg-prod::before{
+    content: " ";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    right: 0%;
+    left: 0%;
+    opacity: 0.6;
+    z-index: -1;
+    background: linear-gradient(to right, #000 0%, var(--atom-blue) 0%, #000 100%);
+    border-radius: 10px;
+}
+.image-bg-prod h3{
+    font-size: 35px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--revers-lavender);
+    margin: 0px;
+    padding: 60px 0px 0px 0px;
+    text-shadow: 0px 0px 4px var(--simple-color);
+}
+.image-bg-prod h6{
+    font-family: sans-serif;
+    color: gainsboro;
+    margin: 0px;
+}
+.services-area{
+    margin-top: -140px;
+}
+.services-area .single-service{
+    border-radius: 10px;
+    text-align: center;
+    padding: 30px;
+    background-color: var(--blend-color);
+    box-shadow: 0px 2px 8px 1px grey;
+    margin-bottom: 25px;
+    transition: 1s ease-in-out;
+    cursor: pointer;
+}
+.services-area .single-service:hover{
+    transform: translateY(-20px);
+}
+.services-area .single-service .img-fluid{
+    filter: grayscale(1);
+}
+.services-area .single-service h4{
+    color: var(--eco-lighting);
+    font-family: sans-serif;
+    margin: 6px 0px 8px 0px;
+}
+.services-area .single-service p{
+    color: grey;
+    font-size: 14px;
+}
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -684,7 +772,6 @@ footer .bottom-component .right-side a{
     }
     .hambarger-menu{
         width: 55%;
-        left: 5%;
     }
     #e404{
         padding-top: 40%;
@@ -756,5 +843,21 @@ footer .bottom-component .right-side a{
         margin-bottom: 5px;
         margin-top: 5px;
         text-align: center;
+    }
+    .image-bg-prod{
+        width: 95%;
+    }
+    .image-bg-prod h3{
+        font-size: 22px;
+        padding: 50px 0px 0px 0px;
+    }
+    .image-bg-prod h6{
+        font-size: 14px;
+    }
+    .services-area {
+        margin-top: -160px;
+    }
+    .services-area .single-service{
+        padding: 20px;
     }
 }
