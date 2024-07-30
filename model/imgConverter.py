@@ -6,21 +6,18 @@ import ast
 def convert_png(image_path):
     image = cv2.imread(image_path)
     filename, extension = image_path.rsplit('.', 1)
+    new_image_path = f"{filename}.png"
+    cv2.imwrite(new_image_path, image, [int(cv2.IMWRITE_PNG_COMPRESSION), 0])
+    return new_image_path
 
-    if extension.lower() == 'png':
-        new_image_path = f"{filename}.jpg"
-        cv2.imwrite(new_image_path, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-    elif extension.lower() == 'jpg':
-        new_image_path = f"{filename}.png"
-        cv2.imwrite(new_image_path, image, [int(cv2.IMWRITE_PNG_COMPRESSION), 0])
-    else:
-        print("Unsupported image format. Only PNG and JPG are supported.")
-        return None
-
+def convert_jpg(image_path):
+    image = cv2.imread(image_path)
+    filename, extension = image_path.rsplit('.', 1)
+    new_image_path = f"{filename}.jpg"
+    cv2.imwrite(new_image_path, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
     return new_image_path
 
 def is_image(image_path):
-    # Check if the file has a valid image extension
     valid_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.gif']
     if not any(image_path.endswith(ext) for ext in valid_extensions):
         return False
@@ -36,16 +33,30 @@ def is_image(image_path):
 
     return False
 
-def convert_image(image_path):
-    new_image_path = convert_png(image_path)
-    return new_image_path
+def convert_image(input_list):
+    image_path = str(input_list[0])
+    extension = str(input_list[1])
+    new_image_path = image_path
+    if is_image(image_path) == True:
+        if extension == 'png':
+            new_image_path = convert_png(image_path)
+        elif extension == 'jpg':
+            new_image_path = convert_jpg(image_path)
+        else:
+            print("Unwanted media convertion try.")
+        return new_image_path
+    else:
+        print("Unsupported image format. Only PNG and JPG are supported.")
+        return None
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: imgConverter.py <list>")
+        print("Usage: imgConverter.py <list-value>")
         return
+    
     input_list = ast.literal_eval(sys.argv[1])
-    if is_image(input_list) == True:
+    image_path = str(input_list[0])
+    if is_image(image_path) == True:
         new_image_path = convert_image(input_list)
         print(new_image_path)
 
