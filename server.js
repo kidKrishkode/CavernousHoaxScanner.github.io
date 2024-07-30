@@ -30,7 +30,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     ejs.renderFile('./views/header.ejs').then(header => {
         ejs.renderFile('./views/footer.ejs').then(footer => {
-            res.status(200).render('index',{header, footer});
+            ejs.renderFile('./views/service.ejs').then(services => {
+                res.status(200).render('index',{header, services, footer});
+            });
         });
     });
 });
