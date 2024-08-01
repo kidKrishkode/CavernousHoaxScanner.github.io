@@ -38,6 +38,35 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/converter', (req, res) => {
+    const promises = [
+        ejs.renderFile('./views/header.ejs'),
+        ejs.renderFile('./views/footer.ejs'),
+        ejs.renderFile('./views/service.ejs')
+    ];
+    Promise.all(promises).then(([header,footer,services]) => {
+        res.status(200).render('converter',{header, services, footer});
+    });
+});
+
+app.get('/converter/process', async (req, res) => {
+    const promises = [
+        ejs.renderFile('./views/header.ejs'),
+        ejs.renderFile('./views/footer.ejs'),
+        ejs.renderFile('./views/service.ejs')
+    ];
+    const imagePath = req.query.path;
+    const extension = req.query.ext;
+    const listOfInput = [imagePath, extension];
+    await callPythonProcess(listOfInput, 'converter').then(path => {
+        Promise.all(promises).then(([header, footer, services]) => {
+            res.status(200).render('converter', {header, services, footer, path});
+        });
+    }).catch(error => {
+        console.error('Error:', error.message);
+    });
+});
+
 app.get('/imageInfo', async (req, res) => {
     try{
         imagePath = path.join(__dirname, 'public', './images/image1.jpg');
