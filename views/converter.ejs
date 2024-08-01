@@ -13,28 +13,33 @@
     <link rel="stylesheet" href="../public/App.css"/>
     <link rel="icon" href="../public/favicon.png"/>
 </head>
-<body onload="dfd.engine_start();">
+<body onload="converter.engine_start();">
     <header id="header">
         <%= header %>
     </header>
-    <section class="workspace" id="dfdPage">
+    <section class="workspace" id="converterPage">
         <img src="../images/3d_donut.png" alt="chs" class="right-top-des"/>
-        <h2>DeepFake Detector</h2>
+        <h2>Image Converter</h2>
         <div class="underline"></div>
         <div class="containers">
             <div class="drop-box">
-                <div class="placeholder"><i class="fa fa-file-image-o" style="font-size: 30px;"></i><br>Drag and drop an image or video, or click to select</div>
+                <div class="placeholder"><i class="fa fa-file-image-o" style="font-size: 30px;"></i><br>Drag and drop an image, or click to select</div>
                 <div class="preview"></div>
-                <input type="file" id="file-input" accept="image/*, video/*" name="file-input" onchange="dfd.engine_active();">
+                <input type="file" id="file-input" accept="image/*" name="file-input" onchange="converter.engine_active();">
             </div>
         </div>
         <div class="flx containers-option">
-            <div class="social-opener">
-                <i class="fa fa-facebook"></i>
-                <i class="fa fa-google"></i>
+            <div class="selecter">
+                <select class="form-control" id="extension-input" onchange="" name="extension-input">
+                    <option>Jpg</option>
+                    <option>Jpeg</option>
+                    <option selected="true">Png</option>
+                    <option>Gif</option>
+                    <option>Bimp</option>
+                </select>
             </div>
             <div class="process-btn">
-                <div class="btn btn-process">Process</div>
+                <div class="btn btn-process" onclick="process();">Process</div>
             </div>
         </div>
         <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
@@ -51,10 +56,7 @@
                 <span class="head">Media Size:</span><span class="data" id="media-size">Not Selected!</span>
             </div>
             <div class="flx">
-                <span class="head">Media Duration:</span><span class="data" id="media-due">Not Selected!</span>
-            </div>
-            <div class="flx">
-                <span class="head">Media Dimantion:</span><span class="data" id="media-diamention">Not Selected!</span>
+                <span class="head">Media Path:</span><span class="data" id="media-path">Not Selected!</span>
             </div>
         </div>
         <div class="htsi appear hide">
@@ -62,7 +64,7 @@
             <div class="underline"></div>
             <div class="card-group flo">
                 <div class="card">
-                    <h4 class="card-title"><span>1</span> Drop your Image or Video</h4>
+                    <h4 class="card-title"><span>1</span> Drop your Image</h4>
                     <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
                 </div>
                 <div class="card">
@@ -76,7 +78,7 @@
                     <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
                 </div>
                 <div class="card">
-                    <h4 class="card-title"><span>4</span> Download Report</h4>
+                    <h4 class="card-title"><span>4</span> Download New Image</h4>
                     <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
                 </div>
             </div>
@@ -92,10 +94,19 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('header','dfdPage','moreProduct','footer');
+    pageSet.push('header','converterPage','moreProduct','footer');
     appearSet.push(['.htsi',380],['#moreProduct',580]);
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
+    function process(){
+        let image = document.getElementById('file-input').value;
+        let extension = document.getElementById('extension-input').value.toLowerCase();
+        if(converter.signal){
+            window.location.href = `/converter/process?ext=${extension}&path=${image}`;
+        }else{
+            alert('This media not acceptable!\nTry another one..');
+        }
+    }
 </script>
 </html>
