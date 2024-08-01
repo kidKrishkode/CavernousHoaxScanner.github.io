@@ -1,6 +1,7 @@
 import sys
 import subprocess
 import json
+import logging
 
 # import require python files
 import test
@@ -13,6 +14,8 @@ import imgConverter
 # def call_foreground(image_path, width, height):
 #     result = subprocess.run(['python', './test.py', asset], capture_output=True, text=True)
 #     return result.stdout
+# logging.basicConfig(filename='json_data.log',level=logging.DEBUG)
+# logging.debug(json.dumps({"result": sys.argv}))
 
 def main():
     if len(sys.argv) <= 1:

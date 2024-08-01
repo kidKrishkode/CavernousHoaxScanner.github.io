@@ -2,6 +2,7 @@ import sys
 import cv2
 import json
 import ast
+import logging
 
 def convert_png(image_path):
     image = cv2.imread(image_path)
@@ -34,6 +35,9 @@ def is_image(image_path):
     return False
 
 def convert_image(input_list):
+    if './model/main.py' in sys.argv[0]:
+        input_list = [str(X) for X in input_list[0].split(',')]
+
     image_path = str(input_list[0])
     extension = str(input_list[1])
     new_image_path = image_path
