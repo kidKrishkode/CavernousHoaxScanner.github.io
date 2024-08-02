@@ -7,6 +7,8 @@ const {spawn} = require('child_process');
 const querystring = require('querystring');
 const ejs = require('ejs');
 const jsonfile = require('jsonfile');
+const varchar = require('./config/env-variables.ts');
+const security = require('./config/security.ts');
 require('./public/App.test.js');
 require('dotenv').config();
 
@@ -27,25 +29,56 @@ app.use('/public',express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+    try{
+        const url = req.originalUrl;
+        const query = url.split('?')[1];
+        const params = (new URL(path.join(__dirname, url))).searchParams;
+        const public_key = varchar.duplex;
+        if(params.has('encode')){
+            if(query!=undefined){
+                const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
+                req.url = `${url.split('?')[0]}?${decodedUrl}`;
+                req.query = querystring.parse(decodedUrl);
+            }
+        }else{
+            if(query!=undefined){
+                const encodedUrl = security.encodedURI(query, public_key);
+                req.url = `${url}?encode=${encodedUrl}`;
+                req.query = querystring.parse(encodedUrl);
+            }
+        }
+        next();
+    }catch(e){
+        res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
+    }
+});
+
 app.get('/', (req, res) => {
     const promises = [
         ejs.renderFile('./views/header.ejs'),
         ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs')
+        ejs.renderFile('./views/service.ejs'),
+        ejs.renderFile('./views/faq.ejs')
     ];
-    Promise.all(promises).then(([header,footer,services]) => {
-        res.status(200).render('index',{header, services, footer});
+    Promise.all(promises).then(([header, footer, services, faq]) => {
+        res.status(200).render('index',{header, services, faq, footer});
     });
+});
+
+app.get('/varchar', async (req, res) => {
+    res.status(200).json(varchar);
 });
 
 app.get('/converter', (req, res) => {
     const promises = [
         ejs.renderFile('./views/header.ejs'),
         ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs')
+        ejs.renderFile('./views/service.ejs'),
+        ejs.renderFile('./views/faq.ejs')
     ];
-    Promise.all(promises).then(([header,footer,services]) => {
-        res.status(200).render('converter',{header, services, footer});
+    Promise.all(promises).then(([header, footer, services, faq]) => {
+        res.status(200).render('converter',{header, services, faq, footer});
     });
 });
 
@@ -53,14 +86,15 @@ app.get('/converter/process', async (req, res) => {
     const promises = [
         ejs.renderFile('./views/header.ejs'),
         ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs')
+        ejs.renderFile('./views/service.ejs'),
+        ejs.renderFile('./views/faq.ejs')
     ];
     const imagePath = req.query.path;
     const extension = req.query.ext;
     const listOfInput = [imagePath, extension];
     await callPythonProcess(listOfInput, 'converter').then(path => {
-        Promise.all(promises).then(([header, footer, services]) => {
-            res.status(200).render('converter', {header, services, footer, path});
+        Promise.all(promises).then(([header, footer, services, faq]) => {
+            res.status(200).render('converter', {header, services, faq, footer, path});
         });
     }).catch(error => {
         console.error('Error:', error.message);
@@ -138,6 +172,7 @@ function WEB(port){
     this.active = true;
     this.port = port;
     this.filename = path.basename(__filename);
+    this.appInfo = jsonfile.readFileSync('./public/manifest.json');
 }
 
 function callPythonProcess(list, functionValue){
