@@ -87,6 +87,9 @@
             <%= services %>
         </div>
     </section>
+    <aside id="faq-help" class="appear hide">
+        <%= faq %>
+    </aside>
     <footer id="footer">
         <%= footer %>
     </footer>
@@ -94,11 +97,12 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('header','converterPage','moreProduct','footer');
-    appearSet.push(['.htsi',380],['#moreProduct',580]);
+    pageSet.push('header','converterPage','moreProduct', 'faq-help', 'footer');
+    appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
+    document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     function process(){
         let image = document.getElementById('file-input').value;
         let extension = document.getElementById('extension-input').value.toLowerCase();
