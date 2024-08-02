@@ -769,6 +769,48 @@ footer .bottom-component .right-side a{
     color: grey;
     font-size: 14px;
 }
+#faq-help{
+    width: 100%;
+    margin: 40px 0% 10px 0%;
+    padding: 5px 6%;
+    display: none;
+}
+#faq-help h2{
+    color: var(--eco-lighting);
+    font-size: 18px;
+    font-weight: 600;
+    font-family: sans-serif;
+    text-align: left;
+}
+#faq-help .layout{
+    width: 100%;
+    margin: 0px;
+}
+#faq-help .accordion{
+    padding: 10px;
+    background: var(--mit-color);
+    margin: 10px 0px 20px 0px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 1px gray;
+    transition: 1s ease-in-out;
+}
+#faq-help .accordion__question p{
+    margin: 5px;
+    padding: 0;
+    font-family: Verdana;
+    font-size: 14px;
+    color: var(--revers-white);
+}
+#faq-help .accordion__answer p{
+    color: grey;
+    text-align: justify;
+}
+#faq-help .accordion__answer{
+    display: none;
+}
+#faq-help .accordion.active .accordion__answer{
+    display: block;
+}
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -888,5 +930,8 @@ footer .bottom-component .right-side a{
     }
     .services-area .single-service{
         padding: 20px;
+    }
+    #faq-help{
+        margin: 20px 0% 60px 0%;
     }
 }

@@ -5,6 +5,7 @@ const files_structure = [
     'views/',
     'public/',
     'images/',
+    'config/',
     'package.json'
 ];
 

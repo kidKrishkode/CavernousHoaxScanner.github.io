@@ -2,8 +2,11 @@ let nav = 0;
 let theme = 1;
 let system;
 let loader;
+let config;
 const pageSet = [];
 const appearSet = [];
+let themeSet = [];
+
 function System(){
     try{
         this.listen = window.location;
@@ -24,7 +27,8 @@ document.addEventListener("DOMContentLoaded",() => {
     loader.remove(2000);
     system = new System();
     document.getElementById('side-menu').innerHTML = '<div class="hambarger-menu"><ul class="nav justify-content-end">'+document.getElementById('nav-menu').innerHTML+'</ul></div>';
-    window.addEventListener("scroll",system.scrollAppear); 
+    window.addEventListener("scroll",system.scrollAppear);
+    system.setUp();
 });
 function navbar_toggle(){
     if(nav==0){
@@ -56,6 +60,30 @@ Loader.prototype.remove = function(time){
         document.body.style.overflowY = "scroll";
         system.VisiblePage();
     },time);
+}
+System.prototype.setUp = function(){
+    try{
+        fetch('/varchar').then(response => response.json()).then(data => {
+            config = data.valueOf();
+            themeSet = config.themeSet;
+        }).catch(error =>{
+            console.error('Error: ',error);
+        });
+        if(!!document.getElementById('faq-help')){
+            let answers = document.querySelectorAll(".accordion"); 
+            answers.forEach((event) => { 
+                event.addEventListener("click", () => { 
+                    if(event.classList.contains("active")){ 
+                        event.classList.remove("active"); 
+                    }else{
+                        event.classList.add("active"); 
+                    } 
+                }); 
+            });
+        }
+    }catch(e){
+        console.log("Error to set up initials!\n",e);
+    }
 }
 System.prototype.VisiblePage = function(){
     try{
@@ -122,42 +150,6 @@ System.prototype.downloadCode = function(id,name){
     link.download = fileName;
     link.click();
 }
-const themeSet = [
-    [
-        ["--bg-color", "#f6f6f6"],
-	    ["--mit-color", "#ececec"],
-	    ["--simple-color", "#ffffff"],
-        ["--blend-color", "#e8eae8e1"],
-        ["--dark-color", "#e3e0e0be"],
-        ["--venda", "#f2f2f2"],
-	    ["--lavender", "#320064"],
-	    ["--eclipse", "#230046"],
-        ["--charm", "#6e13aff2"],
-        ["--eco-lighting", "#00ff09"],
-        ["--atom-blue", "#0c8ff0"],
-        ["--revers-lavender", "#320064"],
-        ["--revers-white", "#000"],
-        ["--loader-back", "#fffffff6"],
-        ["--loader-font", "#320064"]
-    ],
-    [
-        ["--bg-color", "#0d1117"],
-	    ["--mit-color", "#161b22"],
-	    ["--simple-color", "#000000"],
-        ["--blend-color", "#1b263b"],
-        ["--dark-color", "#2d2d3493"],
-        ["--venda", "#141414"],
-	    ["--lavender", "#430085"],
-	    ["--eclipse", "#320a5b"],
-        ["--charm", "#6e13aff2"],
-        ["--eco-lighting", "#00ff09"],
-        ["--atom-blue", "#0c8ff0"],
-        ["--revers-lavender", "#fff"],
-        ["--revers-white", "#fff"],
-        ["--loader-back", "#000000"],
-        ["--loader-font", "#00ff09"]
-    ]
-]
 System.prototype.themeToggle = function(id){
     if(theme == 0){
         for(let i=0; i<themeSet[1].length; i++){
@@ -175,4 +167,11 @@ System.prototype.setTheme = function(){
     for(let i=0; i<themeSet[1].length; i++){
         document.documentElement.style.setProperty(themeSet[1][i][0], themeSet[1][i][1]);
     }
+}
+System.prototype.encodedURI = function(url, key){
+    let str = url.toString().toLowerCase();
+    for(let i=0; i<config.hash.length; i++){
+        str = str.replaceAll(config.hash[i][0], config.hash[i][1]);
+    }
+    return str.toString();
 }

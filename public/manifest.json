@@ -1,6 +1,7 @@
 {
-    "short_name": "Cavernous Hoax Scanner",
-    "name": "Create JPEN Web Sample",
+    "name": "Cavernous Hoax Scanner",
+    "short_name": "CHS",
+    "description": "Create JPEN Web for deepfake detection",
     "icons": [
         {
             "src": "favicon.png",
