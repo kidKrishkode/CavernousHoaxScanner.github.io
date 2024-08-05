@@ -3,8 +3,10 @@ let theme = 1;
 let system;
 let loader;
 let config;
+let temp;
 const pageSet = [];
 const appearSet = [];
+const currentPage = [];
 let themeSet = [];
 
 function System(){
@@ -65,7 +67,7 @@ System.prototype.setUp = function(){
     try{
         fetch('/varchar').then(response => response.json()).then(data => {
             config = data.valueOf();
-            themeSet = config.themeSet;
+            themeSet = config.varchar.themeSet;
         }).catch(error =>{
             console.error('Error: ',error);
         });
@@ -81,6 +83,10 @@ System.prototype.setUp = function(){
                 }); 
             });
         }
+        pullDataBase();
+        if(local_memory.length!=0){
+            system.setTheme();
+        }
     }catch(e){
         console.log("Error to set up initials!\n",e);
     }
@@ -90,6 +96,7 @@ System.prototype.VisiblePage = function(){
         for(let i=0; i<pageSet.length; i++){
             document.querySelector("#"+pageSet[i]).style.display = "block";
         }
+        system.setActiveMenu(currentPage[currentPage.length-1]);
     }catch(e){
         console.warn("New Problem: ",e);
     }
@@ -150,6 +157,14 @@ System.prototype.downloadCode = function(id,name){
     link.download = fileName;
     link.click();
 }
+System.prototype.downloadImage = function(id, name){
+    const img = document.getElementById(id);
+    const fileName = name || '1.png';
+    const link = document.createElement("a");
+    link.href = img.src;
+    link.download = fileName;
+    link.click();
+}
 System.prototype.themeToggle = function(id){
     if(theme == 0){
         for(let i=0; i<themeSet[1].length; i++){
@@ -162,16 +177,109 @@ System.prototype.themeToggle = function(id){
         }
         theme = 0;
     }
+    local_memory[0] = theme;
+    system.pushDataBase();
 }
 System.prototype.setTheme = function(){
-    for(let i=0; i<themeSet[1].length; i++){
-        document.documentElement.style.setProperty(themeSet[1][i][0], themeSet[1][i][1]);
+    theme = local_memory[0];
+    for(let i=0; i<themeSet[theme].length; i++){
+        document.documentElement.style.setProperty(themeSet[theme][i][0], themeSet[theme][i][1]);
     }
 }
 System.prototype.encodedURI = function(url, key){
     let str = url.toString().toLowerCase();
-    for(let i=0; i<config.hash.length; i++){
-        str = str.replaceAll(config.hash[i][0], config.hash[i][1]);
+    for(let i=0; i<config.varchar.hash.length; i++){
+        str = str.replaceAll(config.varchar.hash[i][0], config.varchar.hash[i][1]);
     }
     return str.toString();
+}
+System.prototype.setActiveMenu = function(menuName){
+    const navMenu = document.querySelector('.hambarger-menu');
+    const navItems = navMenu.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.querySelector('.nav-link').classList.remove('active');
+    });
+    const activeItem = navMenu.querySelector(`.nav-link[href="/${menuName.toLowerCase().replace(' ', '')}"]`);
+    if(activeItem){
+        activeItem.classList.add('active');
+    }else{
+        return false;
+    }
+}
+const dbName = 'CHSDB';
+const dbVersion = 1;
+let db;
+let local_memory=[];
+System.prototype.pushDataBase = function(){
+    saveArray(local_memory);
+}
+const openDB = () => {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbName, dbVersion);
+        request.onerror = (event) => {
+            reject('Error to opening database');
+        };
+        request.onsuccess = (event) => {
+            db = event.target.result;
+            resolve('Database opened successfully');
+        };
+        request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            const store = db.createObjectStore('data', { keyPath: 'id' });
+        };
+    });
+};
+const saveArray = async (array) => {
+    clearDB();
+    await openDB();
+    const transaction = db.transaction(['data'], 'readwrite');
+    const store = transaction.objectStore('data');
+    array.forEach(item => {
+        store.put(item);
+    });
+};
+const fetchArray = async () => {
+    await openDB();
+    const transaction = db.transaction(['data'], 'readonly');
+    const store = transaction.objectStore('data');
+    const request = store.getAll();
+    return new Promise((resolve, reject) => {
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+        request.onerror = (event) => {
+            reject('Error to fetching data');
+        };
+    });
+};
+const pullDataBase = async () =>{
+    local_memory = await fetchArray();
+}
+const clearDB = async () => {
+    await openDB();
+    const transaction = db.transaction(['data'], 'readwrite');
+    const store = transaction.objectStore('data');
+    store.clear();
+};
+const getDBUsage = async () => {
+    await openDB();
+    const request = indexedDB.open(dbName, dbVersion);
+    return new Promise((resolve, reject) => {
+        request.onsuccess = (event) => {
+            const db = event.target.result;
+            const usedSpace = (db.objectStoreNames.length * 1024 * 1024); // Assuming 1MB for each object store
+            const totalSpace = db.objectStoreNames.length * 1024 * 1024; // Assuming 1MB total space
+            const usagePercentage = (usedSpace / totalSpace) * 100;
+            resolve({ usedSpace, totalSpace, usagePercentage });
+        };
+        request.onerror = (event) => {
+            reject('Error to calculating database usage');
+        };
+    });
+};
+const storageStatus = async () =>{
+    temp = await getDBUsage();
+    setTimeout(()=>{
+        console.log(temp);
+    },1000);
 }
