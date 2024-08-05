@@ -2,7 +2,6 @@ import sys
 import cv2
 import json
 import ast
-import logging
 
 def convert_png(image_path):
     image = cv2.imread(image_path)
@@ -41,6 +40,7 @@ def convert_image(input_list):
     image_path = str(input_list[0])
     extension = str(input_list[1])
     new_image_path = image_path
+
     if is_image(image_path) == True:
         if extension == 'png':
             new_image_path = convert_png(image_path)
