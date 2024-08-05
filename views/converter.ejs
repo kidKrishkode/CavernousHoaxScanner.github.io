@@ -28,7 +28,7 @@
                 <input type="file" id="file-input" accept="image/*" name="file-input" onchange="converter.engine_active();">
             </div>
         </div>
-        <div class="flx containers-option">
+        <div class="flx containers-option" id="op1">
             <div class="selecter">
                 <select class="form-control" id="extension-input" onchange="" name="extension-input">
                     <option>Jpg</option>
@@ -45,10 +45,10 @@
         <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
         <img src="../images/3d_atom.png" alt="chs" class="right-middle-des"/>
         <img src="../images/arrow_circle.png" alt="chs" class="left-bottom-des"/>
-        <div class="glass-status flx">
+        <div class="glass-status flx" id="op2">
             <span class="head">Media Accepted:</span><span class="data" id="media-acc">No Media Found!</span>
         </div>
-        <div class="glass-status">
+        <div class="glass-status" id="op3">
             <div class="flx">
                 <span class="head">Media Type:</span><span class="data" id="media-type">Not Selected!</span>
             </div>
@@ -99,17 +99,32 @@
 <script>
     pageSet.push('header','converterPage','moreProduct', 'faq-help', 'footer');
     appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
+    currentPage.push('services');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     function process(){
-        let image = document.getElementById('file-input').value;
         let extension = document.getElementById('extension-input').value.toLowerCase();
-        if(converter.signal){
-            window.location.href = `/converter/process?ext=${extension}&path=${image}`;
-        }else{
-            alert('This media not acceptable!\nTry another one..');
+        let fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(){
+            const imageData = reader.result;
+            fetch('/converter/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({extension, imageData})
+            }).then(response => response.json()).then(data => {
+                document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
+                system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
+                document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');">Back</div>`;
+                document.getElementById('op2').style.display = 'none';
+                document.getElementById('op3').style.display = 'none';
+            }).catch(e=>console.log(e));
         }
     }
 </script>
