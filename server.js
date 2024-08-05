@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
 const jimp = require('jimp');
 const bodyParser = require('body-parser');
 const {spawn} = require('child_process');
@@ -48,6 +49,10 @@ app.use((req, res, next) => {
                 req.query = querystring.parse(encodedUrl);
             }
         }
+        const my_browser = security.browser(req.headers);
+        if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data)){
+            res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
+        }
         next();
     }catch(e){
         res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
@@ -66,8 +71,13 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/index', (req, res) => {
+    res.redirect('/');
+});
+
 app.get('/varchar', async (req, res) => {
-    res.status(200).json(varchar);
+    const navi = req.headers;
+    res.status(200).json({varchar, navi});
 });
 
 app.get('/converter', (req, res) => {
@@ -82,20 +92,17 @@ app.get('/converter', (req, res) => {
     });
 });
 
-app.get('/converter/process', async (req, res) => {
-    const promises = [
-        ejs.renderFile('./views/header.ejs'),
-        ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs'),
-        ejs.renderFile('./views/faq.ejs')
-    ];
-    const imagePath = req.query.path;
-    const extension = req.query.ext;
-    const listOfInput = [imagePath, extension];
+app.post('/converter/process', async (req, res) => {
+    const imagePath = req.body.imageData;
+    const extension = req.body.extension;
+    const tempFilePath = path.join(__dirname,'/images/bin/temp_image.jpg');
+    const imageData = imagePath.split(',')[1];
+    const image = await jimp.read(Buffer.from(imageData, 'base64'));
+    await image.writeAsync(`${tempFilePath}`);
+
+    const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
     await callPythonProcess(listOfInput, 'converter').then(path => {
-        Promise.all(promises).then(([header, footer, services, faq]) => {
-            res.status(200).render('converter', {header, services, faq, footer, path});
-        });
+        res.status(200).json({path, extension});
     }).catch(error => {
         console.error('Error:', error.message);
     });
@@ -154,18 +161,24 @@ app.get('/faceIdentify', async (req, res) => {
     }
 });
 
-async function newImage(imagePath){
-    let pixelDatas = [];
-    const image = await jimp.read(imagePath);
-    width = image.bitmap.width;
-    height = image.bitmap.height;
-    for(let y=0; y<height; y++){
-        for(let x=0; x<width; x++){
-            const pixel = jimp.intToRGBA(image.getPixelColor(x,y));
-            pixelDatas.push(pixel);
+function newImage(req,res,imageUrl){
+    const imagePath = imageUrl;
+
+    // Check if the file exists
+    fs.access(imagePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            res.status(404).send('Image not found');
+            return;
         }
-    }
-    return pixelDatas;
+
+        // Set headers to prompt download
+        res.setHeader('Content-Disposition', 'attachment; filename=temp.png');
+        res.setHeader('Content-Type', 'image/png');
+
+        // Stream the file to the response
+        const readStream = fs.createReadStream(imagePath);
+        readStream.pipe(res);
+    });
 }
 
 function WEB(port){
