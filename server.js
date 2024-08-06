@@ -163,19 +163,13 @@ app.get('/faceIdentify', async (req, res) => {
 
 function newImage(req,res,imageUrl){
     const imagePath = imageUrl;
-
-    // Check if the file exists
     fs.access(imagePath, fs.constants.F_OK, (err) => {
         if (err) {
             res.status(404).send('Image not found');
             return;
         }
-
-        // Set headers to prompt download
         res.setHeader('Content-Disposition', 'attachment; filename=temp.png');
         res.setHeader('Content-Type', 'image/png');
-
-        // Stream the file to the response
         const readStream = fs.createReadStream(imagePath);
         readStream.pipe(res);
     });
