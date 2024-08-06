@@ -4,6 +4,8 @@ let system;
 let loader;
 let config;
 let temp;
+let local_memory=[];
+let db, memory;
 const pageSet = [];
 const appearSet = [];
 const currentPage = [];
@@ -13,8 +15,6 @@ function System(){
     try{
         this.listen = window.location;
         this.navigation = window.navigation;
-        this.id = window.navigation.currentEntry.id;
-        this.key = window.navigation.currentEntry.key;
         this.notes = false;
     }catch(e){
         alert("System not deployed!\n\n",e);
@@ -23,6 +23,10 @@ function System(){
 function Loader(load){
     this.loaded = load;
 }
+function MEMORY(){
+    this.dbName = 'CHSDB';
+    this.dbVersion = 1;
+}
 document.addEventListener("DOMContentLoaded",() => {
     loader = new Loader(true);
     loader.creat();
@@ -30,6 +34,7 @@ document.addEventListener("DOMContentLoaded",() => {
     system = new System();
     document.getElementById('side-menu').innerHTML = '<div class="hambarger-menu"><ul class="nav justify-content-end">'+document.getElementById('nav-menu').innerHTML+'</ul></div>';
     window.addEventListener("scroll",system.scrollAppear);
+    memory = new MEMORY();
     system.setUp();
 });
 function navbar_toggle(){
@@ -83,9 +88,11 @@ System.prototype.setUp = function(){
                 }); 
             });
         }
-        pullDataBase();
-        if(local_memory.length!=0){
-            system.setTheme();
+        memory.pullDataBase();
+        if(local_memory!=[]){
+            setTimeout(()=>{
+                system.setTheme();
+            },1000);
         }
     }catch(e){
         console.log("Error to set up initials!\n",e);
@@ -177,11 +184,15 @@ System.prototype.themeToggle = function(id){
         }
         theme = 0;
     }
-    local_memory[0] = theme;
+    local_memory[0] = {
+        id: 0,
+        name: "Theme",
+        value: theme
+    };
     system.pushDataBase();
 }
 System.prototype.setTheme = function(){
-    theme = local_memory[0];
+    theme = local_memory[0].value;
     for(let i=0; i<themeSet[theme].length; i++){
         document.documentElement.style.setProperty(themeSet[theme][i][0], themeSet[theme][i][1]);
     }
@@ -206,16 +217,12 @@ System.prototype.setActiveMenu = function(menuName){
         return false;
     }
 }
-const dbName = 'CHSDB';
-const dbVersion = 1;
-let db;
-let local_memory=[];
 System.prototype.pushDataBase = function(){
-    saveArray(local_memory);
+    memory.saveArray(local_memory);
 }
-const openDB = () => {
+MEMORY.prototype.openDB = function(){
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open(dbName, dbVersion);
+        const request = indexedDB.open(memory.dbName, memory.dbVersion);
         request.onerror = (event) => {
             reject('Error to opening database');
         };
@@ -228,18 +235,18 @@ const openDB = () => {
             const store = db.createObjectStore('data', { keyPath: 'id' });
         };
     });
-};
-const saveArray = async (array) => {
-    clearDB();
-    await openDB();
+}
+MEMORY.prototype.saveArray = async function(array){
+    memory.clearDB();
+    await memory.openDB();
     const transaction = db.transaction(['data'], 'readwrite');
     const store = transaction.objectStore('data');
     array.forEach(item => {
         store.put(item);
     });
-};
-const fetchArray = async () => {
-    await openDB();
+}
+MEMORY.prototype.fetchArray = async function(){
+    await memory.openDB();
     const transaction = db.transaction(['data'], 'readonly');
     const store = transaction.objectStore('data');
     const request = store.getAll();
@@ -251,35 +258,13 @@ const fetchArray = async () => {
             reject('Error to fetching data');
         };
     });
-};
-const pullDataBase = async () =>{
-    local_memory = await fetchArray();
 }
-const clearDB = async () => {
-    await openDB();
+MEMORY.prototype.clearDB = async function(){
+    await memory.openDB();
     const transaction = db.transaction(['data'], 'readwrite');
     const store = transaction.objectStore('data');
     store.clear();
-};
-const getDBUsage = async () => {
-    await openDB();
-    const request = indexedDB.open(dbName, dbVersion);
-    return new Promise((resolve, reject) => {
-        request.onsuccess = (event) => {
-            const db = event.target.result;
-            const usedSpace = (db.objectStoreNames.length * 1024 * 1024); // Assuming 1MB for each object store
-            const totalSpace = db.objectStoreNames.length * 1024 * 1024; // Assuming 1MB total space
-            const usagePercentage = (usedSpace / totalSpace) * 100;
-            resolve({ usedSpace, totalSpace, usagePercentage });
-        };
-        request.onerror = (event) => {
-            reject('Error to calculating database usage');
-        };
-    });
-};
-const storageStatus = async () =>{
-    temp = await getDBUsage();
-    setTimeout(()=>{
-        console.log(temp);
-    },1000);
+}
+MEMORY.prototype.pullDataBase = async function(){
+    local_memory = await memory.fetchArray();
 }
