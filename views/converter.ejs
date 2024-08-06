@@ -36,6 +36,7 @@
                     <option selected="true">Png</option>
                     <option>Gif</option>
                     <option>Bimp</option>
+                    <option>Svg</option>
                 </select>
             </div>
             <div class="process-btn">
@@ -121,9 +122,13 @@
             }).then(response => response.json()).then(data => {
                 document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
                 system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
-                document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');">Back</div>`;
+                document.getElementById('op1').innerHTML = `
+                    <div class="btn btn-process" onclick="route('');">Back</div>
+                    <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
+                `;
                 document.getElementById('op2').style.display = 'none';
                 document.getElementById('op3').style.display = 'none';
+                document.getElementById('file-input').disabled = true;
             }).catch(e=>console.log(e));
         }
     }
