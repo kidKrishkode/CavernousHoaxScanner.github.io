@@ -8,6 +8,7 @@ const {spawn} = require('child_process');
 const querystring = require('querystring');
 const ejs = require('ejs');
 const jsonfile = require('jsonfile');
+const multer = require('multer');
 const varchar = require('./config/env-variables.ts');
 const security = require('./config/security.ts');
 require('./public/App.test.js');
@@ -29,6 +30,9 @@ app.use('/public',express.static(path.join(__dirname,'public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
 
 app.use((req, res, next) => {
     try{
@@ -92,20 +96,37 @@ app.get('/converter', (req, res) => {
     });
 });
 
-app.post('/converter/process', async (req, res) => {
-    const imagePath = req.body.imageData;
+app.post('/converter/process', upload.single('file'), async (req, res) => {
     const extension = req.body.extension;
-    const tempFilePath = path.join(__dirname,'/images/bin/temp_image.jpg');
-    const imageData = imagePath.split(',')[1];
-    const image = await jimp.read(Buffer.from(imageData, 'base64'));
-    await image.writeAsync(`${tempFilePath}`);
+    let listOfInput;
+    if(req.body.imageData){
+        const imagePath = req.body.imageData;
+        const tempFilePath = path.join(__dirname,'/images/bin/temp_image.jpg');
+        const imageData = imagePath.split(',')[1];
+        const image = await jimp.read(Buffer.from(imageData, 'base64'));
+        await image.writeAsync(`${tempFilePath}`);
+        listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
+        await callPythonProcess(listOfInput, 'converter').then(path => {
+            res.status(200).json({path, extension});
+        }).catch(error => {
+            console.error('Error:', error.message);
+        });
+    }else{
+        const fileBuffer = req.file.buffer;
+        console.log(fileBuffer);
+    }
+    console.log('tata');
+    // const tempFilePath = path.join(__dirname,'/images/bin/temp_image.jpg');
+    // const imageData = imagePath.split(',')[1];
+    // const image = await jimp.read(Buffer.from(imageData, 'base64'));
+    // await image.writeAsync(`${tempFilePath}`);
 
-    const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
-    await callPythonProcess(listOfInput, 'converter').then(path => {
-        res.status(200).json({path, extension});
-    }).catch(error => {
-        console.error('Error:', error.message);
-    });
+    // const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
+    // await callPythonProcess(listOfInput, 'converter').then(path => {
+    //     res.status(200).json({path, extension});
+    // }).catch(error => {
+    //     console.error('Error:', error.message);
+    // });
 });
 
 app.get('/imageInfo', async (req, res) => {
