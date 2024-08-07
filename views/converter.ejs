@@ -35,7 +35,7 @@
                     <option>Jpeg</option>
                     <option selected="true">Png</option>
                     <option>Gif</option>
-                    <option>Bimp</option>
+                    <option>Bmp</option>
                     <option>Svg</option>
                 </select>
             </div>
@@ -105,10 +105,8 @@
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
-    function process(){
+    function directUpload(file){
         let extension = document.getElementById('extension-input').value.toLowerCase();
-        let fileInput = document.getElementById('file-input');
-        const file = fileInput.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
@@ -131,6 +129,63 @@
                 document.getElementById('file-input').disabled = true;
             }).catch(e=>console.log(e));
         }
+    }
+    function process(){
+        let fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+        if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 400){
+            compressAndUpload(file);
+        }else{
+            directUpload(file);
+        }
+    }
+    function compressAndUpload(file){
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(event){
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = function(){
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const MAX_WIDTH = 124;
+                const MAX_HEIGHT = 124;
+                let width = img.width;
+                let height = img.height;
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                canvas.toBlob(function(blob) {
+                    const formData = new FormData();
+                    formData.append('file', blob, 'compressed_image.jpg');
+                    formData.append('extension', document.getElementById('extension-input').value.toLowerCase());
+                    fetch('/converter/process', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
+                        document.getElementById('op1').innerHTML = `
+                            <div class="btn btn-process" onclick="route('');">Back</div>
+                            <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
+                        `;
+                    })
+                    .catch(e => console.log(e));
+                }, 'image/jpeg', 0.7); // 0.7 is the quality of the image
+            };
+        };
     }
 </script>
 </html>

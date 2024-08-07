@@ -102,5 +102,33 @@
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+
+    function process(){
+        let extension = document.getElementById('extension-input').value.toLowerCase();
+        let fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(){
+            const imageData = reader.result;
+            fetch('/converter/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({extension, imageData})
+            }).then(response => response.json()).then(data => {
+                document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
+                system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
+                document.getElementById('op1').innerHTML = `
+                    <div class="btn btn-process" onclick="route('');">Back</div>
+                    <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
+                `;
+                document.getElementById('op2').style.display = 'none';
+                document.getElementById('op3').style.display = 'none';
+                document.getElementById('file-input').disabled = true;
+            }).catch(e=>console.log(e));
+        }
+    }
 </script>
 </html>
