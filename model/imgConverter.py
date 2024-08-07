@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import svgwrite
 import json
 import ast
 
@@ -45,9 +46,50 @@ def convert_gif(image_path):
     return image_path
 
 def convert_bmp(image_path):
-    return image_path
+    image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+    if image.shape[2] == 4:
+        b, g, r, a = cv2.split(image)
+        b = cv2.bitwise_and(b, b, mask=a)
+        g = cv2.bitwise_and(g, g, mask=a)
+        r = cv2.bitwise_and(r, r, mask=a)
+        image = cv2.merge((b, g, r))
+    elif image.shape[2] == 1:
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    else:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
+        alpha_channel = np.ones((image.shape[0], image.shape[1]), dtype=image.dtype) * 255
+        image = np.dstack((image, alpha_channel))
+    filename, extension = image_path.rsplit('.', 1)
+    new_image_path = f"{filename}.bmp"
+    cv2.imwrite(new_image_path, image)
+    return new_image_path
 
 def convert_svg(image_path):
+    image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+    if image.shape[2] == 4:
+        b, g, r, a = cv2.split(image)
+        image = cv2.merge((r, g, b, a))
+    else:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        alpha_channel = np.ones((image.shape[0], image.shape[1]), dtype=image.dtype) * 255
+        image = np.dstack((image, alpha_channel))
+    height, width, _ = image.shape
+    filename, extension = image_path.rsplit('.', 1)
+    new_image_path = f"{filename}.svg"
+    dwg = svgwrite.Drawing(new_image_path, size=(width, height))
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = image[y, x]
+            if a > 0:
+                fill = svgwrite.rgb(r, g, b, '%')
+                dwg.add(dwg.rect(insert=(x, y), size=(1, 1), fill=fill, fill_opacity=a / 255.0))
+    dwg.save()
+    return new_image_path
+
+def convert_tga(image_path):
+    return image_path
+
+def convert_tiff(image_path):
     return image_path
 
 def is_image(image_path):
