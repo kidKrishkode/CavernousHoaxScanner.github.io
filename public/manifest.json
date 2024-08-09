@@ -17,6 +17,18 @@
     "start_url": ".",
     "display": "standalone",
     "theme_color": "#22577aff",
-    "background_color": "#ffffff"
+    "background_color": "#ffffff",
+    "Errors": [
+        {
+            "name": "Invalid input type",
+            "error": 4
+
+        },
+        {
+            "name": "Empty input argument",
+            "error": 0
+
+        }
+    ]
 }
     
