@@ -92,7 +92,7 @@ app.get('/imgToPdf', (req, res) => {
         ejs.renderFile('./views/faq.ejs')
     ];
     Promise.all(promises).then(([header, footer, services, faq]) => {
-        res.status(200).render('pdfconverter',{header, services, faq, footer});
+        res.status(200).render('pdfConverter',{header, services, faq, footer});
     });
 });
 
@@ -109,36 +109,28 @@ app.get('/converter', (req, res) => {
 });
 
 app.post('/converter/process', upload.single('file'), async (req, res) => {
-    const extension = req.body.extension;
-    let listOfInput;
-    if(req.body.imageData){
-        const imagePath = req.body.imageData;
-        const tempFilePath = path.join(__dirname,'/images/bin/temp_image.jpg');
-        const imageData = imagePath.split(',')[1];
-        const image = await jimp.read(Buffer.from(imageData, 'base64'));
-        await image.writeAsync(`${tempFilePath}`);
-        listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
+    try{
+        const extension = req.body.extension;
+        const tempFilePath = path.join(__dirname,'/images/bin/temp_image.png');
+        if(req.body.imageData){
+            const imagePath = req.body.imageData;
+            const imageData = imagePath.split(',')[1];
+            const image = await jimp.read(Buffer.from(imageData, 'base64'));
+            await image.writeAsync(`${tempFilePath}`);
+        }else{
+            const fileBuffer = req.file.buffer;
+            const image = await jimp.read(fileBuffer);
+            await image.writeAsync(`${tempFilePath}`);
+        }
+        const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
         await callPythonProcess(listOfInput, 'converter').then(path => {
             res.status(200).json({path, extension});
         }).catch(error => {
             console.error('Error:', error.message);
         });
-    }else{
-        const fileBuffer = req.file.buffer;
-        console.log(fileBuffer);
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
     }
-    console.log('tata');
-    // const tempFilePath = path.join(__dirname,'/images/bin/temp_image.jpg');
-    // const imageData = imagePath.split(',')[1];
-    // const image = await jimp.read(Buffer.from(imageData, 'base64'));
-    // await image.writeAsync(`${tempFilePath}`);
-
-    // const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
-    // await callPythonProcess(listOfInput, 'converter').then(path => {
-    //     res.status(200).json({path, extension});
-    // }).catch(error => {
-    //     console.error('Error:', error.message);
-    // });
 });
 
 app.get('/imageInfo', async (req, res) => {
