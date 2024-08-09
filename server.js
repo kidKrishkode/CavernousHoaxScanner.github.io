@@ -84,6 +84,18 @@ app.get('/varchar', async (req, res) => {
     res.status(200).json({varchar, navi});
 });
 
+app.get('/imgToPdf', (req, res) => {
+    const promises = [
+        ejs.renderFile('./views/header.ejs'),
+        ejs.renderFile('./views/footer.ejs'),
+        ejs.renderFile('./views/service.ejs'),
+        ejs.renderFile('./views/faq.ejs')
+    ];
+    Promise.all(promises).then(([header, footer, services, faq]) => {
+        res.status(200).render('pdfconverter',{header, services, faq, footer});
+    });
+});
+
 app.get('/converter', (req, res) => {
     const promises = [
         ejs.renderFile('./views/header.ejs'),
