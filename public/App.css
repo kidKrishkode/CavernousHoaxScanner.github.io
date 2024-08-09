@@ -811,6 +811,15 @@ footer .bottom-component .right-side a{
 #faq-help .accordion.active .accordion__answer{
     display: block;
 }
+.pdfPreview{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
+    grid-auto-rows: auto;
+    gap: 2px;
+    max-width: 100%;
+    overflow: hidden;
+
+}
 
 @media only screen and (max-width: 900px){
     .navbar img{
