@@ -10,6 +10,7 @@ import diffForegBackg
 import neckDetect
 import resizer
 import imgConverter
+import imgToPdf
 
 # def call_foreground(image_path, width, height):
 #     result = subprocess.run(['python', './test.py', asset], capture_output=True, text=True)
@@ -60,9 +61,11 @@ def main():
     elif function_name == 'converter':
         new_path = imgConverter.convert_image(asset)
         print(json.dumps(new_path))
+    elif function_name == 'imgToPdf':
+        new_path = imgToPdf.convert_pdf(asset)
+        print(json.dumps(new_path))
     else:
         print(f"Function {function_name} is not recognized")
 
 if __name__ == "__main__":
     main()
-    
