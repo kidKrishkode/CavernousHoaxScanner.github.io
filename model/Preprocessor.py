@@ -30,7 +30,6 @@ def is_image(image_path):
             return True
     except Exception as e:
         print(f"Error to reading image: {e}")
-
     return False
 
 def accuracy(*args):
@@ -55,3 +54,24 @@ def normalize(filname, basis):
     with open(filname, 'w') as f:
         json.dump(normalize_db, f)
 
+def ETL(inputs, outputs, json_file_path):
+    try:
+        with open(json_file_path, 'r') as f:
+            data = json.load(f)
+        if all(key in data[0].keys() for key in inputs + outputs):
+            existing_entry = next((entry for entry in data if all(entry[key] == value for key, value in zip(inputs, inputs))), None)
+            if existing_entry:
+                data.remove(existing_entry)
+            data.append(dict(zip(inputs + outputs, inputs + outputs)))
+        else:
+            sample_data = data[0]
+            keys = list(sample_data.keys())
+            joined_list = inputs + outputs
+            new_data = {}
+            for i, key in enumerate(keys):
+                new_data[key] = joined_list[i]
+            data.append(new_data)
+        with open(json_file_path, 'w') as f:
+            json.dump(data, f)
+    except:
+        print('Level data modifing not possible\n')
