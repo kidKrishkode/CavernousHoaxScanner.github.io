@@ -4,7 +4,7 @@ import numpy as np
 import base64
 import logging
 
-img_extensions = ['.jpg', '.jpeg', '.png', '.peng', '.bmp', '.gif', '.webp', '.svg', '.jpe', '.jfif', '.tar', '.tiff']
+img_extensions = ['.jpg', '.jpeg', '.png', '.peng', '.bmp', '.gif', '.webp', '.svg', '.jpe', '.jfif', '.tar', '.tiff', '.tga']
 
 def data_url_to_cv_image(data_url):
     data_url = data_url.split(',')[1]
