@@ -1,7 +1,7 @@
 {
     "name": "Cavernous Hoax Scanner",
     "short_name": "CHS",
-    "description": "Create JPEN Web for deepfake detection",
+    "description": "Cavernous Hoax Scanner is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Relational regression.",
     "icons": [
         {
             "src": "favicon.png",
