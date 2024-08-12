@@ -28,6 +28,9 @@
                 <input type="file" id="file-input" accept="image/*" name="file-input" onchange="converter.engine_active();">
             </div>
         </div>
+        <div class="progress-status">
+            <div class="progress">Please wait a little..</div>
+        </div>
         <div class="flx containers-option" id="op1">
             <div class="selecter">
                 <select class="form-control" id="extension-input" onchange="" name="extension-input">
@@ -118,25 +121,20 @@
                 },
                 body: JSON.stringify({extension, imageData})
             }).then(response => response.json()).then(data => {
-                document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
-                system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
-                document.getElementById('op1').innerHTML = `
-                    <div class="btn btn-process" onclick="route('');">Back</div>
-                    <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
-                `;
-                document.getElementById('op2').style.display = 'none';
-                document.getElementById('op3').style.display = 'none';
-                document.getElementById('file-input').disabled = true;
+                afterResponce(data);
             }).catch(e=>console.log(e));
         }
     }
     function process(){
         let fileInput = document.getElementById('file-input');
-        const file = fileInput.files[0];
-        if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 400){
-            compressAndUpload(file);
-        }else{
-            directUpload(file);
+        if(fileInput.files.length!=0){
+            const file = fileInput.files[0];
+            document.querySelector('.progress-status').style.display = 'block';
+            if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 400){
+                compressAndUpload(file);
+            }else{
+                directUpload(file);
+            }
         }
     }
     function compressAndUpload(file){
@@ -173,19 +171,25 @@
                     fetch('/converter/process', {
                         method: 'POST',
                         body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
-                        document.getElementById('op1').innerHTML = `
-                            <div class="btn btn-process" onclick="route('');">Back</div>
-                            <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
-                        `;
+                    }).then(response => response.json()).then(data => {
+                        afterResponce(data);
                     })
                     .catch(e => console.log(e));
                 }, 'image/jpeg', 0.7); // 0.7 is the quality of the image
             };
         };
+    }
+    function afterResponce(data){
+        document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
+        system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
+        document.getElementById('op1').innerHTML = `
+            <div class="btn btn-process" onclick="route('');">Back</div>
+            <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
+        `;
+        document.getElementById('op2').style.display = 'none';
+        document.getElementById('op3').style.display = 'none';
+        document.getElementById('file-input').disabled = true;
+        document.querySelector('.progress-status').style.display = 'none';
     }
 </script>
 </html>

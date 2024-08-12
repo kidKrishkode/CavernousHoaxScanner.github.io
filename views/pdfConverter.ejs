@@ -17,7 +17,7 @@
     <header id="header">
         <%= header %>
     </header>
-    <section class="workspace" id="dfdPage">
+    <section class="workspace" id="pdfPage">
         <img src="../images/3d_donut.png" alt="chs" class="right-top-des"/>
         <h2>Image To PDF Converter</h2>
         <div class="underline"></div>
@@ -28,12 +28,14 @@
                 <input type="file" id="file-input" accept="image/*" multiple="true" name="file-input" onchange="pdf.engine_active();">
             </div>
         </div>
+        <div class="progress-status">
+            <div class="progress">Please wait a little..</div>
+        </div>
         <div class="flx containers-option">
-            <div class="social-opener">
-               
+            <div class="view-image">
             </div>
             <div class="process-btn">
-                <div class="btn btn-process">Process</div>
+                <div class="btn btn-process" onclick="process();">Process</div>
             </div>
         </div>
         <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
@@ -58,7 +60,7 @@
             <div class="underline"></div>
             <div class="card-group flo">
                 <div class="card">
-                    <h4 class="card-title"><span>1</span> Drop your Image or Video</h4>
+                    <h4 class="card-title"><span>1</span> Drop your Images</h4>
                     <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
                 </div>
                 <div class="card">
@@ -91,38 +93,27 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('header','dfdPage','moreProduct','faq-help','footer');
-    appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
-    currentPage.push('index');
+    pageSet.push('header','pdfPage','moreProduct','faq-help','footer');
+    appearSet.push(['.htsi',380], ['#moreProduct',580], ['#faq-help', 980]);
+    currentPage.push('imgToPdf');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
-
     function process(){
-        let extension = document.getElementById('extension-input').value.toLowerCase();
-        let fileInput = document.getElementById('file-input');
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(){
-            const imageData = reader.result;
-            fetch('/converter/process', {
+        if(document.getElementById('media-acc').textContent === 'Accepted' && pdf.imgSet.length!=0){
+            let fileInput = document.getElementById('file-input');
+            const files = fileInput.files[0];
+            document.querySelector('.progress-status').style.display = 'block';
+            const imageData = pdf.imgSet;
+            fetch('/imgToPdf/process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({extension, imageData})
+                body: JSON.stringify({imageData})
             }).then(response => response.json()).then(data => {
-                document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
-                system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
-                document.getElementById('op1').innerHTML = `
-                    <div class="btn btn-process" onclick="route('');">Back</div>
-                    <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
-                `;
-                document.getElementById('op2').style.display = 'none';
-                document.getElementById('op3').style.display = 'none';
-                document.getElementById('file-input').disabled = true;
+                console.log(data);
             }).catch(e=>console.log(e));
         }
     }
