@@ -96,6 +96,14 @@ app.get('/imgToPdf', (req, res) => {
     });
 });
 
+app.post('/imgToPdf/process', upload.array('imageData'), async (req, res) => {
+    try{
+        console.log(req.body);
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
+});
+
 app.get('/converter', (req, res) => {
     const promises = [
         ejs.renderFile('./views/header.ejs'),
