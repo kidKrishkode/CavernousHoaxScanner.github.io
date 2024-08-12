@@ -1,21 +1,28 @@
 import sys
 import cv2
 import numpy as np
+import Preprocessor
 import svgwrite
 import json
 import ast
 
 def convert_png(image_path):
     image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
-    if image.shape[2] == 4:
-        filename, extension = image_path.rsplit('.', 1)
+    if image is None:
+        raise ValueError("Image not loaded properly. Check the file path.")
+    if len(image.shape) == 3 and image.shape[2] == 4:
+        filename, _ = image_path.rsplit('.', 1)
         new_image_path = f"{filename}.png"
         cv2.imwrite(new_image_path, image, [int(cv2.IMWRITE_PNG_COMPRESSION), 0])
     else:
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
-        alpha_channel = np.ones((image.shape[0], image.shape[1]), dtype=image.dtype) * 255
-        image = np.dstack((image, alpha_channel))
-        filename, extension = image_path.rsplit('.', 1)
+        if len(image.shape) == 2 or image.shape[2] == 1:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGRA)
+        else:
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
+        if image.shape[2] == 3:
+            alpha_channel = np.ones((image.shape[0], image.shape[1]), dtype=np.uint8) * 255
+            image = np.dstack((image, alpha_channel))
+        filename, _ = image_path.rsplit('.', 1)
         new_image_path = f"{filename}.png"
         cv2.imwrite(new_image_path, image, [int(cv2.IMWRITE_PNG_COMPRESSION), 0])
     return new_image_path
@@ -92,22 +99,6 @@ def convert_tga(image_path):
 def convert_tiff(image_path):
     return image_path
 
-def is_image(image_path):
-    valid_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.gif', '.svg']
-    if not any(image_path.endswith(ext) for ext in valid_extensions):
-        return False
-
-    # Try to read the image using OpenCV
-    try:
-        img = cv2.imread(image_path)
-        # If the image is read successfully, check if it's not empty
-        if img is not None:
-            return True
-    except Exception as e:
-        print(f"Error reading image: {e}")
-
-    return False
-
 def convert_image(input_list):
     if './model/main.py' in sys.argv[0]:
         input_list = [str(X) for X in input_list[0].split(',')]
@@ -116,7 +107,7 @@ def convert_image(input_list):
     extension = str(input_list[1])
     new_image_path = image_path
 
-    if is_image(image_path) == True:
+    if Preprocessor.is_image(image_path) == True:
         if extension == 'png':
             new_image_path = convert_png(image_path)
         elif extension == 'jpg':
@@ -143,7 +134,7 @@ def main():
     
     input_list = ast.literal_eval(sys.argv[1])
     image_path = str(input_list[0])
-    if is_image(image_path) == True:
+    if Preprocessor.is_image(image_path) == True:
         new_image_path = convert_image(input_list)
         print(new_image_path)
 

@@ -2,44 +2,41 @@ import sys
 import ast
 import cv2
 from fpdf import FPDF
+import Preprocessor
 
 def create_pdf(image_paths):
-    output_path = "C:/Users/Panna/Desktop/CavernousHoaxScanner/images/datahouse/temp.pdf"
+    output_path = "../images/datahouse/temp.pdf"
     pdf = FPDF()
     for image_path in image_paths:
         img = cv2.imread(image_path)
-        height , width = img.shape[:2]
-        width_mm = width*25.4/96
-        heigth_mm = height*25.4/96
-        pdf.add_page(orientation= 'P' if  width <= height else 'L')
-        #format=(width_mm,heigth_mm)
-        pdf.image(image_path,0,0,width_mm,heigth_mm)
+        img_height, img_width = img.shape[:2]
+        # A4 page dimensions in mm
+        page_width, page_height = 210, 297
+        img_aspect = img_width / img_height
+        page_aspect = page_width / page_height
+        if img_aspect > page_aspect:
+            new_width = page_width
+            new_height = page_width / img_aspect
+        else:
+            new_height = page_height
+            new_width = page_height * img_aspect
+        pdf.add_page(orientation= 'P' if  new_width <= new_height else 'L')
+        x_offset = (page_width - new_width) / 2 if new_width < page_width else 0
+        y_offset = (page_height - new_height) / 2 if new_height < page_height else 0
+        pdf.image(image_path, x_offset, y_offset, new_width, new_height)
     pdf.output(output_path)
-    
-def is_image(image_path):
-    valid_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.gif','.webp','.svg','.jpe','.jfif']
-    if not any(image_path.endswith(ext) for ext in valid_extensions):
-        return False
+    return output_path
 
-    # Try to read the image using OpenCV
-    try:
-        img = cv2.imread(image_path)
-        # If the image is read successfully, check if it's not empty
-        if img is not None:
-            return True
-    except Exception as e:
-        print(f"Error reading image: {e}")
-
-    return False
 
 def convert_pdf(input_list):
     if './model/main.py' in sys.argv[0]:
         input_list = [str(X) for X in input_list[0].split(',')]
 
     for i in range (0, len(input_list)):
-        if is_image(input_list[i]) == False:
+        if Preprocessor.is_image(input_list[i]) == False:
             return 4
-    create_pdf(input_list)
+    output_path = create_pdf(input_list)
+    return output_path
 
 def main():
     if len(sys.argv) != 2:
@@ -47,8 +44,10 @@ def main():
         return
     
     input_list = ast.literal_eval(sys.argv[1])
-    image_paths = ['C:/Users/Panna/Desktop/CA1/SOFT COMP/ADV.png','C:/Users/Panna/Desktop/CA1/SOFT COMP/N 1.png']
-    convert_pdf(image_paths)
+    # image_paths = ['C:/Users/Panna/Desktop/CA1/SOFT COMP/ADV.png','C:/Users/Panna/Desktop/CA1/SOFT COMP/N 1.png']
+    image_paths = ["C:/Users/JYOTINMOY MITRA/Pictures/0a0ecc2772060179963dc66c87ff22e8.png","C:/Users/JYOTINMOY MITRA/Pictures/1024px-Visual_Studio_Code_1.35_icon.svg.png"]
+    output_path = convert_pdf(image_paths)
+    print(output_path)
 
 if __name__ == "__main__":
     main()
