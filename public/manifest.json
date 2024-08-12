@@ -18,17 +18,29 @@
     "display": "standalone",
     "theme_color": "#22577aff",
     "background_color": "#ffffff",
-    "Errors": [
-        {
-            "name": "Invalid input type",
-            "error": 4
-
-        },
-        {
-            "name": "Empty input argument",
-            "error": 0
-
-        }
+    "error_log": [
+        {"code": 0, "desc": "Invalid user input: empty field detected"},
+        {"code": 1, "desc": "Unsupported media format: please try another file type"},
+        {"code": 2, "desc": "Image too large: maximum size exceeded"},
+        {"code": 3, "desc": "Failed to compress image: unknown compression error"},
+        {"code": 4, "desc": "Watermarking failed: unable to overlay text/image"},
+        {"code": 5, "desc": "Face detection failed: no faces detected in image/video"},
+        {"code": 6, "desc": "Video processing failed: unsupported video codec"},
+        {"code": 7, "desc": "Image to PDF conversion failed: unable to generate PDF"},
+        {"code": 8, "desc": "Invalid video format: only MP4, AVI, and MOV are supported"},
+        {"code": 9, "desc": "Video too large: maximum size exceeded"},
+        {"code": 10, "desc": "Failed to extract frames from video: unknown error"},
+        {"code": 11, "desc": "Object detection failed: unable to detect objects in image/video"},
+        {"code": 12, "desc": "Image upload failed: unable to upload image to server"},
+        {"code": 13, "desc": "Video upload failed: unable to upload video to server"},
+        {"code": 14, "desc": "Image resizing failed: unable to resize image"},
+        {"code": 15, "desc": "Video trimming failed: unable to trim video"},
+        {"code": 16, "desc": "Image cropping failed: unable to crop image"},
+        {"code": 17, "desc": "Video rotation failed: unable to rotate video"},
+        {"code": 18, "desc": "Image filtering failed: unable to apply filter"},
+        {"code": 19, "desc": "Video formatting failed: unable to format video"},
+        {"code": 20, "desc": "Image optimization failed: unable to optimize image"},
+        {"code": 21, "desc": "Video optimization failed: unable to optimize video"}
     ]
 }
     
