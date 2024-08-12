@@ -287,10 +287,10 @@ li .active{
     width: 100%;
 }
 
-#dfdPage,#moreProduct,#converterPage{
+#dfdPage,#moreProduct,#converterPage,#pdfPage{
     display: none;
 }
-#dfdPage h2,#converterPage h2{
+#dfdPage h2,#converterPage h2,#pdfPage h2{
     margin: 10px auto 2px auto;
     font-size: 26px;
     font-weight: bold;
@@ -306,7 +306,7 @@ li .active{
     margin: 2px auto;
     margin-bottom: 10px;
 }
-#dfdPage .containers,#converterPage .containers{
+#dfdPage .containers,#converterPage .containers,#pdfPage .containers{
     width: 60%;
     display: flex;
     justify-content: center;
@@ -317,7 +317,7 @@ li .active{
     background: var(--mit-color);
     transition: 1s ease-in-out;
 }  
-#dfdPage .containers .drop-box, #converterPage .containers .drop-box{
+#dfdPage .containers .drop-box, #converterPage .containers .drop-box,#pdfPage .containers .drop-box{
     position: relative;
     width: 100%;
     height: 400px;
@@ -330,7 +330,7 @@ li .active{
     align-items: center;
     transition: 1s ease-in-out;
 }  
-#dfdPage .containers .drop-box .placeholder, #converterPage .containers .drop-box .placeholder{
+#dfdPage .containers .drop-box .placeholder, #converterPage .containers .drop-box .placeholder,#pdfPage .containers .drop-box .placeholder{
     width: 100%;
     position: absolute;
     top: 50%;
@@ -341,7 +341,7 @@ li .active{
     text-align: center;
     color: var(--charm);
 }  
-#dfdPage .containers .drop-box .preview, #converterPage .containers .drop-box .preview{
+#dfdPage .containers .drop-box .preview, #converterPage .containers .drop-box .preview,#pdfPage .containers .drop-box .preview{
     position: relative;
     width: 100%;
     height: 100%;
@@ -361,11 +361,11 @@ li .active{
     opacity: 0;
     cursor: pointer;
 }
-#dfdPage .containers-option,#converterPage .containers-option{
+#dfdPage .containers-option,#converterPage .containers-option,#pdfPage .containers-option{
     width: 60%;
     margin: 4px auto 20px auto;
 }
-#dfdPage .containers-option .social-opener i, #converterPage .containers-option .social-opener i{
+#dfdPage .containers-option .social-opener i, #converterPage .containers-option .social-opener i, #pdfPage .containers-option .social-opener i{
     width: 30px;
     height: 30px;
     font-size: 16px;
@@ -386,6 +386,32 @@ li .active{
     border-color: var(--mit-color);
     padding: 4px;
 }
+.workspace .progress-status{
+    width: 60%;
+    margin: 2px auto;
+    display: none;
+}
+.workspace .progress{
+    width: 100%;
+    height: 12px;
+    display: inline-block;
+    background-color: var(--charm);
+    background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.25) 75%, transparent 75%, transparent);
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0px;
+    background-size: 1em 1em;
+    box-sizing: border-box;
+    animation: barStripe 1s linear infinite;
+}
+@keyframes barStripe{
+    0%{
+        background-position: 1em 0;
+    }100%{
+        background-position: 0 0;
+    }
+}  
 .set-right{
     width: 15%;
 }
@@ -471,6 +497,29 @@ li .active{
     height: 200px;
     opacity: 0.8;
     z-index: -20;
+}
+.jelly{
+	display: block;
+ 	width: 45px;
+    height: 60px;
+    position: relative;
+    transform: rotate(-45deg);
+    animation: ani 35s linear 1;
+}
+@keyframes ani{
+ 	0%{
+        position: absolute;
+        top: 100%;
+        left: 100%;
+    }99%{
+     	position: absolute;
+        top: 0%;
+        left: 0%;
+    }100%{
+     	position: absolute;
+        top: -30%;
+        left: -30%;
+    }
 }
 .glass-status{
     width: 60%;
@@ -811,15 +860,75 @@ footer .bottom-component .right-side a{
 #faq-help .accordion.active .accordion__answer{
     display: block;
 }
-.pdfPreview{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
-    grid-auto-rows: auto;
-    gap: 2px;
-    max-width: 100%;
-    overflow: hidden;
-
+#pdfPreview{
+    display: none;
 }
+.pdfView{
+    width: 70%;
+    height: 600px;
+    margin: 5% auto 0px auto;
+    border-radius: 10px;
+    background: var(--mit-color);
+}
+.pdfView header{
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background: var(--blend-color);
+    color: var(--revers-white);
+    font-size: 25px;
+    padding: 0px 5px;
+}
+.pdfView header img{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    margin: 5px 0px;
+    filter: invert(1);
+}
+.pdfView header .btn{
+    height: 30px;
+    padding: 2px 6px;
+    margin: auto;
+}
+.pdfView .view{
+    width: 100%;
+    height: 90%;
+    max-height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #320064 transparent;
+    padding: 20px 0px;
+}
+.pdfView .view .page{
+    width: 20%;
+    height: 330px;
+    background: #fff;
+    margin: 8px 10px;
+}
+.pdfView .view .page .img{
+    height: 90%;
+    align-content: center;
+}
+.pdfView .view .page img{
+    position: relative;
+    width: 100%;
+    max-height: 100%;
+}
+.pdfView .view .page .index{
+    width: 100%;
+    height: 10%;
+    text-align: center;
+    color: #fff;
+    background: #80808072;
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+}
+
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -871,10 +980,10 @@ footer .bottom-component .right-side a{
     .drop{
         width: 100%;
     }
-    #dfdPage .containers,#dfdPage .containers-option,.glass-status, #converterPage .containers, #converterPage .containers-option{
+    #dfdPage .containers,#dfdPage .containers-option,.glass-status, #converterPage .containers, #converterPage .containers-option, #pdfPage .containers, #pdfPage .containers-option, .workspace .progress-status{
         width: 90%;
     }
-    #dfdPage .containers .drop-box, #converterPage .containers .drop-box{
+    #dfdPage .containers .drop-box, #converterPage .containers .drop-box,#pdfPage .containers .drop-box{
         height: 300px;
     }
     .right-middle-des{
@@ -885,6 +994,10 @@ footer .bottom-component .right-side a{
     .left-bottom-des{
         position: absolute;
         top: 250%;
+    }
+    .jelly{
+        transform: rotate(-30deg);
+        animation: ani 25s linear 1;
     }
     .htsi .card-group.flo{
         width: 100%;
@@ -943,4 +1056,12 @@ footer .bottom-component .right-side a{
     #faq-help{
         margin: 20px 0% 60px 0%;
     }
+    .pdfView{
+        width: 90%;
+    }
+    .pdfView .view .page{
+        width: 50%;
+        height: 285px;
+    }
+        
 }

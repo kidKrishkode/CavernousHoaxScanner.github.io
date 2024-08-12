@@ -104,6 +104,9 @@ System.prototype.VisiblePage = function(){
             document.querySelector("#"+pageSet[i]).style.display = "block";
         }
         system.setActiveMenu(currentPage[currentPage.length-1]);
+        setTimeout(()=>{
+            document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
+        },20000);
     }catch(e){
         console.warn("New Problem: ",e);
     }
