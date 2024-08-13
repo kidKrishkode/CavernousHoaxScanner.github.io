@@ -18,36 +18,57 @@
             <a class="nav-link"><img src="../public/favicon.png" alt="chs" width="25" height="25" style="margin: 1px 40%;"/></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/main"><i class="fa fa-desktop"></i> Main</a>
+            <a class="nav-link flx" href="/main"><div class="icons"><i class="fa fa-desktop"></i></div><div class="nav-text">Main</div></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/index"><i class="fa fa-object-group"></i> DFD Scanner</a>
+            <a class="nav-link flx" href="/index"><div class="icons"><i class="fa fa-object-group"></i></div><div class="nav-text">DFD Scanner</div></a>
+        </li>
+        <li class="nav-item" onclick="serviceMenu_toggle();">
+            <a class="nav-link flx"><div class="icons"><i class="fa fa-magic"></i></div><div class="nav-text">Services</div><div class="nav-expender" id="service-icon">&plus;</div></a>
+        </li>
+        <ul class="nav justify-content-end" id="service-menu">
+            <li class="nav-item">
+                <a class="nav-link flx" href="/"><div class="icons"><i class="fa fa-paint-brush"></i></div><div class="nav-text">Image Editior</div></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link flx" href="/"><div class="icons"><i class="fa fa-file-pdf-o"></i></div><div class="nav-text">Image to PDF</div></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link flx" href="/"><div class="icons"><i class="fa fa-file-image-o"></i></div><div class="nav-text">Image Converter</div></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link flx" href="/"><div class="icons"><i class="fa fa-object-group"></i></div><div class="nav-text">DeepFake Detector</div></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link flx" href="/"><div class="icons"><i class="fa fa-id-badge"></i></div><div class="nav-text">Face Morphism</div></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link flx" href="/"><div class="icons"><i class="fa fa-minus-square-o"></i></div><div class="nav-text">Image Compressor</div></a>
+            </li>
+        </ul>
+        <li class="nav-item">
+            <a class="nav-link flx" href="/apiPlug"><div class="icons"><i class="fa fa-plug"></i></div><div class="nav-text">API Plugins</div></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/services"><i class="fa fa-magic"></i> Services</a>
+            <a class="nav-link flx" href="/about"><div class="icons"><i class="fa fa-group"></i></div><div class="nav-text">About Us</div></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/apiPlug"><i class="fa fa-plug"></i> API Plugins</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/about"><i class="fa fa-group"></i> About Us</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/blogs"><i class="fa fa-globe"></i> Blogs</a>
+            <a class="nav-link flx" href="/blogs"><div class="icons"><i class="fa fa-globe"></i></div><div class="nav-text">Blogs</div></a>
         </li>
         <span class="nav-account">
             <li class="nav-item">
-                <a class="nav-link"><i class="fa fa-tint"></i> Color Theme
-                    <span class="set-right">
-                        <label class="switch">
-                            <input type="checkbox" checked="true" id="theme1" onchange="system.themeToggle('theme1');">
-                            <span class="slider round"></span>
-                        </label>
-                    </span>
+                <a class="nav-link flx"><div class="icons"><i class="fa fa-tint"></i></div><div class="nav-text">Color Theme
+                        <span class="set-right">
+                            <label class="switch">
+                                <input type="checkbox" checked="true" id="theme1" onchange="system.themeToggle('theme1');">
+                                <span class="slider round"></span>
+                            </label>
+                        </span>
+                    </div>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/PStorebyWhiteLotus/User_Login.html"><i class="fa fa-user-circle-o"></i> Account</a>
+                <a class="nav-link flx" href="https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/PStorebyWhiteLotus/User_Login.html"><div class="icons"><i class="fa fa-user-circle-o"></i></div><div class="nav-text">Account</div></a>
             </li>
         </span>
     </ul>
