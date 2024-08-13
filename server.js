@@ -132,6 +132,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         }
         const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
         await callPythonProcess(listOfInput, 'converter').then(path => {
+            if(web.noise_detect(path)) console.log("Error no: ",path);
             res.status(200).json({path, extension});
         }).catch(error => {
             console.error('Error:', error.message);
@@ -213,6 +214,18 @@ function WEB(port){
     this.port = port;
     this.filename = path.basename(__filename);
     this.appInfo = jsonfile.readFileSync('./public/manifest.json');
+}
+
+WEB.prototype.noise_detect = function(data){
+    try{
+        if((data*1) - (data*1) == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }catch(e){
+        console.log("Error found to detect noise\n",e);
+    }
 }
 
 function callPythonProcess(list, functionValue){
