@@ -37,6 +37,7 @@ html{
 }
 .nav-link:hover{
     color: var(--lavender)!important;
+    background: #c2c2c2;
 }
 li .active{
     color: grey!important;
@@ -142,6 +143,28 @@ li .active{
 }
 .hambarger-menu ul li:last-child{
     border-bottom: none;
+}
+.hambarger-menu #service-menu li:last-child{
+    border-bottom: 1px solid grey;
+}
+.hambarger-menu ul li a .icons{
+    width: 20%;
+}
+.hambarger-menu ul li a .nav-text{
+    width: 80%;
+    height: 25px;
+    text-align: left;
+}
+.hambarger-menu ul li a .nav-expender{
+    width: 10%;
+    font-weight: bolder;
+    cursor: pointer;
+}
+#service-menu{
+    display: none;
+}
+#service-menu li a{
+    color: #17a2b8!important;
 }
 #e404{
     height: 100vh;
@@ -908,6 +931,7 @@ footer .bottom-component .right-side a{
     height: 330px;
     background: #fff;
     margin: 8px 10px;
+    cursor: grab;
 }
 .pdfView .view .page .img{
     height: 90%;

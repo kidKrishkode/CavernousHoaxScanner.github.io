@@ -1,4 +1,5 @@
 let nav = 0;
+let service = 0;
 let theme = 1;
 let system;
 let loader;
@@ -47,6 +48,18 @@ function navbar_toggle(){
         document.body.style.overflowY = "auto";
         nav--;
     }
+}
+function serviceMenu_toggle(){
+    if(service==0){
+        document.getElementById('service-menu').style.display = "block";
+        document.getElementById('service-icon').innerHTML = "&minus;";
+        service++;
+    }else{
+        document.getElementById('service-menu').style.display = "none";
+        document.getElementById('service-icon').innerHTML = "&plus;";
+        service--;
+    }
+    navbar_toggle();
 }
 Loader.prototype.creat = function(){
     if(loader.loaded!=false){
@@ -106,7 +119,7 @@ System.prototype.VisiblePage = function(){
         system.setActiveMenu(currentPage[currentPage.length-1]);
         setTimeout(()=>{
             document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
-        },20000);
+        },50000);
     }catch(e){
         console.warn("New Problem: ",e);
     }
