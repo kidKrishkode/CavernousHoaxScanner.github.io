@@ -11,6 +11,7 @@ const jsonfile = require('jsonfile');
 const multer = require('multer');
 const varchar = require('./config/env-variables.ts');
 const security = require('./config/security.ts');
+const hex = require('./config/hex.ts');
 require('./public/App.test.js');
 require('dotenv').config();
 
@@ -25,6 +26,7 @@ const pixelData = [];
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use('/assets',express.static(path.join(__dirname,'assets')));
 app.use('/images',express.static(path.join(__dirname,'images')));
 app.use('/public',express.static(path.join(__dirname,'public')));
 
@@ -119,7 +121,7 @@ app.get('/converter', (req, res) => {
 app.post('/converter/process', upload.single('file'), async (req, res) => {
     try{
         const extension = req.body.extension;
-        const tempFilePath = path.join(__dirname,'/images/bin/temp_image.png');
+        const tempFilePath = path.join(__dirname,'/assets/bin/temp_image.png');
         if(req.body.imageData){
             const imagePath = req.body.imageData;
             const imageData = imagePath.split(',')[1];
@@ -132,10 +134,10 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         }
         const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
         await callPythonProcess(listOfInput, 'converter').then(path => {
-            if(web.noise_detect(path)) console.log("Error no: ",path);
+            if(web.noise_detect(path)) return web.handle_error(res, path);
             res.status(200).json({path, extension});
         }).catch(error => {
-            console.error('Error:', error.message);
+            console.error('Error:', error);
         });
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
@@ -218,13 +220,19 @@ function WEB(port){
 
 WEB.prototype.noise_detect = function(data){
     try{
-        if((data*1) - (data*1) == 0){
-            return true;
-        }else{
-            return false;
-        }
+        return hex.pyerrorscanner(data);
     }catch(e){
         console.log("Error found to detect noise\n",e);
+    }
+}
+WEB.prototype.handle_error = function(res, code){
+    try{
+        const error_log = web.appInfo['error_log'];
+        const error = hex.pyerrorinfo(error_log, code);
+        res.status(200).json({error});
+        return;
+    }catch(e){
+        console.log("Error found to handle error\n",e);
     }
 }
 
