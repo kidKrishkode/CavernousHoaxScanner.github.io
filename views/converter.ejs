@@ -180,6 +180,9 @@
         };
     }
     function afterResponce(data){
+        if(typeof data.error !== "undefined"){
+            return system.handelPyError(data.error);
+        }
         document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
         system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
         document.getElementById('op1').innerHTML = `
