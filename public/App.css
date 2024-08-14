@@ -886,14 +886,14 @@ footer .bottom-component .right-side a{
 #pdfPreview{
     display: none;
 }
-.pdfView{
+.pdfView,.errorView{
     width: 70%;
     height: 600px;
     margin: 5% auto 0px auto;
     border-radius: 10px;
     background: var(--mit-color);
 }
-.pdfView header{
+.pdfView header,.errorView header{
     width: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -902,14 +902,14 @@ footer .bottom-component .right-side a{
     font-size: 25px;
     padding: 0px 5px;
 }
-.pdfView header img{
+.pdfView header img,.errorView header img{
     position: relative;
     width: 25px;
     height: 25px;
     margin: 5px 0px;
     filter: invert(1);
 }
-.pdfView header .btn{
+.pdfView header .btn, .errorView header .btn{
     height: 30px;
     padding: 2px 6px;
     margin: auto;
@@ -951,6 +951,28 @@ footer .bottom-component .right-side a{
     position: relative;
     bottom: 0px;
     left: 0px;
+}
+.errorView{
+    height: 500px;
+    margin: 8% auto 0px auto;
+}
+.errorView .error-message{
+    padding: 40px 8px;
+    text-align: center;
+}
+.errorView .error-message .fa-times-circle-o{
+    color: red;
+    font-size: 100px;
+    margin: 0px auto;
+}
+.errorView .error-message h2{
+    color: #dc3545;
+    font-family: Consolas;
+}
+.errorView .error-message p{
+    color: grey;
+    font-family: sans-serif;
+    margin-top: 20px;
 }
 
 
@@ -1080,8 +1102,11 @@ footer .bottom-component .right-side a{
     #faq-help{
         margin: 20px 0% 60px 0%;
     }
-    .pdfView{
+    .pdfView,.errorView{
         width: 90%;
+    }
+    .errorView{
+        margin: 15% auto 0px auto;
     }
     .pdfView .view .page{
         width: 50%;

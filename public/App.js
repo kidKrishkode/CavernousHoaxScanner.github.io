@@ -17,6 +17,7 @@ function System(){
         this.listen = window.location;
         this.navigation = window.navigation;
         this.notes = false;
+        this.error_layout = false;
     }catch(e){
         alert("System not deployed!\n\n",e);
     }
@@ -119,7 +120,7 @@ System.prototype.VisiblePage = function(){
         system.setActiveMenu(currentPage[currentPage.length-1]);
         setTimeout(()=>{
             document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
-        },50000);
+        },500000);
     }catch(e){
         console.warn("New Problem: ",e);
     }
@@ -232,6 +233,30 @@ System.prototype.setActiveMenu = function(menuName){
     }else{
         return false;
     }
+}
+System.prototype.handelPyError = function(error){
+    try{
+        if(!system.error_layout){
+            let temp = config.varchar.error_templet;
+            temp = temp.replaceAll('<|error.code|>',error.code);
+            temp = temp.replaceAll('<|error.message|>',error.message);
+            document.body.innerHTML += temp;
+            document.body.style.overflowY = "hidden";
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            system.error_layout = true;
+        }else{
+            document.body.removeChild(document.getElementById('errorPreview'));
+            system.error_layout = false;
+            system.handelPyError(error);
+        }
+    }catch(e){
+        console.log(error,e);
+    }
+}
+System.prototype.closePyError = function(){
+    document.body.removeChild(document.getElementById('errorPreview'));
+    window.location.reload();
 }
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);
