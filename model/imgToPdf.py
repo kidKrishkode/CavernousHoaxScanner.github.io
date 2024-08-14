@@ -5,7 +5,7 @@ from fpdf import FPDF
 import Preprocessor
 
 def create_pdf(image_paths):
-    output_path = "../images/datahouse/temp.pdf"
+    output_path = "../assets/pdfhouse/temp.pdf"
     pdf = FPDF()
     for image_path in image_paths:
         img = cv2.imread(image_path)
