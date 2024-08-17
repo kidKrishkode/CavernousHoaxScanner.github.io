@@ -31,7 +31,7 @@ def resizeImage(image_path, width, height):
         # Return the new image path and resolution
         return temp_image_path, new_width, new_height
     else:
-        return "Image size under conditions", current_width, current_height
+        return 22
 
 def main():
     if len(sys.argv) != 4:
