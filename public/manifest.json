@@ -40,7 +40,8 @@
         {"code": 18, "desc": "Image filtering failed: unable to apply filter"},
         {"code": 19, "desc": "Video formatting failed: unable to format video"},
         {"code": 20, "desc": "Image optimization failed: unable to optimize image"},
-        {"code": 21, "desc": "Video optimization failed: unable to optimize video"}
+        {"code": 21, "desc": "Video optimization failed: unable to optimize video"},
+        {"code": 22, "desc": "Image size under conditions: unsble to resize image"}
     ]
 }
     
