@@ -12,6 +12,7 @@
     --atom-blue: #0c8ff0;
     --revers-lavender: #fff;
     --revers-white: #fff;
+    --glass-color: #161b2279;
     --loader-back: #000000;
     --loader-font: #00ff09;
 }
@@ -579,7 +580,7 @@ li .active{
     padding: 5px 0px 0px 0px;
 }
 .htsi{
-    margin: 30px auto;
+    margin: 80px auto;
     position: relative;
 }
 .appear{
@@ -773,12 +774,18 @@ footer .bottom-component .right-side a{
     transition: 1s ease-in-out;
     cursor: pointer;
 }
+#moreProduct{
+    width: 90%;
+    margin: 80px auto;
+    background-image: url("../images/grid.png");
+    background-size: contain;
+}
 .image-bg-prod{
     width: 80%;
     height: 250px;
     margin: 20px auto;
     border-radius: 10px;
-    background-image: linear-gradient(54deg, rgba(0, 195, 255, 0.223), rgba(177, 8, 255, 0.34)), url('../images/img-bg-prod.png');
+    /* background-image: linear-gradient(54deg, rgba(0, 195, 255, 0.223), rgba(177, 8, 255, 0.34)), url('../images/img-bg-prod.png'); */
     background-size: contain;
     backdrop-filter: blur(4px);
     position: relative;
@@ -795,12 +802,12 @@ footer .bottom-component .right-side a{
     left: 0%;
     opacity: 0.6;
     z-index: -1;
-    background: linear-gradient(to right, #000 0%, var(--atom-blue) 0%, #000 100%);
+    /* background: linear-gradient(to right, #000 0%, var(--lavender) 0%, #000 100%); */
     border-radius: 10px;
 }
 .image-bg-prod h3{
-    font-size: 35px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 400;
     font-family: Arial, Helvetica, sans-serif;
     color: var(--revers-lavender);
     margin: 0px;
@@ -809,7 +816,7 @@ footer .bottom-component .right-side a{
 }
 .image-bg-prod h6{
     font-family: sans-serif;
-    color: gainsboro;
+    color: gray;
     margin: 0px;
 }
 .services-area{
@@ -819,8 +826,10 @@ footer .bottom-component .right-side a{
     border-radius: 10px;
     text-align: center;
     padding: 20px 10px;
-    background-color: var(--blend-color);
-    box-shadow: 0px 2px 8px 1px grey;
+    background-color: var(--mit-color);
+    background: var(--glass-color);
+    backdrop-filter: blur(5px);
+    box-shadow: 0px 2px 6px -2px var(--lavender);
     margin-bottom: 25px;
     transition: 1s ease-in-out;
     cursor: pointer;
@@ -828,8 +837,18 @@ footer .bottom-component .right-side a{
 .services-area .single-service:hover{
     transform: translateY(-20px);
 }
+.services-area .single-service .img-folder{
+    width: 100%;
+    height: 150px;
+    margin: 2px auto;
+    border-radius: 10px;
+    background: var(--mit-color);
+}
 .services-area .single-service .img-fluid{
-    filter: grayscale(1);
+    filter: grayscale(0);
+    position: relative;
+    top: 30%;
+    width: 60px;
 }
 .services-area .single-service h4{
     color: var(--eco-lighting);
@@ -840,6 +859,64 @@ footer .bottom-component .right-side a{
 .services-area .single-service p{
     color: grey;
     font-size: 14px;
+    height: 80px;
+}
+#feed{
+    width: 100%;
+    margin: 80px 0% 20px 0%;
+    padding-bottom: 40px;
+    background-image: url('../images/clip-earth.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#feed h3{
+    text-align: center;
+    color: var(--revers-lavender);
+}
+.feed-area{
+    background: transparent;
+    margin: 20px auto;
+}
+.feed-area .container{
+    display: -webkit-box;
+    max-width: 80%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+.feed-area .single-feed{
+    width: 500px;
+    margin: 5px 20px;
+    padding: 4px 40px;
+    background: var(--glass-color);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    border-radius: 10px;
+    font-family: sans-serif;
+    cursor: default;
+}
+.feed-area .single-feed h4{
+    text-align: center;
+    font-weight: 400;
+    color: var(--revers-white);
+}
+.feed-area .single-feed p{
+    text-align: center;
+    height: 120px;
+}
+.feed-area .single-feed hr{
+    margin: 2px auto;
+    width: 60%;
+    height: 0.5px;
+    background: #c0c0c0;
+}
+.feed-area .single-feed h5{
+    text-align: center;
+    font-weight: 400;
+    color: var(--revers-lavender);
 }
 #faq-help{
     width: 100%;
@@ -1093,9 +1170,6 @@ footer .bottom-component .right-side a{
     .image-bg-prod h6{
         font-size: 14px;
     }
-    .services-area {
-        margin-top: -160px;
-    }
     .services-area .single-service{
         padding: 20px;
     }
@@ -1111,6 +1185,25 @@ footer .bottom-component .right-side a{
     .pdfView .view .page{
         width: 50%;
         height: 285px;
+    }
+    #feed h3{
+        font-size: 22px;
+    }
+    .feed-area .container{
+        max-width: 90%;
+    }
+    .feed-area .single-feed{
+        width: 400px;
+        padding: 4px 20px;
+    }
+    .feed-area .single-feed h4{
+        font-size: 20px;
+    }
+    .feed-area .single-feed p{
+        height: 80px;
+    }
+    .feed-area .single-feed h5{
+        font-size: 18px;
     }
         
 }

@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded",() => {
     loader.creat();
     loader.remove(2000);
     system = new System();
-    document.getElementById('side-menu').innerHTML = '<div class="hambarger-menu"><ul class="nav justify-content-end">'+document.getElementById('nav-menu').innerHTML+'</ul></div>';
     window.addEventListener("scroll",system.scrollAppear);
     memory = new MEMORY();
     system.setUp();
@@ -108,6 +107,7 @@ System.prototype.setUp = function(){
                 system.setTheme();
             },1000);
         }
+        document.getElementById('side-menu').innerHTML = '<div class="hambarger-menu"><ul class="nav justify-content-end">'+document.getElementById('nav-menu').innerHTML+'</ul></div>';
     }catch(e){
         console.log("Error to set up initials!\n",e);
     }
@@ -121,6 +121,7 @@ System.prototype.VisiblePage = function(){
         setTimeout(()=>{
             document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
         },500000);
+        system.feedScroll();
     }catch(e){
         console.warn("New Problem: ",e);
     }
@@ -140,6 +141,19 @@ System.prototype.scrollAppear = function(){
         }
     }catch(e){
         console.warn("New Problem: ",e);
+    }
+}
+System.prototype.feedScroll = function(){
+    try{
+        var container = document.getElementById('feed-group');
+        var middleIndex = Math.floor(document.querySelectorAll('.single-feed').length / 2);
+        var middleEle = document.querySelectorAll('.single-feed')[middleIndex-1];
+        // middleEle.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
+        var rect = middleEle.getBoundingClientRect();
+        var space = middleIndex*20;
+        container.scrollTo(rect.left + space + window.pageXOffset, 0);
+    }catch(e){
+        console.log("Somthing error to scroll feed!\n",e);
     }
 }
 function route(link){
