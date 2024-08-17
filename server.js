@@ -65,15 +65,17 @@ app.use((req, res, next) => {
     }
 });
 
+const promises = [
+    ejs.renderFile('./views/header.ejs'),
+    ejs.renderFile('./views/footer.ejs'),
+    ejs.renderFile('./views/service.ejs'),
+    ejs.renderFile('./views/feed.ejs'),
+    ejs.renderFile('./views/faq.ejs')
+];
+
 app.get('/', (req, res) => {
-    const promises = [
-        ejs.renderFile('./views/header.ejs'),
-        ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs'),
-        ejs.renderFile('./views/faq.ejs')
-    ];
-    Promise.all(promises).then(([header, footer, services, faq]) => {
-        res.status(200).render('index',{header, services, faq, footer});
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('index',{header, services, feed, faq, footer});
     });
 });
 
@@ -87,14 +89,8 @@ app.get('/varchar', async (req, res) => {
 });
 
 app.get('/imgToPdf', (req, res) => {
-    const promises = [
-        ejs.renderFile('./views/header.ejs'),
-        ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs'),
-        ejs.renderFile('./views/faq.ejs')
-    ];
-    Promise.all(promises).then(([header, footer, services, faq]) => {
-        res.status(200).render('pdfConverter',{header, services, faq, footer});
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('pdfConverter',{header, services, feed, faq, footer});
     });
 });
 
@@ -107,14 +103,8 @@ app.post('/imgToPdf/process', upload.array('imageData'), async (req, res) => {
 });
 
 app.get('/converter', (req, res) => {
-    const promises = [
-        ejs.renderFile('./views/header.ejs'),
-        ejs.renderFile('./views/footer.ejs'),
-        ejs.renderFile('./views/service.ejs'),
-        ejs.renderFile('./views/faq.ejs')
-    ];
-    Promise.all(promises).then(([header, footer, services, faq]) => {
-        res.status(200).render('converter',{header, services, faq, footer});
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('converter',{header, services, feed, faq, footer});
     });
 });
 
