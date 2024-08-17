@@ -90,6 +90,9 @@
         <div id="moreProduct" class="appear hide">
             <%= services %>
         </div>
+        <div id="customerFeed">
+            <%= feed %>
+        </div>
     </section>
     <aside id="faq-help" class="appear hide">
         <%= faq %>
@@ -108,6 +111,8 @@
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+    document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
+    
     function directUpload(file){
         let extension = document.getElementById('extension-input').value.toLowerCase();
         const reader = new FileReader();

@@ -87,6 +87,9 @@
         <div id="moreProduct" class="appear hide">
             <%= services %>
         </div>
+        <div id="customerFeed">
+            <%= feed %>
+        </div>
         <div id="faq-help" class="appear hide">
             <%= faq %>
         </div>
@@ -99,12 +102,13 @@
 <script src="../public/default.min.js"></script>
 <script>
     pageSet.push('header','dfdPage','moreProduct','faq-help','footer');
-    appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
+    appearSet.push(['.htsi',380],['#moreProduct',580],['#faq-help', 1180]);
     currentPage.push('index');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+    document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
 
     function process(){
         let extension = document.getElementById('extension-input').value.toLowerCase();
