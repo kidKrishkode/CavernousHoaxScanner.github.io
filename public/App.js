@@ -121,6 +121,9 @@ System.prototype.VisiblePage = function(){
         setTimeout(()=>{
             document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
         },500000);
+        setTimeout(()=>{
+            document.body.removeChild(document.querySelector('.jelly'));
+        },500000+35000);
         system.feedScroll();
     }catch(e){
         console.warn("New Problem: ",e);
@@ -150,7 +153,7 @@ System.prototype.feedScroll = function(){
         var middleEle = document.querySelectorAll('.single-feed')[middleIndex-1];
         // middleEle.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
         var rect = middleEle.getBoundingClientRect();
-        var space = middleIndex*20;
+        var space = (middleIndex*20)-10;
         container.scrollTo(rect.left + space + window.pageXOffset, 0);
     }catch(e){
         console.log("Somthing error to scroll feed!\n",e);
@@ -158,6 +161,12 @@ System.prototype.feedScroll = function(){
 }
 function route(link){
     window.location = link;
+}
+function service_swap(id){
+    for(let i=0; i<6; i++){
+        document.getElementById(`item-${i+1}`).checked = false;
+    }
+    document.getElementById(`item-${id}`).checked = true;
 }
 function invaild(){
     alert("Sorry, this feature not avalible in this version,\nTry another one!...");

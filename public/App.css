@@ -493,6 +493,16 @@ li .active{
     height: 150px;
     opacity: 0.8;
     z-index: -20;
+    animation: spring 5s linear infinite;
+}
+@keyframes spring{
+    0%{
+        top: 7%;
+    }50%{
+        top: 9%;
+    }100%{
+        top: 7%;
+    }
 }
 .left-middle-des{
     position: absolute;
@@ -604,7 +614,7 @@ li .active{
     margin: 5px 10%;
     border-radius: 10px;
     padding: 6px 8px;
-    background: var(--blend-color);
+    background: var(--glass-color);
     transition: 1s ease-in-out;
 }
 .htsi .card-group .card .card-title{
@@ -761,7 +771,7 @@ footer .bottom-component .right-side a{
     padding: 0px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #320064 transparent;
+    scrollbar-color: transparent transparent;
 }
 .organization-list ul li{
     height: 50px;
@@ -821,21 +831,18 @@ footer .bottom-component .right-side a{
 }
 .services-area{
     margin-top: -140px;
+    height: 350px;
 }
 .services-area .single-service{
     border-radius: 10px;
     text-align: center;
     padding: 20px 10px;
-    background-color: var(--mit-color);
     background: var(--glass-color);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     box-shadow: 0px 2px 6px -2px var(--lavender);
     margin-bottom: 25px;
     transition: 1s ease-in-out;
     cursor: pointer;
-}
-.services-area .single-service:hover{
-    transform: translateY(-20px);
 }
 .services-area .single-service .img-folder{
     width: 100%;
@@ -860,6 +867,75 @@ footer .bottom-component .right-side a{
     color: grey;
     font-size: 14px;
     height: 80px;
+}
+.services-area input[type=radio]{
+    display: none;
+}
+.services-area .cardx{
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: transform .4s ease;
+    cursor: pointer;
+}
+.services-area .cards{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+}  
+.services-area .container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    transform-style: preserve-3d;
+    display: flex;
+}
+#item-1:checked ~ .cards #service-6,
+#item-2:checked ~ .cards #service-1,
+#item-3:checked ~ .cards #service-2,
+#item-4:checked ~ .cards #service-3,
+#item-5:checked ~ .cards #service-4,
+#item-6:checked ~ .cards #service-5 {
+    transform: translateX(-60%) scale(0.8);
+    opacity: 0.8;
+    z-index: 0;
+    display: block;
+}
+#item-1:checked ~ .cards #service-1,
+#item-2:checked ~ .cards #service-2,
+#item-3:checked ~ .cards #service-3,
+#item-4:checked ~ .cards #service-4,
+#item-5:checked ~ .cards #service-5,
+#item-6:checked ~ .cards #service-6 {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    z-index: 1;
+    display: block;
+}
+#item-1:checked ~ .cards #service-1:hover,
+#item-2:checked ~ .cards #service-2:hover,
+#item-3:checked ~ .cards #service-3:hover,
+#item-4:checked ~ .cards #service-4:hover,
+#item-5:checked ~ .cards #service-5:hover,
+#item-6:checked ~ .cards #service-6:hover{
+    transform: translateY(-20px);
+}
+#item-1:checked ~ .cards #service-2,
+#item-2:checked ~ .cards #service-3,
+#item-3:checked ~ .cards #service-4,
+#item-4:checked ~ .cards #service-5,
+#item-5:checked ~ .cards #service-6,
+#item-6:checked ~ .cards #service-1 {
+    transform: translateX(60%) scale(0.8);
+    opacity: 0.8;
+    z-index: 0;
+    display: block;
 }
 #feed{
     width: 100%;
@@ -1008,7 +1084,6 @@ footer .bottom-component .right-side a{
     height: 330px;
     background: #fff;
     margin: 8px 10px;
-    cursor: grab;
 }
 .pdfView .view .page .img{
     height: 90%;
@@ -1028,6 +1103,25 @@ footer .bottom-component .right-side a{
     position: relative;
     bottom: 0px;
     left: 0px;
+}
+.pdfView .view ul{
+    width: 100%;
+    padding: 0px;
+}
+.pdfView .view ul li{
+    width: 95%;
+    background: var(--glass-color);
+    backdrop-filter: blur(5px);
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid #343a40;
+    margin: 2px auto;
+    color: grey;
+    cursor: grab;
+}
+.pdfView .view ul li span{
+    width: 20%;
+    margin: auto;
 }
 .errorView{
     height: 500px;
@@ -1160,6 +1254,13 @@ footer .bottom-component .right-side a{
         margin-top: 5px;
         text-align: center;
     }
+    #moreProduct{
+        width: 100%;
+    }
+    .services-area{
+        height: 250px;
+        margin-top: -120px;
+    }
     .image-bg-prod{
         width: 95%;
     }
@@ -1170,8 +1271,26 @@ footer .bottom-component .right-side a{
     .image-bg-prod h6{
         font-size: 14px;
     }
+    .services-area .container{
+        width: 70%;
+        margin: auto;
+    }
     .services-area .single-service{
-        padding: 20px;
+        padding: 10px;
+    }
+    .services-area .single-service h4{
+        font-size: 16px;
+    }
+    .services-area .single-service p{
+        font-size: 10px;
+        height: 60px;
+    }
+    .services-area .single-service .img-folder{
+        height: 100px;
+    }
+    .services-area .single-service .img-fluid{
+        top: 25%;
+        width: 45px;
     }
     #faq-help{
         margin: 20px 0% 60px 0%;
@@ -1185,6 +1304,15 @@ footer .bottom-component .right-side a{
     .pdfView .view .page{
         width: 50%;
         height: 285px;
+    }
+    .pdfView .view ul li span{
+        font-size: 10px;
+    }
+    .pdfView .view ul li span:nth-last-child(1){
+        display: none;
+    }
+    .pdfView .view ul li span:nth-last-child(2){
+        width: 30%;
     }
     #feed h3{
         font-size: 22px;
