@@ -1,13 +1,19 @@
 <span id="services">
     <div class="image-bg-prod">
         <h3>Always in our Customer Favour</h3>
-        <h6>Discover the Powerful Features of Cavernous Hoax Scanner. Stay tune for more tools.</h6>
+        <h6>Discover the Powerful Features of Cavernous Hoax Scanner, Stay tune for more tools.</h6>
     </div>
     <div class="services-area">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-service" onclick="route('/imgEditor');">
+            <input type="radio" name="slider" id="item-1">
+            <input type="radio" name="slider" id="item-2" checked>
+            <input type="radio" name="slider" id="item-3">
+            <input type="radio" name="slider" id="item-4">
+            <input type="radio" name="slider" id="item-5">
+            <input type="radio" name="slider" id="item-6">
+            <div class="row cards">
+                <div class="col-lg-4 cardx" for="item-1" id="service-1" onclick="service_swap(1);">
+                    <div class="single-service" ondblclick="route('/imgEditor');">
                         <h4>Image Editior</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, ipsam dolor eum doloremque itaque nemo.</p>
                         <div class="img-folder">
@@ -15,8 +21,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="single-service" onclick="route('/imgToPdf');">
+                <div class="col-lg-4 cardx" for="item-2" id="service-2" onclick="service_swap(2);">
+                    <div class="single-service" ondblclick="route('/imgToPdf');">
                         <h4>Image to PDF Converter</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, ipsam dolor eum doloremque itaque nemo.</p>
                         <div class="img-folder">
@@ -24,19 +30,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="single-service" onclick="route('/converter');">
+                <div class="col-lg-4 cardx" for="item-3" id="service-3" onclick="service_swap(3);">
+                    <div class="single-service" ondblclick="route('/converter');">
                         <h4>Image Converter</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, ipsam dolor eum doloremque itaque nemo.</p>
                         <div class="img-folder">
                             <img class="img-fluid" src="../images/s3.png" alt="chs" />
                         </div>
                     </div>
-                </div>														
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-service" onclick="route('/index');">
+                </div>
+                <div class="col-lg-4 cardx" for="item-4" id="service-4" onclick="service_swap(4);">
+                    <div class="single-service" ondblclick="route('/index');">
                         <h4>DeepFake Detector</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, ipsam dolor eum doloremque itaque nemo.</p>
                         <div class="img-folder">
@@ -44,8 +48,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="single-service" onclick="route('/');">
+                <div class="col-lg-4 cardx" for="item-5" id="service-5" onclick="service_swap(5);">
+                    <div class="single-service" ondblclick="route('/');">
                         <h4>Face Morphism</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, ipsam dolor eum doloremque itaque nemo.</p>
                         <div class="img-folder">
@@ -53,16 +57,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="single-service" onclick="route('/compressor');">
+                <div class="col-lg-4 cardx" for="item-6" id="service-6" onclick="service_swap(6);">
+                    <div class="single-service" ondblclick="route('/compressor');">
                         <h4>Image Compressor</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, ipsam dolor eum doloremque itaque nemo.</p>
                         <div class="img-folder">
                             <img class="img-fluid" src="../images/s6.png" alt="chs" />
                         </div>
                     </div>
-                </div>
+                </div>													
             </div>
         </div>
+    </div>
+    <div style="text-align: center; width: 100%;">
+        <div class="btn btn-process" onclick="route('/about');" title="Learn about what we offer you in details">Learn More</div>
     </div>
 </span>
