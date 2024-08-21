@@ -85,7 +85,10 @@ app.get('/index', (req, res) => {
 
 app.get('/varchar', async (req, res) => {
     const navi = req.headers;
-    res.status(200).json({varchar, navi});
+    res.status(200).json({varchar, navi, hex: {
+        vaildFiles: hex.vaildFiles.toString(),
+        dragAndSort: hex.dragAndSort.toString(),
+    }});
 });
 
 app.get('/imgToPdf', (req, res) => {
