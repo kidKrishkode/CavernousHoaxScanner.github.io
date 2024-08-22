@@ -104,22 +104,46 @@
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
-    
+    let response_set=[];
     function process(){
         if(document.getElementById('media-acc').textContent === 'Accepted' && pdf.imgSet.length!=0){
             let fileInput = document.getElementById('file-input');
             const files = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
-            const imageData = pdf.imgSet;
+            for (let i=0; i<pdf.imgSet.length; i++){
+                push_ack_img_fetch(pdf.imgSet[i]);}
+            check_ack_img_fetch();
             fetch('/imgToPdf/process', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({imageData})
-            }).then(response => response.json()).then(data => {
-                console.log(data);
-            }).catch(e=>console.log(e));
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({length: pdf.imgSet.length})
+                }).then(response => response.json()).then(data => {
+                }).catch(e=>console.log(e));
+        }
+    }
+    function push_ack_img_fetch(a){
+        
+                const imageData = a;
+                fetch('/imgToPdf/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({imageData,length: pdf.imgSet.length, i})
+                }).then(response => response.json()).then(data => {
+                   response_set.append(data);
+                }).catch(e=>console.log(e));
+            
+    }
+    function check_ack_img_fetch(){
+        response_set.sort();
+        for(i=0;i<response_set.length;i++){
+            if(i!=response_set[i]-1){
+                push_ack_img_fetch(pdf.imgSet[i+1]);
+            }
+
         }
     }
 </script>
