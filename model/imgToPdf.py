@@ -5,7 +5,7 @@ from fpdf import FPDF
 import Preprocessor
 
 def create_pdf(image_paths):
-    output_path = "../assets/pdfhouse/temp.pdf"
+    output_path = "./assets/pdfhouse/temp.pdf"
     pdf = FPDF()
     for image_path in image_paths:
         img = cv2.imread(image_path)
@@ -44,9 +44,7 @@ def main():
         return
     
     input_list = ast.literal_eval(sys.argv[1])
-    # image_paths = ['C:/Users/Panna/Desktop/CA1/SOFT COMP/ADV.png','C:/Users/Panna/Desktop/CA1/SOFT COMP/N 1.png']
-    image_paths = ["C:/Users/JYOTINMOY MITRA/Pictures/0a0ecc2772060179963dc66c87ff22e8.png","C:/Users/JYOTINMOY MITRA/Pictures/1024px-Visual_Studio_Code_1.35_icon.svg.png"]
-    output_path = convert_pdf(image_paths)
+    output_path = convert_pdf(input_list)
     print(output_path)
 
 if __name__ == "__main__":
