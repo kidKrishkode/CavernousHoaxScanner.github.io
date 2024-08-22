@@ -22,6 +22,8 @@ const AppName = "Cavernous Hoax Scanner";
 let web = new WEB(PORT);
 let imagePath,width,height;
 const pixelData = [];
+const pdf_imgPath = [];
+let pdf_limit;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -97,9 +99,35 @@ app.get('/imgToPdf', (req, res) => {
     });
 });
 
-app.post('/imgToPdf/process', upload.array('imageData'), async (req, res) => {
+app.post('/imgToPdf/upload', upload.single('file'), async (req, res) => {
     try{
-        console.log(req.body);
+        const image = await jimp.read(req.file.buffer);
+        const limit = (req.body.limit)*1;
+        const index = (req.body.i)*1;
+
+        const tempFilePath = path.join(__dirname,`/assets/pdfhouse/imgs/${index+1}.png`);
+        pdf_imgPath.push(tempFilePath.toString().replaceAll('\\','/'));
+
+        await image.writeAsync(`${tempFilePath}`);
+        pdf_limit = limit;
+        const ack = index+1;
+        res.status(200).json({"ack": ack});
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
+});
+
+app.post('/imgToPdf/process', async (req, res) => {
+    try{
+        if(pdf_limit!=0){
+            const listOfInput = pdf_imgPath;
+            await callPythonProcess(listOfInput, 'imgToPdf').then(path => {
+                if(web.noise_detect(path)) return web.handle_error(res, path);
+                res.status(200).json({path});
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
     }
