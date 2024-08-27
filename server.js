@@ -99,21 +99,28 @@ app.get('/imgToPdf', (req, res) => {
     });
 });
 
+let imageParts = {};
 app.post('/imgToPdf/upload', upload.single('file'), async (req, res) => {
-    try{
-        const image = await jimp.read(req.file.buffer);
-        const limit = (req.body.limit)*1;
-        const index = (req.body.i)*1;
-
-        const tempFilePath = path.join(__dirname,`/assets/pdfhouse/imgs/${index+1}.png`);
-        pdf_imgPath.push(tempFilePath.toString().replaceAll('\\','/'));
-
-        await image.writeAsync(`${tempFilePath}`);
-        pdf_limit = limit;
-        const ack = index+1;
+    try {
+        const index = parseInt(req.body.i);
+        const part = req.body.part;
+        const imagePart = req.body.filePart;
+        const limit = parseInt(req.body.limit);
+        if(!imageParts[index]) imageParts[index] = ['', ''];
+        imageParts[index][part - 1] = imagePart;
+        if(imageParts[index][0] && imageParts[index][1]){
+            const completeImageData = imageParts[index][0] + imageParts[index][1];
+            const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base4'));
+            const tempFilePath = path.join(__dirname, `/assets/pdfhouse/imgs/${index + 1}.png`);
+            await image.writeAsync(`${tempFilePath}`);
+            pdf_imgPath.push(tempFilePath.toString().replaceAll('\\', '/'));
+            pdf_limit = limit;
+            delete imageParts[index];
+        }
+        const ack = part;
         res.status(200).json({"ack": ack});
     }catch(e){
-        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+        res.status(403).render('notfound', {error: 403, message: "Failed to process most recent task, Try again later"});
     }
 });
 
@@ -127,6 +134,24 @@ app.post('/imgToPdf/process', async (req, res) => {
             }).catch(error => {
                 console.error('Error:', error);
             });
+        }
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
+});
+
+app.post('/imgToPdf/delete', async (req, res) => {
+    try{
+        pdf_imgPath.length = 0;
+        const dir_img = fs.readdirSync(path.join(__dirname, `/assets/pdfhouse/imgs/`));
+        if(dir_img.length > 1){
+            for(let i=1; i<dir_img.length; i++){
+                fs.unlink(path.join(__dirname, `/assets/pdfhouse/imgs/${dir_img[i]}`), (err) => {
+                    if(err){
+                        console.log('Problem to delete: ./assets/pdfhouse/imgs/',dir_img[i]);
+                    }
+                });
+            }
         }
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
