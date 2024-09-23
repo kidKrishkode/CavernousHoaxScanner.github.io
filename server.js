@@ -12,6 +12,7 @@ const multer = require('multer');
 const varchar = require('./config/env-variables.ts');
 const security = require('./config/security.ts');
 const hex = require('./config/hex.ts');
+const compiler = require('./config/compiler.ts');
 require('./public/App.test.js');
 require('dotenv').config();
 
@@ -23,6 +24,7 @@ let web = new WEB(PORT);
 let imagePath,width,height;
 const pixelData = [];
 const pdf_imgPath = [];
+let editor_img_path;
 let pdf_limit;
 
 app.set('view engine', 'ejs');
@@ -90,6 +92,17 @@ app.get('/varchar', async (req, res) => {
     res.status(200).json({varchar, navi, hex: {
         vaildFiles: hex.vaildFiles.toString(),
         dragAndSort: hex.dragAndSort.toString(),
+    }});
+});
+
+app.get('/compiler', async (req, res) => {
+    res.status(200).json({compiler: {
+        updateLineNumbers: compiler.updateLineNumbers.toString(),
+        ideDeploy: compiler.ideDeploy.toString(),
+        appointCode: compiler.appointCode.toString(),
+        htmlCompiler: compiler.htmlCompiler.toString(),
+        jsCompiler: compiler.jsCompiler.toString(),
+        codefork: jsonfile.readFileSync('./config/codefork.json')
     }});
 });
 
@@ -217,6 +230,39 @@ app.get('/imageInfo', async (req, res) => {
     }
 });
 
+app.get('/imgEditor', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('imgEditor',{header, services, feed, faq, footer});
+    });
+});
+
+app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
+    try{
+        const index = parseInt(req.body.i);
+        const imagePart = req.body.filePart;
+        if(!imageParts[index]) imageParts[index] = ['', ''];
+        imageParts[index][part - 1] = imagePart;
+        if(imageParts[index][0] && imageParts[index][1]){
+            const completeImageData = imageParts[index][0] + imageParts[index][1];
+            const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base4'));
+            const tempFilePath = path.join(__dirname, `/assets/editor/${index + 1}.png`);
+            await image.writeAsync(`${tempFilePath}`);
+            editor_img_path = tempFilePath.toString().replaceAll('\\','/');
+            delete imageParts[index];
+        }
+        const ack = part;
+        res.status(200).json({"ack": ack});
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
+});
+
+app.get('/imgEditor/open_editior', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('imgEditor',{header, services, feed, faq, footer, editor_img_path});
+    });
+});
+
 app.get('/forgBackg', async (req, res) => {
     try{
         await callPythonProcess([imagePath, height, width], 'diffForegBackg').then(result => {
@@ -241,6 +287,12 @@ app.get('/faceIdentify', async (req, res) => {
         console.log(e);
         res.status(500).send('An Error occurred');
     }
+});
+
+app.get('/apiPlug', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('apiPlug',{header, services, feed, faq, footer});
+    });
 });
 
 function newImage(req,res,imageUrl){
