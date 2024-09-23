@@ -13,6 +13,8 @@
     --revers-lavender: #fff;
     --revers-white: #fff;
     --glass-color: #161b2279;
+    --code-color: #161b20;
+    --code-li-color: #1E1E1E;
     --loader-back: #000000;
     --loader-font: #00ff09;
 }
@@ -311,7 +313,7 @@ li .active{
     width: 100%;
 }
 
-#dfdPage,#moreProduct,#converterPage,#pdfPage{
+#dfdPage,#moreProduct,#converterPage,#pdfPage,#apiPlugPage{
     display: none;
 }
 #dfdPage h2,#converterPage h2,#pdfPage h2{
@@ -1145,6 +1147,68 @@ footer .bottom-component .right-side a{
     font-family: sans-serif;
     margin-top: 20px;
 }
+.apiView{
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.apiView .api-container{
+    margin: 10px 0px;
+    background: var(--mit-color);
+    backdrop-filter: blur(5px);
+    border-radius: calc(6px + 0.25rem);
+    transition: 1s ease-in-out;
+}
+.apiView .api-left{
+    width: 60%;
+}
+.api-right{
+    width: 35%;
+    height: min-content;
+}
+.api-container .head{
+    padding: 10px 6px;
+}
+.api-container .head h3{
+    font-size: 18px;
+    margin: auto 0px;
+    font-weight: 700;
+    color: var(--charm);
+    text-transform: capitalize;
+}
+.api-container hr{
+    width: 98%;
+    margin: 0px auto 5px auto;
+    border-radius: 5px;
+    background: gray;
+}
+.api-container .body{
+    padding: 10px 30px;
+    min-height: 100px;
+}
+.api-container .body form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.api-container .body form .form-group{
+    width: 45%;
+}
+.api-container .body form .form-group label{
+    color: var(--revers-white);
+}
+.api-container .body form .form-group .form-control{
+    background: transparent;
+    color: var(--revers-white);
+}
+.api-container .body form .form-group .form-control option{
+    background: var(--simple-color);
+}
+.api-right .body{
+    padding: 10px;
+}
 
 
 @media only screen and (max-width: 900px){
@@ -1332,6 +1396,16 @@ footer .bottom-component .right-side a{
     }
     .feed-area .single-feed h5{
         font-size: 18px;
+    }
+    .apiView{
+        display: flex;
+        flex-direction: column;
+    }
+    .apiView .api-container{
+        width: 100%;
+    }
+    .api-container .body form .form-group {
+        width: 95%;
     }
         
 }

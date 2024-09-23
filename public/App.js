@@ -4,6 +4,7 @@ let theme = 1;
 let system;
 let loader;
 let config;
+let compiler;
 let temp;
 let local_memory=[];
 let db, memory;
@@ -43,6 +44,11 @@ function navbar_toggle(){
         document.getElementById('side-menu').style.display = "block";
         document.body.style.overflowY = "hidden";
         nav++;
+        const nl1 = document.body.addEventListener('scroll', (e)=>{
+            e.preventDefault();
+            navbar_toggle();
+            document.body.removeEventListener(nl1);
+        });
     }else{
         document.getElementById('side-menu').style.display = "none";
         document.body.style.overflowY = "auto";
@@ -108,6 +114,7 @@ System.prototype.setUp = function(){
             },1000);
         }
         document.getElementById('side-menu').innerHTML = '<div class="hambarger-menu"><ul class="nav justify-content-end">'+document.getElementById('nav-menu').innerHTML+'</ul></div>';
+        system.compilerSetUp();
     }catch(e){
         console.log("Error to set up initials!\n",e);
     }
@@ -194,6 +201,24 @@ function search_product(data,list){
         document.getElementById(data+'DOD').style.display="none";
     }
 }
+System.prototype.splitImage_data = function(file){
+    const imageData = file;
+    const halfIndex = Math.floor(imageData.length / 2);
+    const firstHalf = imageData.slice(0, halfIndex);
+    const secondHalf = imageData.slice(halfIndex);
+    return firstHalf, secondHalf;
+}
+System.prototype.copyCode = function(id){
+    const textToCopy = document.querySelector(id);
+    const tempTextarea = document.createElement("textarea");
+    tempTextarea.value = textToCopy.textContent;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    tempTextarea.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    document.body.removeChild(tempTextarea);
+    alert("Code has been copied to the clipboard!");
+}
 System.prototype.downloadCode = function(id,name){
     const textToDownload = document.getElementById(id).textContent;
     // const fileName = "downloaded_file.txt";
@@ -211,6 +236,14 @@ System.prototype.downloadImage = function(id, name){
     link.href = img.src;
     link.download = fileName;
     link.click();
+}
+System.prototype.download_pdf = function(filePath, fileName){
+    const link = document.createElement("a");
+    link.href = filePath;
+    link.download = fileName || '1.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 System.prototype.themeToggle = function(id){
     if(theme == 0){
@@ -280,6 +313,17 @@ System.prototype.handelPyError = function(error){
 System.prototype.closePyError = function(){
     document.body.removeChild(document.getElementById('errorPreview'));
     window.location.reload();
+}
+System.prototype.compilerSetUp = function(){
+    try{
+        fetch('/compiler').then(response => response.json()).then(data => {
+            compiler = data.compiler.valueOf();
+        }).catch(error =>{
+            console.error('Error: ',error);
+        });
+    }catch(e){
+        console.log('Error to set up compiler!');
+    }
 }
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);
