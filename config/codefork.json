@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "lang": "Node Js",
+        "name": "Image Converter",
+        "method": "POST",
+        "code": "const@ s|fetch|n = f|require|n(s' node-fetch 'n);\n\nconst@ s|link|n = s'https:/|/kidKrishkode.github.io/CavernousHoaxScanner.github.io/api/'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: json@|.stringify({s|task|n: s'ImageConvert'n, s|from|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    },
+    {
+        "id": 1,
+        "lang": "React Js",
+        "name": "Image Converter",
+        "method": "POST",
+        "code": "< html@ |lang='en'n >\n< head@ >\n\t< meta@ |charset='utf-8'n >\n\t< meta@ |name='viewport'n |content='width=device-width, initial-scale=1'n >\n\t< title@ |version='1.0'n >$|title|$< /title@ >\n< /head@ >\n< body@ >\n\t$|body|$\n< /body@ >\n< !-- link the api plugins in your project (below) -- >\nHello World\n$|apiplugin|$\n< !-- link the script file where your request is encoded -- >\n&lt; script@ |src='./main.js'n >< /script@ >\n< /html@ >"
+    },
+    {
+        "id": 2,
+        "lang": "Vanilla Js",
+        "name": "Image Converter",
+        "method": "POST",
+        "code": "const@ s|link|n = s'https:/|/kidKrishkode.github.io/CavernousHoaxScanner.github.io/api/'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: json@|.stringify({s|task|n: s'ImageConvert'n, s|from|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    },
+    {
+        "id": 3,
+        "lang": "Vanilla Js",
+        "name": "Image Compressor",
+        "method": "POST",
+        "code": "const@ s|link|n = s'https:/|/kidKrishkode.github.io/CavernousHoaxScanner.github.io/api/'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: json@|.stringify({s|task|n: s'ImageCompressor'n, s|from|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    }
+]

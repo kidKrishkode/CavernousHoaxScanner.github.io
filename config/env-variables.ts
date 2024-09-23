@@ -14,6 +14,9 @@ module.exports = {
             ["--atom-blue", "#0c8ff0"],
             ["--revers-lavender", "#320064"],
             ["--revers-white", "#000"],
+            ["--glass-color", "#ececec79"],
+            ["--code-color", "#ebf0f4"],
+            ["--code-li-color", "#fff"],
             ["--loader-back", "#fffffff6"],
             ["--loader-font", "#320064"]
         ],
@@ -31,6 +34,9 @@ module.exports = {
             ["--atom-blue", "#0c8ff0"],
             ["--revers-lavender", "#fff"],
             ["--revers-white", "#fff"],
+            ["--glass-color", "#161b2279"],            
+            ["--code-color", "#161b20"],
+            ["--code-li-color", "#1E1E1E"],
             ["--loader-back", "#000000"],
             ["--loader-font", "#00ff09"]
         ]
