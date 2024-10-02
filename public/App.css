@@ -123,6 +123,20 @@ li .active{
     background-color: var(--eclipse);
     border-color: var(--eclipse);
 }
+.btn-outline-process{
+    color: var(--lavender);
+    border-color: var(--lavender);
+    background: transparent;
+}
+.btn-outline-process:hover, .btn-invisible-process:hover{
+    color: #fff;
+    border-color: var(--eclipse);
+    background: var(--eclipse);
+}
+.btn-invisible-process{
+    color: var(--lavender);
+    background: transparent;
+}
 #side-menu,#header{
     display: none;
     transition: 1s ease-in-out;
@@ -313,7 +327,7 @@ li .active{
     width: 100%;
 }
 
-#dfdPage,#moreProduct,#converterPage,#pdfPage,#apiPlugPage{
+#dfdPage,#moreProduct,#converterPage,#pdfPage,#apiPlugPage, #apiLandingPage{
     display: none;
 }
 #dfdPage h2,#converterPage h2,#pdfPage h2{
@@ -1147,7 +1161,7 @@ footer .bottom-component .right-side a{
     font-family: sans-serif;
     margin-top: 20px;
 }
-.apiView{
+.apiView, .apiLand{
     width: 90%;
     margin: 40px auto;
     display: flex;
@@ -1161,10 +1175,10 @@ footer .bottom-component .right-side a{
     border-radius: calc(6px + 0.25rem);
     transition: 1s ease-in-out;
 }
-.apiView .api-left{
+.apiView .api-left, .apiLand .api-left{
     width: 60%;
 }
-.api-right{
+.api-right, .apiLand .api-right{
     width: 35%;
     height: min-content;
 }
@@ -1209,7 +1223,120 @@ footer .bottom-component .right-side a{
 .api-right .body{
     padding: 10px;
 }
-
+.apiLand .api-left{
+    color: grey;
+    font-family: sans-serif;
+}
+.apiLand .api-left h2{
+    position: relative;
+    margin: 20% 0px 10px 4px;
+    font-size: 48px;
+    font-weight: bold;
+    word-spacing: 6px;
+    letter-spacing: 2px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background: linear-gradient(50deg, #ff8100 30%, #3b00e6 40%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.apiLand .api-left .flx{
+    justify-content: stretch;
+}
+.apiLand .api-left .btn:last-child{
+    margin-left: 10px;
+}
+.apiLand .api-right img{
+    position: relative;
+    width: 90%;
+    margin: 4px auto;
+}
+.product-list{
+    width: 90%;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.product-list .product{
+    width: 30%;
+    border-radius: 5px;
+    color: var(--revers-white);
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 8px 20px 8px;
+    transition: 1s ease-in-out;
+}
+.product-list .product:hover{
+    background: var(--glass-color);
+    backdrop-filter: blur(5px);
+    transform: translateY(-20px);
+    cursor: pointer;
+}
+.product-list .product .icon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #2323ff,#e472e4);
+    margin: 10px auto 4px auto;
+}
+.product-list .product .head{
+    font-size: 18px;
+    font-weight: bold;
+}
+.api-workflow{
+    width: 80%;
+    height: 600px;
+    margin: 120px auto 80px auto;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.api-workflow .api-workflow-left{
+    width: 15%;
+    background: var(--code-li-color);
+}
+.api-workflow .api-workflow-left .api-logo .api-icon{
+    width: 50px;
+    height: 50px;
+    margin: 8px auto;
+    background-image: url('../public/favicon.ico');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.api-workflow .api-workflow-left .api-logo .api-name{
+    text-align: center;
+    color: var(--lavender);
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.api-workflow .api-workflow-left hr{
+    width: 90%;
+    height: 1px;
+    border-radius: 10px;
+    margin: 6px auto;
+    background: grey;
+}
+.api-workflow .api-workflow-right{
+    width: 85%;
+    background: var(--mit-color);
+}
+.api-workflow .api-workflow-right .api-grid{
+    height: 100%;
+    background-image: url('../images/api_grid.png');
+    background-size: 20% 20%;
+    background-position: center;
+}
+.api-workflow .api-workflow-right .api-grid .api-diagram{
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    background-image: url('../images/api_workflow.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -1397,15 +1524,38 @@ footer .bottom-component .right-side a{
     .feed-area .single-feed h5{
         font-size: 18px;
     }
-    .apiView{
+    .apiView, .apiLand{
         display: flex;
         flex-direction: column;
     }
-    .apiView .api-container{
+    .apiView .api-container, .apiLand .api-container{
         width: 100%;
     }
-    .api-container .body form .form-group {
+    .api-container .body form .form-group{
         width: 95%;
+    }
+    .apiLand .api-left h2{
+        margin: 2% 0px 10px 4px;
+        font-size: 36px;
+        letter-spacing: 1px;
+        word-spacing: 2px;
+    }
+    .apiLand .api-left p{
+        text-align: justify;
+    }
+    .product-list{
+        flex-direction: column;
+    }
+    .product-list .product{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .api-workflow{
+        width: 90%;
+        height: 200px;
+    }
+    .api-workflow .api-workflow-right .api-grid {
+        background-size: 40% 40%;
     }
         
 }
