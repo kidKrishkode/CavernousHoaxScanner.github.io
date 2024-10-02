@@ -295,6 +295,12 @@ app.get('/apiPlug', (req, res) => {
     });
 });
 
+app.get('/api', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('apiLanding',{header, services, feed, faq, footer});
+    });
+});
+
 function newImage(req,res,imageUrl){
     const imagePath = imageUrl;
     fs.access(imagePath, fs.constants.F_OK, (err) => {
