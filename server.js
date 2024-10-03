@@ -102,6 +102,7 @@ app.get('/compiler', async (req, res) => {
         appointCode: compiler.appointCode.toString(),
         htmlCompiler: compiler.htmlCompiler.toString(),
         jsCompiler: compiler.jsCompiler.toString(),
+        pyInterpreter: compiler.pyInterpreter.toString(),
         codefork: jsonfile.readFileSync('./config/codefork.json')
     }});
 });
