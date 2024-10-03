@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="../public/index.css" />
     <link rel="icon" href="../public/favicon.ico" />
 </head>
+<style>
+    .code-editor:before{
+        display: none;
+    }
+</style>
 <body>
     <header id="header">
         <%= header %>
@@ -66,7 +71,38 @@
                 </div>
             </div>
         </div>
+        <div id="api-pycode" class="appear hide">
+            <div class="api-name"><i class="fa fa-bolt"></i> Fast API BaseModel</div>
+            <div class="code-editor">
+                <div class="code-wrapper">
+                    <!-- <div class="line-numbers" id="apiInSnipPython-line"></div> -->
+                    <pre class="code language-html" contenteditable="false" spellcheck="false" id="apiInSnipPython">
+                        Python Code
+                    </pre>
+                </div>
+            </div>
+            <small class="form-text text-muted" style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur laudantium temporibus, obcaecati quod natus id voluptatibus sed? Illo, accusamus totam.</small>
+        </div>
+        <div id="code-glow" class="appear invisible"></div>
+        <div id="code-greet" class="appear invisible">
+            <div class="head">Accelerate your <span>idea</span><i class="fa fa-rocket"></i></div>
+            <p class="body"><span>CHS API</span> empowers developers to complete task 55% faster with mediatech API coding assistance across workflows.</p>
+            <div class="btn">Explore CHS API &gt;</div>
+        </div>
+        <!-- <div class="graph-repo">
+            <div class="graph-component graph-left">
+                <h2>Traffic Analysis <span>Monthly updated</span></h2>
+                <div class="graph">Graph</div>
+            </div>
+            <div class="graph-component graph-right">
+                <h2>Popular Service</h2>
+                <div class="graph">Graph</div>
+            </div>
+        </div> -->
     </section>
+    <div id="moreProduct" class="appear hide">
+        <%= services %>
+    </div>
     <div id="customerFeed">
         <%= feed %>
     </div>
@@ -81,12 +117,26 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('header', 'apiLandingPage', 'faq-help', 'footer');
-    appearSet.push(['.product-list', 120], ['.api-workflow', 580],['#faq-help', 980]);
+    pageSet.push('header', 'apiLandingPage', 'moreProduct', 'faq-help', 'footer');
+    appearSet.push(['.product-list', 120], ['.api-workflow', 580], ['#api-pycode', 980], ['#code-glow', 980], ['#code-greet', 980], ['#moreProduct', 1280], ['#faq-help', 1480]); 
     currentPage.push('apiLanding');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
+    document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
+    codeset('Image Converter', 'Python');
+
+    function codeset(name, lang){
+        setTimeout(()=>{
+            appointCode = eval(compiler.appointCode);
+            document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler);
+            // updateLine = eval(compiler.updateLineNumbers);
+            pyInterpreter = eval(compiler.pyInterpreter);
+            ideDeploy = eval(compiler.ideDeploy);
+            pyInterpreter('#apiInSnipPython');
+            ideDeploy('#apiInSnipPython','#apiInSnipPython-line', 0);
+        },1000);
+    }
 </script>
 </html>
