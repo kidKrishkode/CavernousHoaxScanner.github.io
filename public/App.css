@@ -46,9 +46,9 @@ li .active{
     color: grey!important;
 }
 .flo{
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 .flx{
     display: flex;
@@ -79,6 +79,7 @@ li .active{
 }
 .navbar-brand img{
     margin-left: calc(50% - 25px);
+    user-select: none;
 }
 .navbar-hame, .nav-search{
     width: 15%;
@@ -509,6 +510,7 @@ li .active{
     height: 150px;
     opacity: 0.8;
     z-index: -20;
+    user-select: none;
     animation: spring 5s linear infinite;
 }
 @keyframes spring{
@@ -528,6 +530,7 @@ li .active{
     height: 400px;
     opacity: 0.8;
     z-index: -20;
+    user-select: none;
 }
 .right-middle-des{
     position: absolute;
@@ -538,6 +541,7 @@ li .active{
     transform: rotate(20deg);
     opacity: 0.5;
     z-index: -20;
+    user-select: none;
 }
 .left-bottom-des{
     position: absolute;
@@ -547,6 +551,7 @@ li .active{
     height: 200px;
     opacity: 0.8;
     z-index: -20;
+    user-select: none;
 }
 .jelly{
 	display: block;
@@ -620,6 +625,12 @@ li .active{
 .show{
     opacity: 1;
     left: 0%;
+}
+.invisible{
+    opacity: 0;
+}
+.visible{
+    opacity: 1;
 }
 .htsi .card-group{
     width: 80%;
@@ -799,6 +810,7 @@ footer .bottom-component .right-side a{
     filter: grayscale(1);
     transition: 1s ease-in-out;
     cursor: pointer;
+    user-select: none;
 }
 #moreProduct{
     width: 90%;
@@ -1249,6 +1261,7 @@ footer .bottom-component .right-side a{
     position: relative;
     width: 90%;
     margin: 4px auto;
+    user-select: none;
 }
 .product-list{
     width: 90%;
@@ -1278,6 +1291,14 @@ footer .bottom-component .right-side a{
     border-radius: 50%;
     background: linear-gradient(180deg, #2323ff,#e472e4);
     margin: 10px auto 4px auto;
+    animation: 30s mixture linear infinite;
+}
+@keyframes mixture{
+    form{
+        rotate: 0deg;
+    }to{
+        rotate: 360deg;
+    }
 }
 .product-list .product .head{
     font-size: 18px;
@@ -1325,7 +1346,7 @@ footer .bottom-component .right-side a{
 .api-workflow .api-workflow-right .api-grid{
     height: 100%;
     background-image: url('../images/api_grid.png');
-    background-size: 20% 20%;
+    background-size: 25% 25%;
     background-position: center;
 }
 .api-workflow .api-workflow-right .api-grid .api-diagram{
@@ -1336,6 +1357,124 @@ footer .bottom-component .right-side a{
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+#api-pycode{
+    width: 30%;
+    border-radius: 10px;
+    background: var(--dark-color);
+    backdrop-filter: blur(4px);
+    padding: 10px 8px;
+    position: relative;
+    right: 0px;
+    top: -130px;
+    margin-left: 65%;
+}
+#api-pycode .api-name{
+    color: #01abab;
+    padding: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: monospace;
+}
+#code-glow{
+    width: 480px;
+    height: 480px;
+    margin: 0px;
+    background-image: url('../images/glow1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    user-select: none;
+    position: absolute;
+    right: 20%;
+    top: 170%;
+    z-index: -20;
+}
+#code-greet{
+    position: absolute;
+    top: 225%;
+    left: 15%;
+    width: 35%;
+}
+#code-greet .head{
+    color: var(--eco-lighting);
+    font-size: 32px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 2px 0px;
+}
+#code-greet .head span{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#code-greet .head i{
+    font-size: 14px;
+    margin-left: 2px;
+}
+#code-greet .body{
+    font-size: 16px;
+    font-weight: 400;
+    color: gray;
+    font-family: sans-serif;
+}
+#code-greet .body span{
+    color: var(--revers-white);
+    font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#code-greet .btn{
+    color: var(--revers-white);
+    font-weight: 400;
+    font-family: sans-serif;
+    padding: 0px;
+}
+.graph-repo{
+    width: 90%;
+    height: 400px;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.graph-repo .graph-component{
+    background: linear-gradient(20deg, transparent, var(--glass-color), var(--blend-color));
+    border-radius: 10px;
+    border: 1px solid var(--venda);
+    margin: 0px;
+    padding: 8px 6px;
+}
+.graph-repo .graph-component h2{
+    font-size: 16px;
+    font-weight: 400px;
+    color: var(--revers-white);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.graph-repo .graph-component h2 span{
+    font-size: 10px;
+    padding: 4px;
+    border: 2px solid #ec2c75;
+    border-radius: 20px;
+    margin-left: 4px;
+    background: linear-gradient(50deg, #2323ff 30%, #ec2c75 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+.graph-repo .graph-component canvas{
+    position: relative;
+    width: 90%;
+    height: 350px;
+    margin: 4px auto;
+    background: var(--glass-color);
+    overflow: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+.graph-repo .graph-left{
+    width: 68%;
+}
+.graph-repo .graph-right{
+    width: 28%;
+    background: var(--blend-color);
 }
 
 @media only screen and (max-width: 900px){
@@ -1554,8 +1693,54 @@ footer .bottom-component .right-side a{
         width: 90%;
         height: 200px;
     }
-    .api-workflow .api-workflow-right .api-grid {
+    .api-workflow .api-workflow-left .api-logo .api-icon{
+        width: 20px;
+        height: 20px;
+    }
+    .api-workflow .api-workflow-left .api-logo .api-name{
+        font-size: 6px;
+    }
+    .api-workflow .api-workflow-right .api-grid{
         background-size: 40% 40%;
+    }
+    #api-pycode{
+        width: 50%;
+        margin-left: 48%;
+        font-size: 6px;
+        top: -100px;
+    }
+    #api-pycode .api-name{
+        font-size: 8px;
+    }
+    #api-pycode .code-editor{
+        min-height: auto;
+    }
+    #code-glow{
+        width: 240px;
+        height: 240px;
+        top: 240%;
+    }
+    #code-greet{
+        width: 42%;
+        top: 260%;
+        left: 6%;
+    }
+    #code-greet .head{
+        font-size: 18px;
+    }
+    #code-greet .body{
+        font-size: 12px;
+    }
+    .graph-repo{
+        flex-direction: column;
+        height: 500px;
+    }
+    .graph-repo .graph-component{
+        width: 100%;
+        margin-top: 20px;
+    }
+    .graph-repo .graph-component canvas{
+        height: 200px;
     }
         
 }

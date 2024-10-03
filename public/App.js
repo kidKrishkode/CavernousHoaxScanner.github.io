@@ -141,12 +141,24 @@ System.prototype.scrollAppear = function(){
         var y = window.scrollY;
         for(let i=0; i<appearSet.length; i++){
             let box = document.querySelector(appearSet[i][0]);
-            if(y >= appearSet[i][1]){
-                box.classList.add("show");
-                box.classList.remove("hide");
+            if(box.classList.contains('hide') || box.classList.contains('show')){
+                if(y >= appearSet[i][1]){
+                    box.classList.add("show");
+                    box.classList.remove("hide");
+                }else{
+                    box.classList.add("hide");
+                    box.classList.remove("show");
+                }
+            }else if(box.classList.contains('invisible') || box.classList.contains('visible')){
+                if(y >= appearSet[i][1]){
+                    box.classList.add("visible");
+                    box.classList.remove("invisible");
+                }else{
+                    box.classList.add("invisible");
+                    box.classList.remove("visible");
+                }
             }else{
-                box.classList.add("hide");
-                box.classList.remove("show");
+                console.warn("Unkown class property!");
             }
         }
     }catch(e){
@@ -244,6 +256,9 @@ System.prototype.download_pdf = function(filePath, fileName){
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+System.prototype.inphantCDN = function(){
+    window.location = "https://kidKrishkode.github.io/inphantApi.github.io/main.html?page=DocsPage&test=null&search=How%20to%20Use%20Our%20API&env=false";
 }
 System.prototype.themeToggle = function(id){
     if(theme == 0){
