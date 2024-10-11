@@ -33,6 +33,30 @@ def resizeImage(image_path, width, height):
     else:
         return 22
 
+def enhance_image(image_data):
+    image_bytes = base64.b64decode(image_data.split(",")[1])
+    image = Image.open(io.BytesIO(image_bytes))
+
+    image = image.convert("RGB")
+
+    sharpness_enhancer = ImageEnhance.Sharpness(image)
+    image = sharpness_enhancer.enhance(2.0)  # Increase sharpness by a factor of 2
+
+    image = image.filter(ImageFilter.SMOOTH_MORE)  # Apply a stronger smooth filter
+
+    brightness_enhancer = ImageEnhance.Brightness(image)
+    image = brightness_enhancer.enhance(1.2)  # Slightly increase brightness
+
+    contrast_enhancer = ImageEnhance.Contrast(image)
+    image = contrast_enhancer.enhance(1.3)  # Increase contrast by 1.3x
+
+    buffer = io.BytesIO()
+    image.save(buffer, format="JPEG")
+
+    enhanced_image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return f"data:image/jpg;base64,{enhanced_image_base64}"
+    
+
 def main():
     if len(sys.argv) != 4:
         print("Usage: resizer.py <image_path> <height> <width>")
