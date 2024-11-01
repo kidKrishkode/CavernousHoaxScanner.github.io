@@ -26,5 +26,12 @@
         "name": "Image Compressor",
         "method": "POST",
         "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageCompressor'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    },
+    {
+        "id": 4,
+        "lang": "Python",
+        "name": "Image Converter",
+        "method": "Define",
+        "code": "from@ g|fastapi|n import@ g|FastAPI|n, f|Query|n\nfrom@ g|fastapi|n.g|middleware|n.g|cors |n import@ g|CORSMiddleware|n\nfrom@ g|pydantic|n import@ g|BaseModel|n\nimport@ g|Preprocessor|n\nimport@ g|TaskMaster|n\n\ns|app|n = g|FastAPI|n()\n\ns|app|n.f|add_middleware|n(g|Preprocessor|n.s|CORSMiddleware|n)\n\nclasse g|ImageData|n(g|BaseModel|n):\n\ts|form|n: g|str|n\n\ts|img |n: g|str|n\n\n@s|app|n.f|get|n(s'/api/imageConverter'n)\ndef read_root/(s|data|n: g|ImageData|n):\n\ts|src|n = g|TaskMaster|n.f|convert_img |n(s|data|n.s|img |n, s|data|n.s|form|n)\n\treturn@ g|Responce|n.f|model|n(s|src|n, g|Preprocessor|n.f|timeStamp|n())\n\n"
     }
 ]

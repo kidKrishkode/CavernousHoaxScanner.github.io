@@ -86,6 +86,63 @@ module.exports = {
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         };
     },
+    trafficAnalyser: () => {
+        const labels = ['Aug24','Sep24','Oct24','Nov24','Dec24','Jan25','Feb25','Mar25','Apr25','May25','Jun25', 'Jul25'];
+        const xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160];
+        const yValues = [7, 9, 16, 18, 18, 18, 20, 26, 33, 28, 37, 54];
+        const currentMonth = new Date().getMonth()+1;
+        let endMonth;
+        if(currentMonth > 8){
+            endMonth = currentMonth - 8;
+        }else{
+            endMonth = currentMonth + 5;
+        }
+        labels.splice(endMonth);
+        xValues.splice(endMonth);
+        yValues.splice(endMonth);
+        return {labels, xValues, yValues};
+    },
+    popularityTest: (ul, chart) => {
+        const xValues = ["Deepfake Detector", "Image Compressor", "Image Converter", "Sentiments Analyser", "Image to Pdf"];
+        const yValues = [23, 31, 26, 12, 8];
+        const col1 = [
+            "#6e13af",
+            "#9D00B3",
+            "#430085",
+            "#320a5b",
+            "#2B0037"
+        ];
+        let ratio= yValues;
+        let temp, name, loc, x='', styling="background-image: conic-gradient(", left=0, right;
+        for(let j=0; j<xValues.length; j++){
+            name = xValues[j];
+            temp = yValues[j];
+            loc = j;
+            if(j<1){
+                right = Math.round((yValues[j] / 100)*360)-1;
+            }else{
+                right = left + Math.round((yValues[j] / 100)*360)-1;
+            }
+            styling += `${col1[loc]} ${left}deg ${right}deg`;
+            if(j<xValues.length-1){
+                styling+=',';
+            }
+            left = right;
+            if((xValues[loc] != '' ) && ((left + right) != 0)){
+                ul.innerHTML += `<li><div class="pie-box"style="background: ${col1[loc]}"></div>${name} [≈ ${Math.round(yValues[j])}%]</li>`;
+            }
+            xValues[loc] = '';
+        }
+        styling += ");";
+        chart.style.cssText = styling;
+        for(let j=0; j<ratio.length-1; j++){
+            if(ratio[j] != undefined){
+                x+=`${ratio[j]} : `;
+            }else{
+                x+='0 : ';
+            }
+        }
+    },
     foo:() => {
         return 0;
     }

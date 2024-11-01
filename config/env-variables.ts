@@ -74,5 +74,9 @@ module.exports = {
                     <p><|error.message|></p>
                 <div class="btn btn-process" style="margin-top: 40px;" onclick="system.closePyError();"><i class="fa fa-refresh"></i> Re-try</div>
             </div>
-        </div>`
+        </div>`,
+    traffic: {
+        flow: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160],
+        visitor: [7, 9, 16, 18, 18, 18, 20, 26, 33, 28, 37, 54]
+    }
 };
