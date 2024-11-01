@@ -40,7 +40,7 @@
                 <img src="../images/api_icon.png" alt="chs"/>
             </div>
         </div>
-        <div class="product-list appear hide">
+        <div class="product-list product-list-a appear hide">
             <div class="product">
                 <div class="icon"></div>
                 <div class="head">Image Compressor</div>
@@ -89,16 +89,35 @@
             <p class="body"><span>CHS API</span> empowers developers to complete task 55% faster with mediatech API coding assistance across workflows.</p>
             <div class="btn">Explore CHS API &gt;</div>
         </div>
-        <!-- <div class="graph-repo">
+        <div class="graph-repo">
             <div class="graph-component graph-left">
                 <h2>Traffic Analysis <span>Monthly updated</span></h2>
-                <div class="graph">Graph</div>
+                <canvas class="graph" id="lineChart">Graph</canvas>
             </div>
             <div class="graph-component graph-right">
                 <h2>Popular Service</h2>
-                <div class="graph">Graph</div>
+                <div class="head">Populization data depend on Traffic</div>
+                <canvas class="graph pieChart">Pie</canvas>
+                <ul class="pie-ul"></ul>
             </div>
-        </div> -->
+        </div>
+        <div class="product-list product-list-b appear hide">
+            <div class="product">
+                <div class="icon"></div>
+                <div class="head">Face Morphisum</div>
+                <div class="body">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laudantium cumque ex doloribus earum tempore rerum pariatur sapiente veniam saepe?</div>
+            </div>
+            <div class="product">
+                <div class="icon"></div>
+                <div class="head">Image to PDF Maker</div>
+                <div class="body">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laudantium cumque ex doloribus earum tempore rerum pariatur sapiente veniam saepe?</div>
+            </div>
+            <div class="product">
+                <div class="icon"></div>
+                <div class="head">Sentiments Analyser</div>
+                <div class="body">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laudantium cumque ex doloribus earum tempore rerum pariatur sapiente veniam saepe?</div>
+            </div>
+        </div>
     </section>
     <div id="moreProduct" class="appear hide">
         <%= services %>
@@ -116,10 +135,11 @@
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
+<script src="../public/setupVitals.js"></script>
 <script>
     pageSet.push('header', 'apiLandingPage', 'moreProduct', 'faq-help', 'footer');
-    appearSet.push(['.product-list', 120], ['.api-workflow', 580], ['#api-pycode', 980], ['#code-glow', 980], ['#code-greet', 980], ['#moreProduct', 1280], ['#faq-help', 1480]); 
-    currentPage.push('apiLanding');
+    appearSet.push(['.product-list-a', 120], ['.api-workflow', 580], ['#api-pycode', 980], ['#code-glow', 980], ['#code-greet', 980], ['.product-list-b', 1280], ['#moreProduct', 1480], ['#faq-help', 1680]); 
+    currentPage.push('api');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
@@ -138,5 +158,45 @@
             ideDeploy('#apiInSnipPython','#apiInSnipPython-line', 0);
         },1000);
     }
+</script>
+<script>
+    setTimeout(()=>{
+        const trafficAnalyser = eval(config.hex.trafficAnalyser);
+        const line_graph = trafficAnalyser();
+
+        const xValues = line_graph.xValues;
+        const yValues = line_graph.yValues;
+
+        new Chart("lineChart", {
+            type: "line",
+            data: {
+                labels: line_graph.labels,
+                datasets: [{
+                    fill: true,
+                    lineTension: 0,
+                    backgroundColor: "rgba(110, 19, 175, 0.3)",
+                    borderColor: "rgba(50, 0, 255, 0.1)",
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Visitor density according to Time flow"
+                },
+                scales: {
+                    yAxes: [{ticks: {min: 0, max: 60}}],
+                }
+            }
+        });
+    },1000);
+
+    setTimeout(()=>{
+        let pie = document.querySelector('.pieChart');
+        let ul = document.querySelector('.pie-ul');
+        let popularityTest = eval(config.hex.popularityTest);
+        popularityTest(ul, pie);
+    },1000);
 </script>
 </html>
