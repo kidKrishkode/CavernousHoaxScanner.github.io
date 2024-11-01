@@ -22,7 +22,6 @@ const PORT = process.env.PORT || 5000;
 const AppName = "Cavernous Hoax Scanner";
 let web = new WEB(PORT);
 let imagePath,width,height;
-const pixelData = [];
 const pdf_imgPath = [];
 let editor_img_path;
 let pdf_limit;
@@ -61,7 +60,7 @@ app.use((req, res, next) => {
         }
         const my_browser = security.browser(req.headers);
         if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data)){
-            res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
+            // res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
         }
         next();
     }catch(e){
@@ -92,6 +91,8 @@ app.get('/varchar', async (req, res) => {
     res.status(200).json({varchar, navi, hex: {
         vaildFiles: hex.vaildFiles.toString(),
         dragAndSort: hex.dragAndSort.toString(),
+        trafficAnalyser: hex.trafficAnalyser.toString(),
+        popularityTest: hex.popularityTest.toString()
     }});
 });
 
@@ -105,6 +106,31 @@ app.get('/compiler', async (req, res) => {
         pyInterpreter: compiler.pyInterpreter.toString(),
         codefork: jsonfile.readFileSync('./config/codefork.json')
     }});
+});
+
+app.get('/privacy', (req, res) => {
+    const promises = [
+        ejs.renderFile('./views/privacyPolicy.ejs', {
+            id: req.query.view==undefined?0:req.query.view,
+            AppName, 
+            update: (new Date().toDateString()).substring(4,10),
+            contact: web.appInfo.contact,
+            developer: web.appInfo.developer,
+            view: req.query.view==undefined?0:req.query.view,
+            license: req.query.view==2?fs.readFileSync(path.join(__dirname,'LICENSE')).toString():''
+        }),
+    ];
+    Promise.all(promises).then(([privacy]) => {
+        res.status(200).json({privacy});
+    });
+});
+
+app.get('/terms', (req, res) => {
+    res.redirect('/privacy?encode=v65w2*y');
+});
+
+app.get('/license', (req, res) => {
+    res.redirect('/privacy?encode=v65w2*x');
 });
 
 app.get('/imgToPdf', (req, res) => {
@@ -201,33 +227,6 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         });
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
-    }
-});
-
-app.get('/imageInfo', async (req, res) => {
-    try{
-        imagePath = path.join(__dirname, 'public', './images/image1.jpg');
-        const image = await jimp.read(imagePath);
-        width = image.bitmap.width;
-        height = image.bitmap.height;
-        await callPythonProcess([imagePath, height, width], 'resizer').then(result => {
-            imagePath = result.path=="Image size under conditions"?imagePath:result.path;
-        }).catch(error => {
-            console.error('Error:', error.message);
-        });
-        const newimg = await jimp.read(imagePath);
-        width = newimg.bitmap.width;
-        height = newimg.bitmap.height;
-        for(let y=0; y<height; y++){
-            for(let x=0; x<width; x++){
-                const pixel = jimp.intToRGBA(newimg.getPixelColor(x,y));
-                pixelData.push(pixel);
-            }
-        }
-        res.json([pixelData, height, width]);
-    }catch(e){
-        console.log(e);
-        res.status(500).send('An Error occurred');
     }
 });
 
