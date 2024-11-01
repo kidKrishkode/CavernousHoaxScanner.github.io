@@ -27,8 +27,11 @@ function Loader(load){
     this.loaded = load;
 }
 function MEMORY(){
-    this.dbName = 'CHSDB';
+    this.dbName = 'Krishfolio';
     this.dbVersion = 1;
+}
+function TAB(){
+    this.opened = false;
 }
 document.addEventListener("DOMContentLoaded",() => {
     loader = new Loader(true);
@@ -86,6 +89,17 @@ Loader.prototype.remove = function(time){
         document.body.style.overflowY = "scroll";
         system.VisiblePage();
     },time);
+}
+TAB.prototype.open = function(){
+    const tabEle = document.createElement('div');
+    tabEle.classList.add("tabPage");
+    document.body.appendChild(tabEle);
+    TAB.opened = true;
+    document.querySelectorAll('.tabPage')[document.querySelectorAll('.tabPage').length-1].classList.add('blbg');
+}
+TAB.prototype.close = function(){
+    document.body.removeChild(document.querySelector('.tabPage'));
+    TAB.opened = false;
 }
 System.prototype.setUp = function(){
     try{
@@ -293,12 +307,12 @@ System.prototype.encodedURI = function(url, key){
     return str.toString();
 }
 System.prototype.setActiveMenu = function(menuName){
-    const navMenu = document.querySelector('.hambarger-menu');
+    const navMenu = document.querySelector('#side-menu');
     const navItems = navMenu.querySelectorAll('.nav-item');
     navItems.forEach(item => {
         item.querySelector('.nav-link').classList.remove('active');
     });
-    const activeItem = navMenu.querySelector(`.nav-link[href="/${menuName.toLowerCase().replace(' ', '')}"]`);
+    const activeItem = navMenu.querySelector(`.nav-link[href="/${menuName.replace(' ', '')}"]`);
     if(activeItem){
         activeItem.classList.add('active');
     }else{
@@ -339,6 +353,53 @@ System.prototype.compilerSetUp = function(){
     }catch(e){
         console.log('Error to set up compiler!');
     }
+}
+System.prototype.openPrivacy = function(){
+    let tab = new TAB();
+    tab.open();
+    // let link = `${system.encodedURI('/privacy','id='+3)}`;
+    let link = "/privacy";
+    fetch(link, {
+        method: 'GET',
+        header: {
+            "Content": "application/json"
+        },
+    }).then(response => response.json()).then(privacy => {
+        document.querySelector('.tabPage').innerHTML = (privacy.privacy);
+    }).catch(e => console.log(e));
+}
+System.prototype.closePrivacy = function(){
+    let tab = new TAB();
+    tab.close();
+}
+System.prototype.openTerms = function(){
+    let tab = new TAB();
+    tab.open();
+    let link = "/terms";
+    fetch(link, {
+        method: 'GET',
+        header: {
+            "Content": "application/json"
+        },
+    }).then(response => response.json()).then(privacy => {
+        document.querySelector('.tabPage').innerHTML = (privacy.privacy);
+    }).catch(e => console.log(e));
+}
+System.prototype.openLicense = function(){
+    let tab = new TAB();
+    tab.open();
+    let link = "/license";
+    fetch(link, {
+        method: 'GET',
+        header: {
+            "Content": "application/json"
+        },
+    }).then(response => response.json()).then(privacy => {
+        document.querySelector('.tabPage').innerHTML = (privacy.privacy);
+        setTimeout(()=>{
+            document.querySelector('.license').innerText = document.querySelector('.license').textContent;
+        })
+    }).catch(e => console.log(e));
 }
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);

@@ -35,7 +35,7 @@ html{
     color: var(--eclipse)!important;
 }
 .nav-link{
-    color: var(--charm)!important;
+    color: var(--charm);
     transition: 0.7s ease-in-out;
 }
 .nav-link:hover{
@@ -114,6 +114,11 @@ li .active{
     z-index: 99;
     background: transparent;
 }
+.tabPage{
+    height: 100%;
+    position: fixed;
+    background: #00000069;
+}
 .btn-process{
     color: #fff;
     background-color: var(--lavender);
@@ -182,7 +187,7 @@ li .active{
     display: none;
 }
 #service-menu li a{
-    color: #17a2b8!important;
+    color: #17a2b8;
 }
 #e404{
     height: 100vh;
@@ -1428,7 +1433,7 @@ footer .bottom-component .right-side a{
 }
 .graph-repo{
     width: 90%;
-    height: 400px;
+    height: 500px;
     margin: 5px auto;
     display: flex;
     flex-direction: row;
@@ -1440,6 +1445,7 @@ footer .bottom-component .right-side a{
     border: 1px solid var(--venda);
     margin: 0px;
     padding: 8px 6px;
+    overflow: hidden;
 }
 .graph-repo .graph-component h2{
     font-size: 16px;
@@ -1460,11 +1466,10 @@ footer .bottom-component .right-side a{
 }
 .graph-repo .graph-component canvas{
     position: relative;
-    width: 90%;
-    height: 350px;
+    width: 80%;
+    height: 450px;
     margin: 4px auto;
-    background: var(--glass-color);
-    overflow: auto;
+    overflow: hidden;
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
@@ -1474,8 +1479,117 @@ footer .bottom-component .right-side a{
 }
 .graph-repo .graph-right{
     width: 28%;
-    background: var(--blend-color);
+    background: linear-gradient(20deg, var(--glass-color), var(--blend-color));
 }
+.graph-repo .graph-right .head{
+    color: gray;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 8px auto 10px auto;
+}
+.pieChart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto 20px auto;
+    display: block;
+    color: transparent;
+    width: 70%;
+    height: 260px!important;
+    border-radius: 50%;
+    background-image: conic-gradient(black 0deg 90deg, white 90deg 180deg, black 180deg 270deg, white 270deg 360deg);
+}
+.pie-ul{
+    list-style: none;
+    color: grey;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 12px 5px;
+    padding: 2px 4px;
+}
+.pie-ul li{
+    display: flex;
+    flex-direction: row;
+}
+.pie-box{
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin: 7px 4px;
+    background: #000;
+}
+#privacyPage,#licensePage{
+    width: 50%;
+    height: calc(100% - 40px);
+    margin: 20px 25%;
+    background: var(--blend-color);
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border: 2px solid var(--mit-color);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    overflow: hidden;
+}
+#privacyPage .head,#licensePage .head{
+    width: 100%;
+    height: 150px;
+    /* background-image: linear-gradient(54deg, rgba(12, 141, 240, 0.8), rgba(0, 255, 255, 0.8)), url('../images/Pen&ink.png'); */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    clip-path: polygon(100% 0%, 100% 77%, 50% 100%, 0% 75%, 0 0);
+    position: relative;
+}
+#privacyPage .head:before,#licensePage .head:before{
+    content: " ";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    right: 0%;
+    left: 0%;
+    opacity: 0.2;
+    z-index: -1;
+    background: linear-gradient(to left, var(--glass-color) 0%, var(--venda) 0%, var(--glass-color) 100%);
+}
+#privacyPage .head{
+    background-image: linear-gradient(54deg, rgba(12, 141, 240, 0.8), rgba(0, 255, 255, 0.8)), url('../images/hand-shack.png');
+}
+#licensePage .head{
+    background-image: linear-gradient(54deg, rgba(12, 141, 240, 0.8), rgba(0, 255, 255, 0.8)), url('../images/libra.png');
+}
+#privacyPage .title,#licensePage .title{
+    text-align: center;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: var(--charm);
+    margin: 4px 0px;
+    /* height: auto; */
+}
+#privacyPage .component,#licensePage .component{
+    width: 100%;
+    padding: 4px 2px;
+    height: 540px;
+    max-height: 540px;
+    overflow-y: scroll;
+    color: grey;
+    text-align: justify;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+#privacyPage .component h5,#licensePage .component h5{
+    color: var(--atom-blue);
+}
+#privacyPage .component .mac-head,#licensePage .component .mac-head{
+    text-align: center;
+    color: var(--revers-white);
+}
+#privacyPage .component .form-group,#licensePage .component .form-group{
+    width: 100%;
+    padding: 2px;
+}
+
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -1503,7 +1617,7 @@ footer .bottom-component .right-side a{
         font-size: 10px;
     }
     .hambarger-menu{
-        width: 55%;
+        width: 65%;
     }
     #e404{
         padding-top: 10%;
@@ -1733,7 +1847,7 @@ footer .bottom-component .right-side a{
     }
     .graph-repo{
         flex-direction: column;
-        height: 500px;
+        height: 600px;
     }
     .graph-repo .graph-component{
         width: 100%;
@@ -1742,5 +1856,24 @@ footer .bottom-component .right-side a{
     .graph-repo .graph-component canvas{
         height: 200px;
     }
+    .graph-repo .graph-right canvas{
+        width: 40%;
+        height: 120px !important;
+    }
+    #privacyPage,#licensePage{
+		width: 90%;
+		height: calc(100% - 40px);
+		margin: 20px 5%;
+	}
+	#privacyPage .head,#licensePage .head{
+		height: 15%;
+	}
+	#privacyPage .title,#licensePage .title{
+		font-size: 28px;
+	}
+	#privacyPage .component,#licensePage .component{
+		height: 75%;
+		max-height: 75%;
+	}
         
 }
