@@ -64,7 +64,7 @@ module.exports = {
     error_templet: `
         <div class="workspace blbg" style="background: #0000009e;" id="errorPreview">
             <div class="errorView">
-                <header class="flx"><img src="../public/favicon.png" alt="load"/>
+                <header class="flx"><img src="../public/favicon.ico" alt="load"/>
                     <span style="cursor: pointer;" onclick="system.closePyError();">&times;</span>
                 </header>
                 <div class="error-message">

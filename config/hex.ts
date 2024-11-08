@@ -143,6 +143,17 @@ module.exports = {
             }
         }
     },
+    isHosted: (req) => {
+        const host = req.hostname;
+        if(host === 'localhost' || host === '127.0.0.1'){
+            return false;
+        }else{
+            return true;
+        }
+    },
+    reward: (res) => {
+        res.redirect('/nonAPIHost');
+    },
     foo:() => {
         return 0;
     }
