@@ -121,6 +121,7 @@
                     },
                     body: JSON.stringify({limit: pdf.imgSet.length})
                 }).then(response => response.json()).then(data => {
+                    console.log(data);
                     const filePath = (data.path).toString();
                     const name = 'chs'+'_'+(new Date().getTime())+'.pdf';
                     system.download_pdf(filePath, name);
@@ -139,16 +140,19 @@
     }
     function sendImagePart(imagePart, index, part){
         const formData = new FormData();
-        formData.append('filePart', imagePart);
-        formData.append('part', part);
-        formData.append('i', index);
-        formData.append('limit', pdf.imgSet.length);
-        fetch('/imgToPdf/upload', {
-            method: 'POST',
-            body: formData
-        }).then(response => response.json()).then(data => {
-            response_set.push(JSON.stringify(data.ack));
-        }).catch(e => console.log(e));
+        setTimeout(() => {
+            formData.append('filePart', imagePart);
+            formData.append('part', part);
+            formData.append('i', index);
+            formData.append('limit', pdf.imgSet.length);
+            console.log(formData.part, formData.i, formData.limit);
+            fetch('/imgToPdf/upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json()).then(data => {
+                response_set.push(JSON.stringify(data.ack));
+            }).catch(e => console.log(e));
+        },1000);
     }
     function afterResponce(data){
         if(typeof data.error !== "undefined"){
