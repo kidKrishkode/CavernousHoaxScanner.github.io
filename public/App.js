@@ -133,6 +133,24 @@ System.prototype.setUp = function(){
         console.log("Error to set up initials!\n",e);
     }
 }
+System.prototype.deviceVision = function(){
+    const userAgent = navigator.userAgent;
+    const isComputer = /Windows|Macintosh|Linux/i.test(userAgent) && !/Mobile/i.test(userAgent);
+    const isMobile = /Android|iPhone|iPad|iPod|Kindle|BlackBerry/i.test(userAgent);
+    const isMobileDesktop = /Android|iPhone|iPad|iPod/i.test(userAgent) && /Chrome|Safari|Firefox/i.test(userAgent) && !/Mobile/i.test(userAgent);
+    return {
+        isComputer,
+        isMobile,
+        isMobileDesktop
+    };
+    // if(isMobile == true){
+    //     console.log('mobile');
+    // }else if(isMobileDesktop == true){
+    //     console.log('desktop');
+    // }else{
+    //     console.log('computer');
+    // }
+}
 System.prototype.VisiblePage = function(){
     try{
         for(let i=0; i<pageSet.length; i++){
@@ -156,7 +174,7 @@ System.prototype.scrollAppear = function(){
         for(let i=0; i<appearSet.length; i++){
             let box = document.querySelector(appearSet[i][0]);
             if(box.classList.contains('hide') || box.classList.contains('show')){
-                if(y >= appearSet[i][1]){
+                if(y >= appearSet[i][1] || system.deviceVision().isMobileDesktop){
                     box.classList.add("show");
                     box.classList.remove("hide");
                 }else{
@@ -164,7 +182,7 @@ System.prototype.scrollAppear = function(){
                     box.classList.remove("show");
                 }
             }else if(box.classList.contains('invisible') || box.classList.contains('visible')){
-                if(y >= appearSet[i][1]){
+                if(y >= appearSet[i][1] || system.deviceVision().isMobileDesktop){
                     box.classList.add("visible");
                     box.classList.remove("invisible");
                 }else{
@@ -184,7 +202,6 @@ System.prototype.feedScroll = function(){
         var container = document.getElementById('feed-group');
         var middleIndex = Math.floor(document.querySelectorAll('.single-feed').length / 2);
         var middleEle = document.querySelectorAll('.single-feed')[middleIndex-1];
-        // middleEle.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
         var rect = middleEle.getBoundingClientRect();
         var space = (middleIndex*20)-10;
         container.scrollTo(rect.left + space + window.pageXOffset, 0);
