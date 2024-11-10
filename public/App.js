@@ -38,9 +38,10 @@ document.addEventListener("DOMContentLoaded",() => {
     loader.creat();
     loader.remove(2000);
     system = new System();
-    window.addEventListener("scroll",system.scrollAppear);
+    window.addEventListener("scroll", system.scrollAppear);
     memory = new MEMORY();
     system.setUp();
+    // window.addEventListener("load", system.isOnline);
 });
 function navbar_toggle(){
     if(nav==0){
@@ -143,13 +144,6 @@ System.prototype.deviceVision = function(){
         isMobile,
         isMobileDesktop
     };
-    // if(isMobile == true){
-    //     console.log('mobile');
-    // }else if(isMobileDesktop == true){
-    //     console.log('desktop');
-    // }else{
-    //     console.log('computer');
-    // }
 }
 System.prototype.VisiblePage = function(){
     try{
@@ -417,6 +411,15 @@ System.prototype.openLicense = function(){
             document.querySelector('.license').innerText = document.querySelector('.license').textContent;
         })
     }).catch(e => console.log(e));
+}
+System.prototype.isOnline = function(){
+    if(!navigator.onLine){
+        error = {
+            "code": 499,
+            "message": "Connection lost, please fix your internet connection or run CHS localy, configure the dependencies for JPEN to start localhost"
+        }
+        system.handelPyError(error);
+    }
 }
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);

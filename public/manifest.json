@@ -18,6 +18,8 @@
     "display": "standalone",
     "theme_color": "#22577aff",
     "background_color": "#ffffff",
+    "contact": "info.whitelotus24@gmail.com",
+    "developer": "WHITE LOTUS",
     "error_log": [
         {"code": 0, "desc": "Invalid user input: empty field detected"},
         {"code": 1, "desc": "Unsupported media format: please try another file type"},
@@ -41,7 +43,7 @@
         {"code": 19, "desc": "Video formatting failed: unable to format video"},
         {"code": 20, "desc": "Image optimization failed: unable to optimize image"},
         {"code": 21, "desc": "Video optimization failed: unable to optimize video"},
-        {"code": 22, "desc": "Image size under conditions: unsble to resize image"}
+        {"code": 22, "desc": "Image size under conditions: unsble to resize image"},
+        {"code": 23, "desc": "Failed to process most recent task, You are in hosted mode but CHS API not connected with system, Try again later or report it"}
     ]
 }
-    
