@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded",() => {
     window.addEventListener("scroll", system.scrollAppear);
     memory = new MEMORY();
     system.setUp();
-    // window.addEventListener("load", system.isOnline);
+    window.addEventListener("load", system.isOnline);
 });
 function navbar_toggle(){
     if(nav==0){
