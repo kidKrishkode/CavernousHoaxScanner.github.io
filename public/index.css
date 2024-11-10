@@ -226,6 +226,7 @@
     color: var(--revers-white);
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
+    tab-size: 25px;
 }
 .rawport{
 	display: none;
