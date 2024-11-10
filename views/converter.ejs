@@ -126,6 +126,7 @@
                 },
                 body: JSON.stringify({extension, imageData})
             }).then(response => response.json()).then(data => {
+                console.log(data);
                 afterResponce(data);
             }).catch(e=>console.log(e));
         }

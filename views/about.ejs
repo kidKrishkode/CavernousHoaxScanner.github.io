@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="../public/logo.png" name="og:image">
+    <meta content="Deepfake detection is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <title version="1.0">Cavernous Hoax Scanner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="icon" href="../public/favicon.ico"/>
+</head>
+<body>
+    <header id="header">
+        <%= header %>
+    </header>
+    <section class="workspace" id="aboutPage">
+        
+
+        
+    </section>
+    <div id="moreProduct" class="appear hide">
+        <%= services %>
+    </div>
+    <div id="customerFeed">
+        <%= feed %>
+    </div>
+    <aside id="faq-help" class="appear hide">
+        <%= faq %>
+    </aside>
+    <footer id="footer">
+        <%= footer %>
+    </footer>
+</body>
+<script src="../public/App.js"></script>
+<script src="../public/default.min.js"></script>
+<script>
+    pageSet.push('header','aboutPage','moreProduct', 'faq-help', 'footer');
+    appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
+    currentPage.push('about');
+    document.getElementById('header').innerHTML = document.getElementById('header').textContent;
+    document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
+    document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
+    document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+    document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
+    
+</script>
+</html>

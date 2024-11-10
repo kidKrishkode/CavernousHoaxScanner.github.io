@@ -150,6 +150,9 @@
                 method: 'POST',
                 body: formData
             }).then(response => response.json()).then(data => {
+                if(typeof data.error !== "undefined"){
+                    return system.handelPyError(data.error);
+                }
                 response_set.push(JSON.stringify(data.ack));
             }).catch(e => console.log(e));
         },1000);
