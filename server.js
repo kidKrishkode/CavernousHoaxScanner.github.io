@@ -113,7 +113,7 @@ app.get('/privacy', (req, res) => {
         ejs.renderFile('./views/privacyPolicy.ejs', {
             id: req.query.view==undefined?0:req.query.view,
             AppName, 
-            update: (new Date().toDateString()).substring(4,10),
+            update: (new Date().toDateString()).substring(4,8)+(new Date().toDateString()).substring(11,16),
             contact: web.appInfo.contact,
             developer: web.appInfo.developer,
             view: req.query.view==undefined?0:req.query.view,
@@ -134,7 +134,9 @@ app.get('/license', (req, res) => {
 });
 
 app.get('/nonAPIHost', (req, res) => {
-    res.status(400).render('notfound',{error: 400, message: "Failed to process most recent task, You are in hosted mode but API not connected, Try again later"});
+    const error_log = web.appInfo['error_log'];
+    const error = hex.pyerrorinfo(error_log, 23);
+    res.status(200).json({error});
 });
 
 app.get('/imgToPdf', (req, res) => {
@@ -145,28 +147,28 @@ app.get('/imgToPdf', (req, res) => {
 
 let imageParts = {};
 app.post('/imgToPdf/upload', upload.single('file'), async (req, res) => {
-    try {
-        const index = parseInt(req.body.i);
-        const part = req.body.part;
-        const imagePart = req.body.filePart;
-        const limit = parseInt(req.body.limit);
-        if(!imageParts[index]) imageParts[index] = ['', ''];
-        imageParts[index][part - 1] = imagePart;
-        if(imageParts[index][0] && imageParts[index][1]){
-            const completeImageData = imageParts[index][0] + imageParts[index][1];
-            const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
-            const tempFilePath = path.join(__dirname, `/assets/pdfhouse/imgs/${index + 1}.png`);
-            if(!hex.isHosted(req)){
+    try{
+        if(!hex.isHosted(req)){
+            const index = parseInt(req.body.i);
+            const part = req.body.part;
+            const imagePart = req.body.filePart;
+            const limit = parseInt(req.body.limit);
+            if(!imageParts[index]) imageParts[index] = ['', ''];
+            imageParts[index][part - 1] = imagePart;
+            if(imageParts[index][0] && imageParts[index][1]){
+                const completeImageData = imageParts[index][0] + imageParts[index][1];
+                const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
+                const tempFilePath = path.join(__dirname, `/assets/pdfhouse/imgs/${index + 1}.png`);
                 await image.writeAsync(`${tempFilePath}`);
                 pdf_imgPath.push(tempFilePath.toString().replaceAll('\\', '/'));
                 pdf_limit = limit;
                 delete imageParts[index];
-            }else{
-                hex.reward(res);
             }
+            const ack = part;
+            res.status(200).json({"ack": ack});
+        }else{
+            hex.reward(res);
         }
-        const ack = part;
-        res.status(200).json({"ack": ack});
     }catch(e){
         res.status(403).render('notfound', {error: 403, message: "Failed to process most recent task, Try again later"});
     }
@@ -174,9 +176,9 @@ app.post('/imgToPdf/upload', upload.single('file'), async (req, res) => {
 
 app.post('/imgToPdf/process', async (req, res) => {
     try{
-        if(pdf_limit!=0 && pdf_imgPath.length!=0){
-            const listOfInput = pdf_imgPath;
-            if(!hex.isHosted(req)){
+        if(!hex.isHosted(req)){
+            if(pdf_limit!=0 && pdf_imgPath.length!=0){
+                const listOfInput = pdf_imgPath;
                 await callPythonProcess(listOfInput, 'imgToPdf').then(path => {
                     if(web.noise_detect(path)) return web.handle_error(res, path);
                     res.status(200).json({path});
@@ -184,10 +186,10 @@ app.post('/imgToPdf/process', async (req, res) => {
                     console.error('Error:', error);
                 });
             }else{
-                hex.reward(res);
+                res.status(200).json({error: 404, message: "Image not found to build your pdf!"});
             }
         }else{
-            res.status(200).json({error: 404, message: "Image not found to build your pdf!"});
+            hex.reward(res);
         }
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
@@ -285,32 +287,6 @@ app.get('/imgEditor/open_editior', (req, res) => {
     });
 });
 
-app.get('/forgBackg', async (req, res) => {
-    try{
-        await callPythonProcess([imagePath, height, width], 'diffForegBackg').then(result => {
-            res.json(result);
-        }).catch(error => {
-            console.error('Error:', error.message);
-        });
-    }catch(e){
-        console.log(e);
-        res.status(500).send('An Error occurred');
-    }
-});
-
-app.get('/faceIdentify', async (req, res) => {
-    try{
-        await callPythonProcess([imagePath, height, width], 'faceDetect').then(result => {
-            res.json(result);
-        }).catch(error => {
-            console.error('Error:', error.message);
-        });
-    }catch(e){
-        console.log(e);
-        res.status(500).send('An Error occurred');
-    }
-});
-
 app.get('/apiPlug', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('apiPlug',{header, services, feed, faq, footer});
@@ -320,6 +296,12 @@ app.get('/apiPlug', (req, res) => {
 app.get('/api', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('apiLanding',{header, services, feed, faq, footer});
+    });
+});
+
+app.get('/about', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('about',{header, services, feed, faq, footer});
     });
 });
 
