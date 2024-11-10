@@ -224,7 +224,7 @@ module.exports = {
         frog = frog.replaceAll(`null@`, `<span class='blu'>null</span>`);
         frog = frog.replaceAll(`for@`, `<span class='blu'>for</span>`);
         frog = frog.replaceAll(`while@`, `<span class='blu'>while</span>`);
-        frog = frog.replaceAll(`return@`, `<span class='blu'>return</span>`);
+        frog = frog.replaceAll(`return@`, `<span class='prp'>return</span>`);
         frog = frog.replaceAll(`if@`, `<span class='blu'>if</span>`);
         frog = frog.replaceAll(`else@`, `<span class='blu'>else</span>`);
         frog = frog.replaceAll(`else if@`, `<span class='blu'>else if</span>`);
