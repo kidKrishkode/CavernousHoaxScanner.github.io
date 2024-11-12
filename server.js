@@ -22,6 +22,8 @@ const PORT = process.env.PORT || 5000;
 const AppName = "Cavernous Hoax Scanner";
 let web = new WEB(PORT);
 let imagePath,width,height;
+let API_LINK = '';
+let single_img_bin = [];
 const pdf_imgPath = [];
 let editor_img_path;
 let pdf_limit;
@@ -33,8 +35,8 @@ app.use('/assets',express.static(path.join(__dirname,'assets')));
 app.use('/images',express.static(path.join(__dirname,'images')));
 app.use('/public',express.static(path.join(__dirname,'public')));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
@@ -62,6 +64,11 @@ app.use((req, res, next) => {
         if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data)){
             // res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
         }*/
+        if(!hex.isHosted(req)){
+            API_LINK = 'http://127.0.0.1:8000'
+        }else{
+            API_LINK = 'https://chsapi.vercel.app';
+        }
         next();
     }catch(e){
         res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
@@ -92,7 +99,8 @@ app.get('/varchar', async (req, res) => {
         vaildFiles: hex.vaildFiles.toString(),
         dragAndSort: hex.dragAndSort.toString(),
         trafficAnalyser: hex.trafficAnalyser.toString(),
-        popularityTest: hex.popularityTest.toString()
+        popularityTest: hex.popularityTest.toString(),
+        singlePartsAPI: hex.singlePartsAPI.toString()
     }});
 });
 
@@ -218,6 +226,15 @@ app.post('/imgToPdf/delete', async (req, res) => {
     }
 });
 
+app.post('/load/single', (req, res) => {
+    if(req.body.index <= req.body.limit && req.body.index > 0){
+        single_img_bin.push(req.body.img);
+        res.status(200).json({"ack": req.body.index, "time": (new Date).getTime()});
+    }else{
+        console.log("Error to upload arrive for frontend mistack");
+    }
+});
+
 app.get('/converter', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('converter',{header, services, feed, faq, footer});
@@ -227,28 +244,28 @@ app.get('/converter', (req, res) => {
 app.post('/converter/process', upload.single('file'), async (req, res) => {
     try{
         const extension = req.body.extension;
-        const tempFilePath = path.join(__dirname,'/assets/bin/temp_image.png');
-        if(!hex.isHosted(req)){
-            if(req.body.imageData){
-                const imagePath = req.body.imageData;
-                const imageData = imagePath.split(',')[1];
-                const image = await jimp.read(Buffer.from(imageData, 'base64'));
-                await image.writeAsync(`${tempFilePath}`);
-            }else{
-                const fileBuffer = req.file.buffer;
-                const image = await jimp.read(fileBuffer);
-                await image.writeAsync(`${tempFilePath}`);
-            }
-            const listOfInput = [tempFilePath.replaceAll('\\','/'), extension];
-            await callPythonProcess(listOfInput, 'converter').then(path => {
-                if(web.noise_detect(path)) return web.handle_error(res, path);
-                res.status(200).json({path, extension});
-            }).catch(error => {
-                console.error('Error:', error);
-            });
+        let imageData;
+        let limit;
+        if(req.body.load!='true'){
+            imageData = req.body.imageData;
+            limit = 2;
         }else{
-            hex.reward(res);
+            imageData = hex.mergeListToString(single_img_bin);
+            limit = single_img_bin.length;
         }
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((result) => {
+            hex.chsAPI(`${API_LINK}/api/imageConverter`, {
+                form: extension,
+                img: '',
+                load: 'true',
+                key: varchar.API_KEY
+            }).then((result) => {
+                single_img_bin.length = 0;
+                res.status(200).json(result);
+            });
+        }).catch((error) => {
+            console.log("Error sending parts:", error);
+        });
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
     }
@@ -304,20 +321,6 @@ app.get('/about', (req, res) => {
         res.status(200).render('about',{header, services, feed, faq, footer});
     });
 });
-
-function newImage(req,res,imageUrl){
-    const imagePath = imageUrl;
-    fs.access(imagePath, fs.constants.F_OK, (err) => {
-        if (err) {
-            res.status(404).send('Image not found');
-            return;
-        }
-        res.setHeader('Content-Disposition', 'attachment; filename=temp.png');
-        res.setHeader('Content-Type', 'image/png');
-        const readStream = fs.createReadStream(imagePath);
-        readStream.pipe(res);
-    });
-}
 
 function WEB(port){
     this.active = true;
