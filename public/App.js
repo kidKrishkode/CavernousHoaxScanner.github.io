@@ -1,6 +1,6 @@
 let nav = 0;
 let service = 0;
-let theme = 1;
+let theme = 0;
 let system;
 let loader;
 let config;
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded",() => {
     window.addEventListener("scroll", system.scrollAppear);
     memory = new MEMORY();
     system.setUp();
-    window.addEventListener("load", system.isOnline);
+    // window.addEventListener("load", system.isOnline);
 });
 function navbar_toggle(){
     if(nav==0){
@@ -334,8 +334,8 @@ System.prototype.handelPyError = function(error){
     try{
         if(!system.error_layout){
             let temp = config.varchar.error_templet;
-            temp = temp.replaceAll('<|error.code|>',error.code);
-            temp = temp.replaceAll('<|error.message|>',error.message);
+            temp = temp.replaceAll('<|error.code|>',error.code!=undefined?error.code:422);
+            temp = temp.replaceAll('<|error.message|>',error.message!=undefined?error.message:"The server understood the content type of the request content, and the syntax of the request content was correct, but it was unable to process the contained instructions.");
             document.body.innerHTML += temp;
             document.body.style.overflowY = "hidden";
             document.body.scrollTop = 0;
