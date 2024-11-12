@@ -154,6 +154,79 @@ module.exports = {
     reward: (res) => {
         res.redirect('/nonAPIHost');
     },
+    singlePartsAPI: async (url, mainString, limit) => {
+        const parts = [];
+        if(mainString==undefined){
+            mainString='';
+        }
+        const partLength = Math.ceil(mainString.length / limit);
+        for(let i = 0; i < limit; i++){
+            parts.push(mainString.slice(i * partLength, (i + 1) * partLength));
+            // console.log(parts[parts.length-1]);
+        }
+        async function sendPart(part, index, limit){
+            let attempts = 0;
+            while(attempts < 3){
+                attempts++;
+                try{
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            img: part,
+                            limit: limit,
+                            index: index,
+                            key: "3045dd712ffe6e702e3245525ac7fa38"
+                        })
+                    });
+                    const data = await response.json();
+                    if(data.ack === index){
+                        return true;
+                    }
+                }catch(error){
+                    console.log(`Error on attempt ${attempts} for part ${index}:`, error);
+                }
+            }
+            return false;
+        }
+        for(let i = 0; i < parts.length; i++){
+            const isSuccess = await sendPart(parts[i], i + 1, limit);
+            if(!isSuccess){
+                return false;
+            }
+        }
+        return true;
+    },
+    chsAPI: async (uri, token) => {
+        const url = uri;
+        try{
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(token)
+            });
+            if(!response.ok){
+                const errorDetails = await response.json();
+                console.error('API Error:', errorDetails);
+                return false;
+            }
+            const result = await response.json();
+            return result;
+        }catch(error){
+            console.error('Error calling API:', error);
+            return false;
+        }
+    },
+    mergeListToString: (singleImgBin) => {
+        if (!Array.isArray(singleImgBin)) {
+            throw new Error("Input must be an array");
+        }
+        return singleImgBin.join('');
+    },
     foo:() => {
         return 0;
     }
