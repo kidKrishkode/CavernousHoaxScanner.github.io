@@ -988,6 +988,15 @@ footer .bottom-component .right-side a{
     z-index: 0;
     display: block;
 }
+.scroll-btn{
+    width:60%;
+    margin: 2px auto;
+}
+.scroll-btn .carousel-control-prev,.scroll-btn .carousel-control-next{
+    border: none;
+    opacity: 0.35;
+    border-radius: 12px;
+}
 #feed{
     width: 100%;
     margin: 80px 0% 20px 0%;
@@ -1000,6 +1009,9 @@ footer .bottom-component .right-side a{
 #feed h3{
     text-align: center;
     color: var(--revers-lavender);
+    position:relative;
+    top: -25px;
+    left: 0;
 }
 .feed-area{
     background: transparent;
