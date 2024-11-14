@@ -45,7 +45,7 @@ body{
     transition: 1s ease-in-out;
 }
 html{
-    scroll-behavior: smooth;
+    scroll-behavior none;
     scrollbar-width: thin;
     scrollbar-color: #320064 transparent;
 }
