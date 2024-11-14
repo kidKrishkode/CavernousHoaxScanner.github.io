@@ -421,6 +421,12 @@ System.prototype.isOnline = function(){
         system.handelPyError(error);
     }
 }
+System.prototype.block_resource = function(ids){
+    for(let i=0; i<ids.selector.length; i++){
+        document.getElementById(ids.selector[i]).disabled = true;
+    }
+    document.getElementById(ids.input).disabled = true;
+}
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);
 }
