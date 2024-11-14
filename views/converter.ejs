@@ -141,6 +141,7 @@
         if(fileInput.files.length!=0){
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
+            system.block_resource({input: "file-input", selector: ["extension-input"]});
             if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 900){
                 compressAndUpload(file, document.getElementById('media-size').textContent.replace('Kb','')*1);
             }else{
