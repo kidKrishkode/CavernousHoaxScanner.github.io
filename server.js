@@ -9,10 +9,18 @@ const querystring = require('querystring');
 const ejs = require('ejs');
 const jsonfile = require('jsonfile');
 const multer = require('multer');
-const varchar = require('./config/env-variables');
-const security = require('./config/security');
-const hex = require('./config/hex');
-const compiler = require('./config/compiler');
+let varchar, security, hex, compiler;
+try{
+    varchar = require('./config/env-variables');
+    security = require('./config/security');
+    hex = require('./config/hex');
+    compiler = require('./config/compiler');
+}catch(e){
+    varchar = require('./config/env-variables.ts');
+    security = require('./config/security.ts');
+    hex = require('./config/hex.ts');
+    compiler = require('./config/compiler.ts');
+}
 require('./public/App.test.js');
 require('dotenv').config();
 
