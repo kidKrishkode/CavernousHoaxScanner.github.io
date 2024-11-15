@@ -40,6 +40,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use('/assets',express.static(path.join(__dirname,'assets')));
+app.use('/config',express.static(path.join(__dirname,'config')));
 app.use('/images',express.static(path.join(__dirname,'images')));
 app.use('/public',express.static(path.join(__dirname,'public')));
 
@@ -114,7 +115,7 @@ app.get('/varchar', async (req, res) => {
 
 app.get('/compiler', async (req, res) => {
     try{
-        const codefork = await jsonfile.readFile('./config/codefork');
+        const codefork = await jsonfile.readFile('./config/codefork.json');
         res.status(200).json({
             compiler: {
                 updateLineNumbers: compiler.updateLineNumbers.toString(),
