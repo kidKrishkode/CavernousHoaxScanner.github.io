@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="stylesheet" href="../public/index.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
 <style>
@@ -140,7 +141,7 @@
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
-<script src="../public/setupVitals.js"></script>
+<!-- <script src="../public/setupVitals.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
     pageSet.push('header', 'apiLandingPage', 'moreProduct', 'faq-help', 'footer');
@@ -154,15 +155,19 @@
     codeset('Image Converter', 'Python');
 
     function codeset(name, lang){
-        setTimeout(()=>{
-            appointCode = eval(compiler.appointCode);
-            document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler);
-            // updateLine = eval(compiler.updateLineNumbers);
-            pyInterpreter = eval(compiler.pyInterpreter);
-            ideDeploy = eval(compiler.ideDeploy);
-            pyInterpreter('#apiInSnipPython');
-            ideDeploy('#apiInSnipPython','#apiInSnipPython-line', 0);
-        },1000);
+        try{
+            setTimeout(()=>{
+                appointCode = eval(compiler.appointCode);
+                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler);
+                // updateLine = eval(compiler.updateLineNumbers);
+                pyInterpreter = eval(compiler.pyInterpreter);
+                ideDeploy = eval(compiler.ideDeploy);
+                pyInterpreter('#apiInSnipPython');
+                ideDeploy('#apiInSnipPython','#apiInSnipPython-line', 0);
+            },1000);
+        }catch(e){
+            document.getElementById('apiInSnipPython').innerText = e+"\n\n";
+        }
     }
 </script>
 <script>
