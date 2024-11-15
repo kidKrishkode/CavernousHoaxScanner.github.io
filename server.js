@@ -114,7 +114,7 @@ app.get('/varchar', async (req, res) => {
 
 app.get('/compiler', async (req, res) => {
     try{
-        const codefork = await jsonfile.readFile('./config/codefork.json');
+        const codefork = await jsonfile.readFile('./config/codefork');
         res.status(200).json({
             compiler: {
                 updateLineNumbers: compiler.updateLineNumbers.toString(),
