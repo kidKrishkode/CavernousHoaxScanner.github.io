@@ -357,7 +357,7 @@ System.prototype.closePyError = function(){
 System.prototype.compilerSetUp = function(){
     try{
         fetch('/compiler').then(response => response.json()).then(data => {
-            compiler = data.compiler.valueOf();
+            compiler = data.valueOf();
         }).catch(error =>{
             console.error('Error: ',error);
         });
