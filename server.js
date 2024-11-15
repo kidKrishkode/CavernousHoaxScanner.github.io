@@ -113,12 +113,16 @@ app.get('/varchar', async (req, res) => {
 });
 
 app.get('/compiler', async (req, res) => {
-    res.status(200).json({compiler: {
+    res.status(200).json({tools: {
         updateLineNumbers: compiler.updateLineNumbers.toString(),
         ideDeploy: compiler.ideDeploy.toString(),
-        appointCode: compiler.appointCode.toString(),
+        appointCode: compiler.appointCode.toString()
+    },
+    compilers: {
         jsCompiler: compiler.jsCompiler.toString(),
-        pyInterpreter: compiler.pyInterpreter.toString(),
+        pyInterpreter: compiler.pyInterpreter.toString()
+    },
+    codeset: {
         codefork: jsonfile.readFileSync('./config/codefork.json')
     }});
 });
