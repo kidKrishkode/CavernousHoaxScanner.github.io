@@ -117,7 +117,6 @@ app.get('/compiler', async (req, res) => {
         updateLineNumbers: compiler.updateLineNumbers.toString(),
         ideDeploy: compiler.ideDeploy.toString(),
         appointCode: compiler.appointCode.toString(),
-        htmlCompiler: compiler.htmlCompiler.toString(),
         jsCompiler: compiler.jsCompiler.toString(),
         pyInterpreter: compiler.pyInterpreter.toString(),
         codefork: jsonfile.readFileSync('./config/codefork.json')
