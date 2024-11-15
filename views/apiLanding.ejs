@@ -157,11 +157,11 @@
     function codeset(name, lang){
         try{
             setTimeout(()=>{
-                appointCode = eval(compiler.tools.appointCode);
-                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler.codeset);
+                appointCode = eval(compiler.appointCode);
+                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler);
                 // updateLine = eval(compiler.updateLineNumbers);
-                pyInterpreter = eval(compiler.compilers.pyInterpreter);
-                ideDeploy = eval(compiler.tools.ideDeploy);
+                pyInterpreter = eval(compiler.pyInterpreter);
+                ideDeploy = eval(compiler.ideDeploy);
                 pyInterpreter('#apiInSnipPython');
                 ideDeploy('#apiInSnipPython','#apiInSnipPython-line', 0);
             },1000);
