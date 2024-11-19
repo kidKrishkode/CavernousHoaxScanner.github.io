@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Cavernous Hoax Scanner">
+    <meta property="og:image" content="../images/side-img.png" name="og:image">
+    <meta itemprop="image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
+    <meta property="og:site_name" content="Cavernous Hoax Scanner">
+    <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Cavernous Hoax Scanner">
+    <meta content="CHS is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <title version="1.0">Cavernous Hoax Scanner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="stylesheet" href="../public/index.css"/>
+    <link rel="icon" href="../public/favicon.ico"/>
+</head>
+<body>
+    <header id="header">
+        <%= header %>
+    </header>
+    <section class="workspace" id="docsPage">
+        <div class="big-gretter">
+            <h6>WHITE LOTUS present</h6>
+            <div class="header"><div class="flo"><o>from CHS import </o><span>{media-Tech}</span></div>quickly and easily</div>
+            <p class="text-muted">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae quae vel earum dolores, maiores qui repellendus voluptate eum culpa inventore quod nisi harum sit ipsum praesentium laboriosam fugit distinctio.</p>
+            <div class="flx">
+                <div class="btn btn-process" onclick="route('/apiPlug')">Get your API</div>
+                <div class="btn btn-invisible-process" onclick="route('/index')"><i class="fa fa-diamond"></i> Deepfake Detection</div>
+            </div>
+            <div class="gretter-code-padd">
+                <div class="robot">
+                    <div class="message appear invisible">Ahoy hoy users, welcome to our document page, here you get the manual of our service feature and some amazing notes!</div>
+                </div>
+                <div class="rocket"></div>
+                <div class="gretter-code-marg">
+                    <div class="flo gretter-code">
+                        <ul class="code-option">
+                            <li><i class="fa fa-clone"></i></li>
+                            <li><i class="fa fa-code-fork"></i></li>
+                            <li><i class="fa fa-lightbulb-o"></i></li>
+                            <li><i class="fa fa-thumbs-o-up"></i></li>
+                        </ul>
+                        <div class="code-editor">
+                            <div class="code-wrapper">
+                                <pre class="code language-js" contenteditable="false" spellcheck="false" id="apiInSnipVanilla01">
+                                    Py-Script Code
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="moreProduct" class="appear hide">
+        <%= services %>
+    </div>
+    <div id="customerFeed">
+        <%= feed %>
+    </div>
+    </section>
+    <aside id="faq-help" class="appear hide">
+        <%= faq %>
+    </aside>
+    <footer id="footer">
+        <%= footer %>
+    </footer>
+</body>
+<script src="../public/App.js"></script>
+<script src="../public/default.min.js"></script>
+<script>
+    pageSet.push('header', 'docsPage', 'moreProduct', 'faq-help', 'footer');
+    appearSet.push(['.message', 80], ['#moreProduct', 1480], ['#faq-help', 1680]); 
+    currentPage.push('api');
+    document.getElementById('header').innerHTML = document.getElementById('header').textContent;
+    document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
+    document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
+    document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+    document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const messages = [
+            "Image Converter",
+            "DeepFake Detection",
+            "Image to PDF",
+            "Face Morphism",
+            "Image Compressor",
+            "Sentiment Analysis"
+        ];
+        let index = 0;
+        const spanElement = document.querySelector('.big-gretter .header span');
+        const updateText = () => {
+            spanElement.textContent = "";
+            spanElement.style.display = "none";
+            spanElement.classList.remove('typeEffect');
+            void spanElement.offsetWidth;
+            spanElement.classList.add('typeEffect');
+            spanElement.textContent = messages[index];
+            spanElement.style.display = "block";
+            index = (index + 1) % messages.length;
+        };
+        updateText();
+        setInterval(updateText, 9000);
+    });
+    setTimeout(() => {
+        system.codeset('Docs 1', 'Node Js', 'apiInSnipVanilla01');
+    },1000);
+
+</script>
+</html>
