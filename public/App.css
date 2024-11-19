@@ -333,7 +333,7 @@ li .active{
     width: 100%;
 }
 
-#dfdPage,#moreProduct,#converterPage,#pdfPage,#apiPlugPage, #apiLandingPage{
+#dfdPage, #moreProduct, #converterPage, #pdfPage, #apiPlugPage, #apiLandingPage, #docsPage{
     display: none;
 }
 #dfdPage h2,#converterPage h2,#pdfPage h2{
@@ -1589,6 +1589,171 @@ footer .bottom-component .right-side a{
     width: 100%;
     padding: 2px;
 }
+#docsPage .big-gretter{
+    width: 95%;
+    height: 500px;
+    background: var(--mit-color);
+    border-radius: 8px;
+    margin: 20px auto;
+    padding: 60px 0px 10px 0px;
+    transition: 1s ease-in-out;
+}
+#docsPage .big-gretter h6{
+    margin-bottom: 10px;
+    font-family: sans-serif;
+    text-align: center;
+}
+#docsPage .big-gretter .header{
+    font-size: 35px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
+    color: var(--revers-white);
+    text-align: center;
+    transition: 1s ease-in-out;
+}
+#docsPage .big-gretter h6, #docsPage .big-gretter .header span{
+    background: linear-gradient(50deg, #2323ff 30%, #ec2c75 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#docsPage .big-gretter .header div{
+    width: fit-content;
+    margin: 0px auto;
+    justify-content: center;
+}
+#docsPage .big-gretter .header div o{
+    min-width: 280px;
+    margin-right: 10px;
+}
+#docsPage .big-gretter .header div span, .typeEffect{
+    max-width: max-content;
+    overflow: hidden;
+    border-right: .10em solid var(--charm);
+    white-space: nowrap;
+    margin: 0 auto;
+    padding: 0px 6px 0px 2px;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+@keyframes typing{
+    from{ 
+        width: 0;
+    }to{ 
+        width: 100%;
+    }
+}  
+@keyframes blink-caret{
+    from, to{ 
+        border-color: transparent 
+    }50%{ 
+        border-color: var(--charm); 
+    }
+}
+#docsPage .big-gretter p{
+    width: 70%;
+    margin: 20px auto;
+    text-align: center;
+}
+#docsPage .big-gretter .flx{
+    width: 25%;
+    margin: 10px auto;
+}
+#docsPage .big-gretter .gretter-code-padd{
+    width: 60%;
+    height: 400px;
+    margin: 25px auto;
+    background: var(--bg-color);
+    border-radius: 10px;
+    /* box-shadow: 0px 0px 2px 1px grey; */
+    position: absolute;
+    left: 20%;
+    transition: 1s ease-in-out;
+}
+#docsPage .big-gretter .gretter-code-padd .gretter-code-marg{
+    width: 90%;
+    height: 350px;
+    margin: 25px auto;
+    background: var(--mit-color);
+    border-radius: 15px;
+    padding-top: 25px;
+}
+#docsPage .big-gretter .gretter-code-padd .robot{
+    width: 150px;
+    height: 150px;
+    background-image: url('../images/bot1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotateY(180deg);
+    position: absolute;
+    left: -1%;
+    bottom: 2%;
+}
+#docsPage .big-gretter .gretter-code-padd .rocket{
+    width: 120px;
+    height: 120px;
+    background-image: url('../images/spaceship.webp');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: rotate(-60deg);
+    position: absolute;
+    right: -1%;
+    top: 25%;
+}
+#docsPage .big-gretter .gretter-code-padd .robot .message{
+    /* display: none; */
+    width: 250px;
+    height: 80px;
+    background: var(--glass-color);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--revers-white);
+    color: var(--revers-white);
+    font-size: 12px;
+    padding: 2px 4px;
+    text-align: justify;
+    font-family: Consolas, 'Courier New', monospace;
+    border-radius: 5px;
+    position: absolute;
+    right: 50%;
+    top: -35%;
+    transform: rotateY(180deg);
+}
+#docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code{
+    width: 80%;
+    height: 300px;
+    margin: auto;
+    background: var(--bg-color);
+    border-radius: 10px;
+    padding: 10px 5px;
+    transition: 1s ease-in-out;
+}
+.code-option{
+    width: 10%;
+    background: var(--mit-color);
+    color: var(--revers-white);
+    list-style: none;
+    height: 100%;
+    padding: 0px;
+    border-radius: 5px;
+    transition: 1s ease-in-out;
+}
+.code-option li{
+    width: 100%;
+    height: 25%;
+    text-align: center;
+    font-size: 20px;
+    border-bottom: 1px solid var(--bg-color);
+    padding: 20px 0px;
+}
+.code-option li:last-child{
+    border: none;
+}
+#docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor{
+    width: 80%;
+    margin: 0px;
+    min-height: auto;
+}
+#docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor:before{
+    display: none;
+}
 
 
 @media only screen and (max-width: 900px){
@@ -1875,5 +2040,49 @@ footer .bottom-component .right-side a{
 		height: 75%;
 		max-height: 75%;
 	}
-        
+    #docsPage .big-gretter{
+        padding-top: 40px;
+    }
+    #docsPage .big-gretter .header div{
+        flex-direction: column;
+    }
+    #docsPage .big-gretter p{
+        width: 95%;
+        font-size: 14px;
+    }
+    #docsPage .big-gretter .flx{
+        width: 90%;
+    }
+    #docsPage .big-gretter .gretter-code-padd{
+        width: 90%;
+        left: 5%;
+    }
+    #docsPage .big-gretter .gretter-code-padd .rocket{
+        width: 60px;
+        height: 60px;
+        right: -1%;
+    }
+    #docsPage .big-gretter .gretter-code-padd .robot{
+        width: 100px;
+        height: 100px;
+    }
+    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code{
+        flex-direction: column;
+    }
+    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor{
+        width: 100%;
+    }
+    .code-option{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 30px;
+    }
+    .code-option li{
+        font-size: 14px;
+        padding: 0px;
+    }
+    #docsPage .big-gretter .gretter-code-padd .robot .message{
+        top: -60%;
+    }
 }

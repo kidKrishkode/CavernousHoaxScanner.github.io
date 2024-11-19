@@ -427,6 +427,28 @@ System.prototype.block_resource = function(ids){
     }
     document.getElementById(ids.input).disabled = true;
 }
+System.prototype.codeset = function(name, lang, id){
+    try{
+        let appointCode, pyInterpreter, jsCompiler;
+        setTimeout(()=>{
+            appointCode = eval(compiler.appointCode);
+            document.getElementById(id).innerText = appointCode(name, lang, compiler);
+            if(lang == 'Python'){
+                pyInterpreter = eval(compiler.pyInterpreter);
+                pyInterpreter(`#${id}`);
+            }else if(lang == 'Vanilla Js' || lang == 'Node Js' || lang == 'React Js'){
+                jsCompiler = eval(compiler.jsCompiler);
+                jsCompiler(`#${id}`);
+            }else{
+                console.log("Which language you try to compile, please define carefully!");
+            }
+            ideDeploy = eval(compiler.ideDeploy);
+            ideDeploy(`#${id}`,`#${id}-line`, 0);
+        },1000);
+    }catch(e){
+        document.getElementById(id).innerText = e+"\n\n";
+    }
+}
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);
 }
