@@ -1,0 +1,44 @@
+[
+    {
+        "id": 0,
+        "lang": "Node Js",
+        "name": "Image Converter",
+        "method": "POST",
+        "code": "const@ s|fetch|n = f|require|n(s' node-fetch 'n);\n\nconst@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    },
+    {
+        "id": 1,
+        "lang": "React Js",
+        "name": "Image Converter",
+        "method": "POST",
+        "code": "< html@ |lang='en'n >\n< head@ >\n\t< meta@ |charset='utf-8'n >\n\t< meta@ |name='viewport'n |content='width=device-width, initial-scale=1'n >\n\t< title@ |version='1.0'n >$|title|$< /title@ >\n< /head@ >\n< body@ >\n\t$|body|$\n< /body@ >\n< !-- link the api plugins in your project (below) -- >\nHello World\n$|apiplugin|$\n< !-- link the script file where your request is encoded -- >\n&lt; script@ |src='./main.js'n >< /script@ >\n< /html@ >"
+    },
+    {
+        "id": 2,
+        "lang": "Vanilla Js",
+        "name": "Image Converter",
+        "method": "POST",
+        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    },
+    {
+        "id": 3,
+        "lang": "Vanilla Js",
+        "name": "Image Compressor",
+        "method": "POST",
+        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageCompressor'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+    },
+    {
+        "id": 4,
+        "lang": "Python",
+        "name": "Image Converter",
+        "method": "Define",
+        "code": "from@ g|fastapi|n import@ g|FastAPI|n, f|Query|n\nfrom@ g|fastapi|n.g|middleware|n.g|cors |n import@ g|CORSMiddleware|n\nfrom@ g|pydantic|n import@ g|BaseModel|n\nimport@ g|Preprocessor|n\nimport@ g|TaskMaster|n\n\ns|app|n = g|FastAPI|n()\n\ns|app|n.f|add_middleware|n(g|Preprocessor|n.s|CORSMiddleware|n)\n\nclasse g|ImageData|n(g|BaseModel|n):\n\ts|form|n: g|str|n\n\ts|img |n: g|str|n\n\n@s|app|n.f|get|n(s'/api/imageConverter'n)\ndef read_root/(s|data|n: g|ImageData|n):\n\ts|src|n = g|TaskMaster|n.f|convert_img |n(s|data|n.s|img |n, s|data|n.s|form|n)\n\treturn@ g|Responce|n.f|model|n(s|src|n, g|Preprocessor|n.f|timeStamp|n())\n\n"
+    },
+    {
+        "id": 5,
+        "lang": "Node Js",
+        "name": "Docs 1",
+        "method": "GET",
+        "code": "from@ g|whitelotus |n import@ g|CHSWEB|n, g|CHSAPI|n, f|chscdn|n;\nimport@ g|Preprocessor|n;\n\npublic@ function async@ index/(CHSWEB: g|class |n, CHSAPI: g|class |n){\n\t$s|this |n->s|load|n->f|model|n(s'Greetings from CHS'n);\n\tawait@ g|CHSAPI|n.s|data|n[s'request'n]() = $s|this |n->f|greet_model|n(() => \n\t\tif@(g|CHSAPI|n.s|data|n[s'responce'n].f|is_valid|n)\n\t\t\tg|CHSWEB|n->s|load|n->s|view|n(s'user/index'n);\n\t}).catch@(s|error|n =>\n\t\tconsole@|.log(s'Failed to greet user for unwanted conditions!'n)\n\t);\n}\n\nif@ s|__name__|n == s'__main__'n{\n\ts|user_data|n = {s'user'n: s|API_KEY|n};\n\ts|app|n = g|Index|n(s|user_data|n);\n}\n"
+    }
+]
