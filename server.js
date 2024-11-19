@@ -337,6 +337,12 @@ app.get('/about', (req, res) => {
     });
 });
 
+app.get('/docs', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('docs',{header, services, feed, faq, footer});
+    });
+});
+
 function WEB(port){
     this.active = true;
     this.port = port;
@@ -406,4 +412,11 @@ server.listen(PORT, (err) => {
 5. compare face
 6. detect goal
 7. pint statement
+
+git status
+git add .
+git commit -m "Your commit message here"
+
+git fetch origin
+git pull
 */
