@@ -1666,6 +1666,8 @@ footer .bottom-component .right-side a{
     /* box-shadow: 0px 0px 2px 1px grey; */
     position: absolute;
     left: 20%;
+    user-select: none;
+    cursor: default;
     transition: 1s ease-in-out;
 }
 #docsPage .big-gretter .gretter-code-padd .gretter-code-marg{
@@ -1699,7 +1701,6 @@ footer .bottom-component .right-side a{
     top: 25%;
 }
 #docsPage .big-gretter .gretter-code-padd .robot .message{
-    /* display: none; */
     width: 250px;
     height: 80px;
     background: var(--glass-color);
@@ -1754,7 +1755,24 @@ footer .bottom-component .right-side a{
 #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor:before{
     display: none;
 }
-
+#docsPage .search-docs-head{
+    width: 95%;
+    margin: 20px auto;
+    margin-top: 300px;
+    display: flex;
+    flex-direction: row;
+}
+#docsPage .search-docs-head .navbar .form-inline .input-group .input-group-prepend .input-group-text{
+    background: var(--mit-color);
+    color: var(--revers-white);
+}
+#docsPage .search-docs-head .flx{
+    width: 40%;
+    padding: 12px 5px;
+}
+#docsPage .search-docs-head .flx .btn{
+    color: grey;
+}
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -2069,7 +2087,7 @@ footer .bottom-component .right-side a{
     #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code{
         flex-direction: column;
     }
-    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor{
+    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor, #docsPage .search-docs-head .flx{
         width: 100%;
     }
     .code-option{
@@ -2081,8 +2099,19 @@ footer .bottom-component .right-side a{
     .code-option li{
         font-size: 14px;
         padding: 0px;
+        height: 100%;
+        border-bottom: none;
+        border-right: 1px solid var(--bg-color);
     }
     #docsPage .big-gretter .gretter-code-padd .robot .message{
         top: -60%;
+    }
+    #docsPage .search-docs-head{
+        margin-top: 400px;
+        width: 100%;
+        flex-direction: column;
+    }
+    #docsPage .search-docs-head .flx i{
+        display: none;
     }
 }
