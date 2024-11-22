@@ -54,9 +54,11 @@ app.use((req, res, next) => {
     // try{
         const url = req.originalUrl;
         const query = url.split('?')[1];
-        const params = (new URL(path.join(__dirname, url))).searchParams;
+        const baseURL = req.protocol + '://' + req.get('host');
+        const params = new URL(url, baseURL).searchParams;
+        // console.log(baseURL, params.get('encode'));
         const public_key = varchar.duplex;
-        if(params.has('encode')){
+        if(params.get('encode')!=null){
             if(query!=undefined){
                 const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
                 req.url = `${url.split('?')[0]}?${decodedUrl}`;
