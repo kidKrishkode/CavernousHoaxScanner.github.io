@@ -52,7 +52,7 @@ const upload = multer({storage: storage});
 
 app.use((req, res, next) => {
     try{
-        /*const url = req.originalUrl;
+        const url = req.originalUrl;
         const query = url.split('?')[1];
         const params = (new URL(path.join(__dirname, url))).searchParams;
         const public_key = varchar.duplex;
@@ -70,9 +70,9 @@ app.use((req, res, next) => {
             }
         }
         const my_browser = security.browser(req.headers);
-        if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data)){
-            // res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
-        }*/
+        if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data) && hex.isHosted(req)){
+            res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
+        }
         if(!hex.isHosted(req)){
             API_LINK = 'http://127.0.0.1:8000'
         }else{
