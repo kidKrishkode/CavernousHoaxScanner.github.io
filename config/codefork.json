@@ -39,6 +39,6 @@
         "lang": "Node Js",
         "name": "Docs 1",
         "method": "GET",
-        "code": "from@ g|whitelotus |n import@ g|CHSWEB|n, g|CHSAPI|n, f|chscdn|n;\nimport@ g|Preprocessor|n;\n\npublic@ function async@ index/(CHSWEB: g|class |n, CHSAPI: g|class |n){\n\t$s|this |n->s|load|n->f|model|n(s'Greetings from CHS'n);\n\tawait@ g|CHSAPI|n.s|data|n[s'request'n]() = $s|this |n->f|greet_model|n(() => \n\t\tif@(g|CHSAPI|n.s|data|n[s'responce'n].f|is_valid|n)\n\t\t\tg|CHSWEB|n->s|load|n->s|view|n(s'user/index'n);\n\t}).catch@(s|error|n =>\n\t\tconsole@|.log(s'Failed to greet user for unwanted conditions!'n)\n\t);\n}\n\nif@ s|__name__|n == s'__main__'n{\n\ts|user_data|n = {s'user'n: s|API_KEY|n};\n\ts|app|n = g|Index|n(s|user_data|n);\n}\n"
+        "code": "from@ g|whitelotus |n import@ g|CHSWEB|n, g|CHSAPI|n, f|chscdn|n;\nimport@ g|Preprocessor|n;\n\npublic@ function async@ index/(CHSWEB: g|class |n, CHSAPI: g|class |n){\n\t$s|this |n->s|load|n->f|model|n(s'Greetings from CHS'n);\n\tawait@ g|CHSAPI|n.s|data|n[s'request'n]() = $s|this |n->f|greet_model|n(() => \n\t\tif@(g|CHSAPI|n.s|data|n[s'responce'n].f|is_valid|n())\n\t\t\tg|CHSWEB|n->s|load|n->s|view|n(s'user/index'n);\n\t}).catch@(s|error|n =>\n\t\tconsole@|.log(s'Failed to greet user for unwanted conditions!'n)\n\t);\n}\n\nif@ s|__name__|n == s'__main__'n{\n\ts|user_data|n = {s'user'n: s|API_KEY|n};\n\ts|app|n = g|Index|n(s|user_data|n);\n}\n"
     }
 ]
