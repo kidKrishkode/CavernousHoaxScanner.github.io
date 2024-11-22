@@ -64,7 +64,7 @@
                         <div class="input-group-prepend">
                             <span class="btn input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                         </div>
-                        <input type="search" class="form-control" placeholder="Search Here" aria-label="Search" aria-describedby="basic-addon">
+                        <input type="search" class="form-control" id="searchData-docs" placeholder="Search Here" aria-label="Search" aria-describedby="basic-addon" onkeyup="search_product('searchData-docs','drop');">
                     </div>
                 </form>
             </nav>
@@ -76,11 +76,36 @@
                 <span class="btn"><i class="fa fa-filter"></i> Tips</span>
             </div>
         </div>
+        <ol class="search-product-data" id="docsList">
+            <li class="drop">
+                <div class="flx">
+                    <div class="left-web">
+                        <h2>Just need to upload the media, <span class="charm">CHS</span> will convert it</h2>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia blanditiis provident eligendi asperiores nihil! Repellat soluta eum exercitationem? Architecto, at! Aspernatur exercitationem blanditiis et quia sed, reiciendis maxime alias, ad accusantium velit est dolorum provident, corrupti sunt facere tenetur sequi!</p>
+                        <ul class="nostyle">
+                            <li class="tic">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam, doloremque. Illo quod voluptas consequatur quasi.</li>
+                            <li class="tic">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam, doloremque. Illo quod voluptas consequatur quasi.</li>
+                            <li class="tic">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam, doloremque. Illo quod voluptas consequatur quasi.</li>
+                        </ul>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime modi soluta, quidem expedita quasi quod cum aliquam rerum, corporis quisquam non, praesentium ea iure doloremque.</p>
+                        <div class="btn btn-process">Try Now!</div>
+                    </div>
+                    <div class="right-web"></div>
+                </div>
+            </li>
+            <li class="drop">
+                <div class="flx">
+                    <div class="left-api"></div>
+                    <div class="right-api"></div>
+                </div>
+            </li>
+            <li class="drop"></li>
+        </ol>
+        <div class="search-not-found" id="searchData-docsDOD">
+            <img src="../images/404.svg" alt="chs"/>
+        </div>
     </section>
-    <div id="moreProduct" class="appear hide">
-        <%= services %>
-    </div>
-    <div id="customerFeed">
+    <div id="customerFeed" class="appear invisible">
         <%= feed %>
     </div>
     </section>
@@ -94,12 +119,11 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('header', 'docsPage', 'moreProduct', 'faq-help', 'footer');
-    appearSet.push(['.message', 80], ['#moreProduct', 1480], ['#faq-help', 1680]); 
+    pageSet.push('header', 'docsPage', 'faq-help', 'footer');
+    appearSet.push(['.message', 80], ['#customerFeed', 20], ['#faq-help', 1280]); 
     currentPage.push('api');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
-    document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
 </script>
