@@ -309,30 +309,16 @@ li .active{
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 0%;
-    max-height: 600px;
+    /* max-height: 600px;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: #00ff261c transparent;
+    scrollbar-color: #00ff261c transparent; */
 }
 .drop,.drops{
-    width: 30%;
+    width: 100%;
     margin: 0px;
     display: list-item;
 }
-.drops{
-    width: 100%;
-    margin: 0px;
-}
-#searchDataDOD{
-    display: none;
-    width: 300px;
-    margin: 60px auto;
-}
-#searchDataDOD img{
-    position: relative;
-    width: 100%;
-}
-
 #dfdPage, #moreProduct, #converterPage, #pdfPage, #apiPlugPage, #apiLandingPage, #docsPage{
     display: none;
 }
@@ -1773,6 +1759,44 @@ footer .bottom-component .right-side a{
 #docsPage .search-docs-head .flx .btn{
     color: grey;
 }
+#docsPage .search-not-found{
+    display: none;
+    width: 30%;
+    margin: 50px auto 100px auto;
+}
+#docsPage .search-not-found img{
+    position: relative;
+    width: 100%;
+    transition: 1s ease-in-out;
+}
+#docsPage #docsList .drop{
+    margin: 20px auto;
+}
+#docsPage #docsList .drop .flx .left-web, #docsPage #docsList .drop .flx .right-api{
+    width: 60%;
+    padding: 4px 20px;
+    /* background: green; */
+    font-size: 14px;
+    color: grey;
+    text-align: justify;
+}
+#docsPage #docsList .drop .flx .right-web, #docsPage #docsList .drop .flx .left-api{
+    width: 40%;
+    background: pink;
+}
+#docsPage #docsList .drop .flx .left-web h2, #docsPage #docsList .drop .flx .right-api h2{
+    color: var(--revers-white);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: left;
+}
+#docsPage #docsList .drop .flx .left-web h2 span, #docsPage #docsList .drop .flx .right-api h2 span{
+    font-weight: bold;
+    color: var(--charm);
+}
+#docsPage #docsList .drop .flx .left-web .btn, #docsPage #docsList .drop .flx .right-api .btn{
+    margin: 10px 4px;
+}
+
 
 @media only screen and (max-width: 900px){
     .navbar img{
@@ -1816,7 +1840,7 @@ footer .bottom-component .right-side a{
     .search-product-data{
         margin: auto 0;
         padding: 0;
-        max-height: 500px;
+        /* max-height: 500px; */
         display: flex;
         justify-content: space-around;
         padding: 0%;
@@ -2055,7 +2079,7 @@ footer .bottom-component .right-side a{
 		font-size: 28px;
 	}
 	#privacyPage .component,#licensePage .component{
-		height: 75%;
+		/* height: 75%; */
 		max-height: 75%;
 	}
     #docsPage .big-gretter{
@@ -2084,10 +2108,10 @@ footer .bottom-component .right-side a{
         width: 100px;
         height: 100px;
     }
-    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code{
+    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code, #docsPage #docsList .drop .flx{
         flex-direction: column;
     }
-    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor, #docsPage .search-docs-head .flx{
+    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor, #docsPage .search-docs-head .flx, #docsPage #docsList .drop .flx .left-web, #docsPage #docsList .drop .flx .right-api, #docsPage #docsList .drop .flx .right-web, #docsPage #docsList .drop .flx .left-api{
         width: 100%;
     }
     .code-option{
@@ -2113,5 +2137,8 @@ footer .bottom-component .right-side a{
     }
     #docsPage .search-docs-head .flx i{
         display: none;
+    }
+    #docsPage .search-not-found{
+        width: 70%;
     }
 }

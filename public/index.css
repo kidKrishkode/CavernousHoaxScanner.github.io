@@ -267,6 +267,24 @@
     top: 0%;
     left: 82%;
 }
+.nostyle{
+    list-style: none;
+}
+.nostyle .tic:before{
+    content: '✓';
+    color: green;
+    margin-right: 8px;
+}
+.nostyle .tac:before{
+    content:"X";
+    color: red;
+    margin-right: 8px;
+}
+.nostyle .toi:before{
+    content:"◯";
+    color: grey;
+    margin-right: 8px;
+}
 @media only screen and (max-width: 900px){
 	.bg_red,.bg_grn,.bg_blu,.bg_gry{
 		width: 100%!important;
