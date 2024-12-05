@@ -151,12 +151,12 @@ System.prototype.VisiblePage = function(){
             document.querySelector("#"+pageSet[i]).style.display = "block";
         }
         system.setActiveMenu(currentPage[currentPage.length-1]);
-        setTimeout(()=>{
-            document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
-        },500000);
-        setTimeout(()=>{
-            document.body.removeChild(document.querySelector('.jelly'));
-        },500000+35000);
+        // setTimeout(()=>{
+        //     document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
+        // },500000);
+        // setTimeout(()=>{
+        //     document.body.removeChild(document.querySelector('.jelly'));
+        // },500000+35000);
         system.feedScroll();
     }catch(e){
         console.warn("New Problem: ",e);

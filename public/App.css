@@ -1738,7 +1738,7 @@ footer .bottom-component .right-side a{
     margin: 0px;
     min-height: auto;
 }
-#docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor:before{
+#docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor:before, #docsPage #docsList .drop .flx .right-web .code-editor:before, #docsPage #docsList .drop .flx .left-api .code-editor:before{
     display: none;
 }
 #docsPage .search-docs-head{
@@ -1775,14 +1775,12 @@ footer .bottom-component .right-side a{
 #docsPage #docsList .drop .flx .left-web, #docsPage #docsList .drop .flx .right-api{
     width: 60%;
     padding: 4px 20px;
-    /* background: green; */
     font-size: 14px;
     color: grey;
     text-align: justify;
 }
 #docsPage #docsList .drop .flx .right-web, #docsPage #docsList .drop .flx .left-api{
     width: 40%;
-    background: pink;
 }
 #docsPage #docsList .drop .flx .left-web h2, #docsPage #docsList .drop .flx .right-api h2{
     color: var(--revers-white);
@@ -1793,8 +1791,56 @@ footer .bottom-component .right-side a{
     font-weight: bold;
     color: var(--charm);
 }
-#docsPage #docsList .drop .flx .left-web .btn, #docsPage #docsList .drop .flx .right-api .btn{
-    margin: 10px 4px;
+#docsPage #docsList .drop .btn{
+    margin: 0px 10px 20px auto;
+}
+#docsPage #docsList .drop .flx .left-web ul, #docsPage #docsList .drop .flx .right-api ul{
+    margin: 2px auto 10px auto;
+}
+#docsPage #docsList .drop .flx .left-api .code-editor{
+    width: 80%;
+    margin: 0px;
+    max-height: 280px;
+    min-height: auto;
+}
+#docsPage #docsList .drop .flx .left-api .code-editor .code-wrapper{
+    height: 280px;
+    max-height: 280px;
+}
+#docsPage #docsList .drop .flx .left-api .sample-code{
+    padding: 10px 0px;
+}
+#docsPage #docsList .drop .flx .left-api .sample-code .code-option{
+    cursor: pointer;
+}
+#docsPage #docsList .drop .flx .right-web .desktop-view{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+#docsPage #docsList .drop .flx .right-web .desktop-view iframe{
+    width: 80%;
+    height: 60%;
+    min-height: 300px;
+    margin: 10px 10%;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+#docsPage #docsList .drop .flx .right-web .desktop-view:before{
+    content: '';
+    width: 550px;
+    height: 300px;
+    background: transparent!important;
+    opacity: 0.4;
+    position: absolute;
+    right: 2%;
+    margin-top: 10px;
+}
+#docsPage #docsList .drop > .right-web ~ .btn, #docsPage #docsList .drop:has(.left-web) .btn{
+    margin-left: 20px;
+}
+#docsPage #docsList .drop > .right-api ~ .btn, #docsPage #docsList .drop:has(.left-api) .btn{
+    margin-left: 42%;
 }
 
 
@@ -2108,7 +2154,7 @@ footer .bottom-component .right-side a{
         width: 100px;
         height: 100px;
     }
-    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code, #docsPage #docsList .drop .flx{
+    #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code, #docsPage #docsList .drop .flx, #docsPage #docsList .drop .flx .left-api .sample-code{
         flex-direction: column;
     }
     #docsPage .big-gretter .gretter-code-padd .gretter-code-marg .gretter-code .code-editor, #docsPage .search-docs-head .flx, #docsPage #docsList .drop .flx .left-web, #docsPage #docsList .drop .flx .right-api, #docsPage #docsList .drop .flx .right-web, #docsPage #docsList .drop .flx .left-api{
@@ -2140,5 +2186,21 @@ footer .bottom-component .right-side a{
     }
     #docsPage .search-not-found{
         width: 70%;
+    }
+    #docsPage #docsList .drop .flx .left-api .sample-code .code-editor{
+        margin: auto;
+    }
+    #docsPage #docsList .drop .flx .left-api .sample-code .code-option{
+        width: 80%;
+        margin: 5px auto 15px;
+    }
+    #docsPage #docsList .drop .flx .left-api .sample-code .code-option li{
+        padding: 4px;
+    }
+    .reverse-column{
+        flex-direction: column-reverse!important;
+    }
+    #docsPage #docsList .drop:has(.left-web) .btn, #docsPage #docsList .drop:has(.left-api) .btn{
+        margin-left: 40%;
     }
 }
