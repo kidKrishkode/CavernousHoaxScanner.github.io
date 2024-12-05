@@ -48,7 +48,7 @@
                         </ul>
                         <div class="code-editor">
                             <div class="code-wrapper">
-                                <pre class="code language-js" contenteditable="false" spellcheck="false" id="apiInSnipVanilla01">
+                                <pre class="code language-python" contenteditable="false" spellcheck="false" id="apiInSnipVanilla01">
                                     Py-Script Code
                                 </pre>
                             </div>
@@ -80,7 +80,7 @@
             <li class="drop">
                 <div class="flx">
                     <div class="left-web">
-                        <h2>Just need to upload the media, <span class="charm">CHS</span> will convert it</h2>
+                        <h2>Just need to upload the media, <span>CHS</span> will convert it</h2>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia blanditiis provident eligendi asperiores nihil! Repellat soluta eum exercitationem? Architecto, at! Aspernatur exercitationem blanditiis et quia sed, reiciendis maxime alias, ad accusantium velit est dolorum provident, corrupti sunt facere tenetur sequi!</p>
                         <ul class="nostyle">
                             <li class="tic">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam, doloremque. Illo quod voluptas consequatur quasi.</li>
@@ -88,16 +88,39 @@
                             <li class="tic">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam, doloremque. Illo quod voluptas consequatur quasi.</li>
                         </ul>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime modi soluta, quidem expedita quasi quod cum aliquam rerum, corporis quisquam non, praesentium ea iure doloremque.</p>
-                        <div class="btn btn-process">Try Now!</div>
                     </div>
-                    <div class="right-web"></div>
+                    <div class="right-web">
+                        <span class="desktop-view"><iframe src="/converter" alt="chs" class="desktop-view" aria-disabled="true"></iframe></span>
+                    </div>
                 </div>
+                <div class="btn btn-process">Try Now!</div>
             </li>
             <li class="drop">
-                <div class="flx">
-                    <div class="left-api"></div>
-                    <div class="right-api"></div>
+                <div class="flx reverse-column">
+                    <div class="left-api">
+                        <div class="flo sample-code">
+                            <ul class="code-option">
+                                <li><i class="fa fa-clone" onclick="system.copyCode('#apiInSnipVanilla02');"></i></li>
+                                <li><i class="fa fa-code-fork" onclick="system.downloadCode('#apiInSnipVanilla02','index.js');"></i></li>
+                                <li><i class="fa fa-lightbulb-o"></i></li>
+                                <li><i class="fa fa-thumbs-o-up"></i></li>
+                            </ul>
+                            <div class="code-editor">
+                                <div class="code-wrapper">
+                                    <pre class="code language-js" contenteditable="false" spellcheck="false" id="apiInSnipVanilla02">
+                                        Java-Script Code
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-api">
+                        <h2>Don't, warry, you can <i class="fa fa-star prp small"></i><br> convert it easily and quickly with <span>CHS API</span></h2>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia blanditiis provident eligendi asperiores nihil! Repellat soluta eum exercitationem? Architecto, at! Aspernatur exercitationem blanditiis et quia sed, reiciendis maxime alias, ad accusantium velit est dolorum provident, corrupti sunt facere tenetur sequi!</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime modi soluta, quidem expedita quasi quod cum aliquam rerum, corporis quisquam non, praesentium ea iure doloremque.</p>
+                    </div>
                 </div>
+                <div class="btn btn-process">Try Now!</div>
             </li>
             <li class="drop"></li>
         </ol>
@@ -154,6 +177,7 @@
     });
     setTimeout(() => {
         system.codeset('Docs 1', 'Node Js', 'apiInSnipVanilla01');
+        system.codeset('Image Converter', 'Vanilla Js', 'apiInSnipVanilla02');
     },1000);
 
 </script>
