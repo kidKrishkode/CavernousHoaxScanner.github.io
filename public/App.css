@@ -1842,6 +1842,53 @@ footer .bottom-component .right-side a{
 #docsPage #docsList .drop > .right-api ~ .btn, #docsPage #docsList .drop:has(.left-api) .btn{
     margin-left: 42%;
 }
+.captcha h3{
+    color: var(--charm);
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+}
+.captcha .form-inline{
+    width: 60%;
+    justify-content: space-around;
+    margin: 20px auto;
+}
+.captcha #captcha-img{
+    width: 250px;
+    height: 100px;
+    background: url('../images/haze.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0px;
+    user-select: none;
+}
+.captcha #captcha-img img{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.captcha #captcha-text{
+    width: 250px;
+}
+.captcha .captcha-attempts{
+    color: red;
+    font-weight: bold;
+    font-family: Consolas, 'Courier New', monospace;
+    height: 40px;
+}
+.captcha .captcha-footer{   
+    position: relative;
+    bottom: -55px;
+    left: 0px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    margin: 2px auto;
+}
+.captcha .captcha-footer span:hover,.captcha .captcha-footer span a{
+    cursor: pointer;
+    color: grey;
+}
 
 
 @media only screen and (max-width: 900px){
@@ -2202,5 +2249,12 @@ footer .bottom-component .right-side a{
     }
     #docsPage #docsList .drop:has(.left-web) .btn, #docsPage #docsList .drop:has(.left-api) .btn{
         margin-left: 40%;
+    }
+    .captcha .form-inline{
+        width: 100%;
+    }
+    .captcha .captcha-footer{
+        bottom: -10px;
+        width: 100%;
     }
 }

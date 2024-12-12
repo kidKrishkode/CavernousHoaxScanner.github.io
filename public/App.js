@@ -12,26 +12,42 @@ const pageSet = [];
 const appearSet = [];
 const currentPage = [];
 let themeSet = [];
+let security;
 
-function System(){
-    try{
-        this.listen = window.location;
-        this.navigation = window.navigation;
-        this.notes = false;
-        this.error_layout = false;
-    }catch(e){
-        alert("System not deployed!\n\n",e);
+class System{
+    constructor(){
+        try{
+            this.listen = window.location;
+            this.navigation = window.navigation;
+            this.notes = false;
+            this.error_layout = false;
+        }catch(e){
+            alert("System not deployed!\n\n",e);
+        }
     }
 }
-function Loader(load){
-    this.loaded = load;
+class Loader{
+    constructor(load){
+        this.loaded = load;
+    }
 }
-function MEMORY(){
-    this.dbName = 'Krishfolio';
-    this.dbVersion = 1;
+class MEMORY{
+    constructor(){
+        this.dbName = 'CHSDB';
+        this.dbVersion = 1;
+    }
 }
-function TAB(){
-    this.opened = false;
+class TAB{
+    constructor(){
+        this.opened = false;
+    }
+}
+class Security{
+    constructor(){
+        this.vitals = 0;
+        this.trial = 3;
+        this.getCaptcha = '';
+    }
 }
 document.addEventListener("DOMContentLoaded",() => {
     loader = new Loader(true);
@@ -41,6 +57,7 @@ document.addEventListener("DOMContentLoaded",() => {
     window.addEventListener("scroll", system.scrollAppear);
     memory = new MEMORY();
     system.setUp();
+    security = new Security();
     // window.addEventListener("load", system.isOnline);
 });
 function navbar_toggle(){
@@ -99,8 +116,30 @@ TAB.prototype.open = function(){
     document.querySelectorAll('.tabPage')[document.querySelectorAll('.tabPage').length-1].classList.add('blbg');
 }
 TAB.prototype.close = function(){
+    document.body.removeChild(document.querySelectorAll('.tabPage')[document.querySelectorAll('.tabPage').length-1]);
+    if (document.querySelectorAll('.tabPage').length-1 >= 1) TAB.opened = false;
+}
+TAB.prototype.closeAll = function(){
     document.body.removeChild(document.querySelector('.tabPage'));
     TAB.opened = false;
+}
+TAB.prototype.innerContext = function(innerContext){
+    try{
+        document.querySelector('.tabPage').innerHTML = config.varchar.error_templet;
+        document.querySelector('.error-message').innerHTML = innerContext;
+    }catch(e){
+        console.error(e);
+    }
+}
+TAB.prototype.mute = function(){
+    try{
+        const spanToRemove = document.querySelector('.errorView .flx span');
+        if(spanToRemove){
+            spanToRemove.remove();
+        }
+    }catch(e){
+        console.error(e);
+    }
 }
 System.prototype.setUp = function(){
     try{
@@ -158,6 +197,7 @@ System.prototype.VisiblePage = function(){
         //     document.body.removeChild(document.querySelector('.jelly'));
         // },500000+35000);
         system.feedScroll();
+        
     }catch(e){
         console.warn("New Problem: ",e);
     }
@@ -368,7 +408,6 @@ System.prototype.compilerSetUp = function(){
 System.prototype.openPrivacy = function(){
     let tab = new TAB();
     tab.open();
-    // let link = `${system.encodedURI('/privacy','id='+3)}`;
     let link = "/privacy";
     fetch(link, {
         method: 'GET',
@@ -376,7 +415,7 @@ System.prototype.openPrivacy = function(){
             "Content": "application/json"
         },
     }).then(response => response.json()).then(privacy => {
-        document.querySelector('.tabPage').innerHTML = (privacy.privacy);
+        document.querySelectorAll('.tabPage')[document.querySelectorAll('.tabPage').length-1].innerHTML = (privacy.privacy);
     }).catch(e => console.log(e));
 }
 System.prototype.closePrivacy = function(){
@@ -393,7 +432,7 @@ System.prototype.openTerms = function(){
             "Content": "application/json"
         },
     }).then(response => response.json()).then(privacy => {
-        document.querySelector('.tabPage').innerHTML = (privacy.privacy);
+        document.querySelectorAll('.tabPage')[document.querySelectorAll('.tabPage').length-1].innerHTML = (privacy.privacy);
     }).catch(e => console.log(e));
 }
 System.prototype.openLicense = function(){
@@ -406,7 +445,7 @@ System.prototype.openLicense = function(){
             "Content": "application/json"
         },
     }).then(response => response.json()).then(privacy => {
-        document.querySelector('.tabPage').innerHTML = (privacy.privacy);
+        document.querySelectorAll('.tabPage')[document.querySelectorAll('.tabPage').length-1].innerHTML = (privacy.privacy);
         setTimeout(()=>{
             document.querySelector('.license').innerText = document.querySelector('.license').textContent;
         })
@@ -447,6 +486,43 @@ System.prototype.codeset = function(name, lang, id){
         },1000);
     }catch(e){
         document.getElementById(id).innerText = e+"\n\n";
+    }
+}
+System.prototype.captachaWindowOpen = function(){
+    let tab = new TAB();
+    tab.open();
+    tab.innerContext(config.varchar.captcha_templet);
+    tab.mute();
+    security.getCaptcha = eval(config.security.getCaptcha);
+    document.querySelector('#captcha-img').innerHTML = `<img src=${security.getCaptcha(document)} alt='load'/>`;
+}
+System.prototype.reCaptcha = function(){
+    document.querySelector('#captcha-img').innerHTML = `<img src=${security.getCaptcha(document)} alt='load'/>`;
+}
+System.prototype.verifyCaptcha = function(){
+    let capthca = document.querySelector('#captcha-text').value;
+    let hased_captcha = this.encodedURI(capthca, 1441);
+    if(hased_captcha == security.vitals){
+        fetch('/auth/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                captchaSolved: system.encodedURI('true')
+            })
+        }).then(data => data.json()).then(data => {
+            route(data);
+        }).catch(err => {
+            console.log("Oops! system is busy to handle you");
+        });
+    }else{
+        document.querySelector('.captcha-attempts').textContent = `>> Captcha not matched, trial ${security.trial}/3`;
+        security.trial--;
+        if(security.trial < 0){
+            document.querySelector('.captcha-attempts').textContent = "Oops, Trial out!";
+            window.location = "https://google.com/";
+        }
     }
 }
 System.prototype.pushDataBase = function(){
