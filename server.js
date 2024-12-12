@@ -9,6 +9,7 @@ const querystring = require('querystring');
 const ejs = require('ejs');
 const jsonfile = require('jsonfile');
 const multer = require('multer');
+const session = require('express-session');
 let varchar, security, hex, compiler;
 try{
     varchar = require('./config/env-variables');
@@ -32,6 +33,7 @@ let web = new WEB(PORT);
 let imagePath,width,height;
 let API_LINK = '';
 let single_img_bin = [];
+let response_bin = [];
 const pdf_imgPath = [];
 let editor_img_path;
 let pdf_limit;
@@ -46,19 +48,25 @@ app.use('/public',express.static(path.join(__dirname,'public')));
 
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+app.use(
+    session({
+        secret: 'your-secret-key',
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 
 app.use((req, res, next) => {
-    // try{
+    try{
         const url = req.originalUrl;
         const query = url.split('?')[1];
         const baseURL = req.protocol + '://' + req.get('host');
         const params = new URL(url, baseURL).searchParams;
-        // console.log(baseURL, params.get('encode'));
         const public_key = varchar.duplex;
-        if(params.get('encode')!=null){
+        if(params.has('encode')){
             if(query!=undefined){
                 const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
                 req.url = `${url.split('?')[0]}?${decodedUrl}`;
@@ -80,10 +88,20 @@ app.use((req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
+        console.log(req.path);
+        if(security.nonAuthPage(req.path)){
+            return next();
+        }
+        if(!req.session.isVerified){
+            if(!req.session.originalUrl){
+                req.session.originalUrl = req.originalUrl;
+            }
+            return res.redirect('/auth?=0');
+        }
         next();
-    // }catch(e){
-    //     res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
-    // }
+    }catch(e){
+        res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
+    }
 });
 
 const promises = [
@@ -112,6 +130,10 @@ app.get('/varchar', async (req, res) => {
         trafficAnalyser: hex.trafficAnalyser.toString(),
         popularityTest: hex.popularityTest.toString(),
         singlePartsAPI: hex.singlePartsAPI.toString()
+    }, security: {
+        getCaptcha: security.getCaptcha.toString(),
+        generateImageCaptcha: security.generateImageCaptcha.toString(),
+        generateCaptcha: security.generateCaptcha.toString()
     }});
 });
 
@@ -162,6 +184,27 @@ app.get('/nonAPIHost', (req, res) => {
     const error_log = web.appInfo['error_log'];
     const error = hex.pyerrorinfo(error_log, 23);
     res.status(200).json({error});
+});
+
+app.get('/auth', (req, res) => {
+    if(!req.session.isVerified){
+        res.status(200).render('auth');
+    }else{
+        res.redirect('*');
+    }
+});
+
+app.post('/auth/verify', (req, res) => {
+    const { captchaSolved } = req.body;
+    if('true' === security.decodedURI(captchaSolved)){
+        req.session.isVerified = true;
+        const redirectUrl = req.session.originalUrl || '/index';
+        req.session.originalUrl = null;
+        res.status(200).json(redirectUrl);
+    }else{
+        req.session.isVerified = false;
+        res.status(200).json('');
+    }
 });
 
 app.get('/imgToPdf', (req, res) => {
@@ -252,6 +295,15 @@ app.post('/load/single', (req, res) => {
     }
 });
 
+app.post('/load/response', (req, res) => {
+    if(req.body.index <= req.body.limit && req.body.index > 0){
+        response_bin.push(req.body.img);
+        res.status(200).json({"ack": req.body.index, "time": (new Date).getTime()});
+    }else{
+        console.log("Error to upload arrive for frontend mistack");
+    }
+});
+
 app.get('/converter', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('converter',{header, services, feed, faq, footer});
@@ -269,8 +321,10 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         }else{
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
+            console.log("Limit of bin: "+limit);
         }
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((result) => {
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+            if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
                 form: extension,
                 img: '',
@@ -278,7 +332,8 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin.length = 0;
-                res.status(200).json(result);
+                console.log(response_bin);
+                // res.status(200).json(result);
             });
         }).catch((error) => {
             console.log("Error sending parts:", error);
