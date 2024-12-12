@@ -1,42 +1,3 @@
-// interface IRequest {
-//     headers: {
-//         [key: string]: string;
-//     };
-//     body: {
-//         [key: string]: string;
-//     };
-// }
-
-// class Security {
-//     private secretKey: string;
-
-//     constructor(secretKey: string) {
-//         this.secretKey = secretKey;
-//     }
-
-//     public encrypt(data: string): string {
-//         return this.xorEncrypt(data, this.secretKey);
-//     }
-
-//     public decrypt(encryptedData: string): string {
-//         return this.xorDecrypt(encryptedData, this.secretKey);
-//     }
-
-//     private xorEncrypt(data: string, key: string): string {
-//         let encryptedData = '';
-//         for (let i = 0; i < data.length; i++) {
-//             encryptedData += String.fromCharCode(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-//         }
-//         return encryptedData;
-//     }
-
-//     private xorDecrypt(encryptedData: string, key: string): string {
-//         return this.xorEncrypt(encryptedData, key);
-//     }
-// }
-
-// export { Security };
-
 module.exports = {
     encodedURI: (url, key) => {
         let hash = [["0","*z"],["1","*y"],["2","*x"],["3","*w"],["4","*v"],["5","*u"],["6","*t"],["7","*s"],["8","*r"],["9","*q"],["&",0],["+",1],["=",2],["-",3],["a",4],["e",5],["i",6],["n",7],["u",8],["g",9],["r","!h"],["l","!i"],["t","!j"]];
@@ -94,6 +55,70 @@ module.exports = {
             if(list[i].name == browser_info[0] && browser_info[1] >= list[i].version){
                 return true;
             }
+        }
+        return false;
+    },
+    generateImageCaptcha: (document, text) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 200;
+        canvas.height = 100;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF00';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = 'bold italic 40px "Fontdiner Swanky" ';
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const spacing = 5;
+        let x = canvas.width / 2 - (text.length * 25) / 2;
+        const y = canvas.height / 2;
+        for(const char of text){
+            ctx.fillText(char, x, y);
+            x += ctx.measureText(char).width + spacing;
+        }
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 3;
+        const underlineY = y;
+        ctx.beginPath();
+        ctx.moveTo(10, underlineY);
+        ctx.lineTo(canvas.width - 10, underlineY);
+        ctx.stroke();
+        return canvas.toDataURL();
+    },
+    getCaptcha: (document) => {
+        let text, imageData, hased;
+        try{
+            text = module.exports.generateCaptcha();
+            imageData = module.exports.generateImageCaptcha(document, text);
+            hased = module.exports.encodedURI(text, 1441);
+        }catch(e){
+            let generateCaptcha = eval(config.security.generateCaptcha);
+            let generateImageCaptcha = eval(config.security.generateImageCaptcha);
+            text = generateCaptcha();
+            imageData = generateImageCaptcha(document, text);
+            hased = system.encodedURI(text, 1441);
+        }
+        security.vitals = hased;
+        return imageData.toString();
+    }, 
+    generateCaptcha: () => {
+        var cap = new Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','/','@','&','!','#','*','?','%','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9');
+        let i, a, b, c, d, e, f;
+        for(i=0;i<6;i++){
+            a = cap[Math.floor(Math.random()*cap.length)];
+            b = cap[Math.floor(Math.random()*cap.length)];
+            c = cap[Math.floor(Math.random()*cap.length)];
+            d = cap[Math.floor(Math.random()*cap.length)];
+            e = cap[Math.floor(Math.random()*cap.length)];
+            f = cap[Math.floor(Math.random()*cap.length)];
+        }
+        var code = a+b+c+d+e+f;
+        return code;
+    },
+    nonAuthPage: (path) => {
+        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/privacy', '/terms', '/license', '/nonAPIHost'];
+        if(openPage.find(function (element){return element == path})){
+            return true;
         }
         return false;
     }

@@ -183,9 +183,10 @@ module.exports = {
                     });
                     const data = await response.json();
                     if(data.ack === index){
-                        return true;
+                        return "true";
                     }
                 }catch(error){
+                    if(error.cause.errno==-4078 || error.cause.code=='ECONNREFUSED') return false;
                     console.log(`Error on attempt ${attempts} for part ${index}:`, error);
                 }
             }
@@ -194,10 +195,10 @@ module.exports = {
         for(let i = 0; i < parts.length; i++){
             const isSuccess = await sendPart(parts[i], i + 1, limit);
             if(!isSuccess){
-                return false;
+                return 24;
             }
         }
-        return true;
+        return "true";
     },
     chsAPI: async (uri, token) => {
         const url = uri;

@@ -79,5 +79,31 @@ module.exports = {
     traffic: {
         flow: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160],
         visitor: [7, 9, 16, 18, 18, 18, 20, 26, 33, 28, 37, 54]
-    }
+    },
+    captcha_templet: `
+        <section class="captcha">
+            <h3>Verify your self</h3>
+                <small class="text-muted">Fill the following capthca in right order under 3 attempts, if a captcha not loaded with in 5 second then report it and try some time later</small>
+                <form class="form-inline">
+                    <div class="form-group mb-2">
+                        <label for="captch-img" class="sr-only">Capthca</label>
+                        <div class="form-control" id="captcha-img"></div>
+                    </div>
+                    <div class="btn btn-primary mb-2" onclick="system.reCaptcha();"><i class="fa fa-refresh"></i></div>
+                </form>
+                <form class="form-inline">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input type="text" class="form-control" id="captcha-text" placeholder="Enter the captch"/>
+                    </div>
+                    <div class="btn btn-primary mb-2" onclick="system.verifyCaptcha();">Verify</div>
+                </form>
+                <div class="captcha-attempts"></div>
+                <div class="text-muted captcha-footer">
+                    <span onclick="system.openPrivacy();">Privacy</span>
+                    <span onclick="system.openTerms();">Terms</span>
+                    <span onclick="system.openLicense();">License</span>
+                    <span><a href="mailto:info.whitelotus24@gmail.com?&subject=CHS WEB Query&body=My name is: <|Write your name|>,\nMy query is: <|Write your query|>.">Contact</a></span>
+                </div>
+        </section>
+    `
 };
