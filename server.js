@@ -50,7 +50,7 @@ app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 app.use(
     session({
-        secret: 'your-secret-key',
+        secret: security.sessionKey(),
         resave: false,
         saveUninitialized: true,
     })
@@ -88,7 +88,7 @@ app.use((req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
-        console.log(req.path);
+        // console.log(req.path);
         if(security.nonAuthPage(req.path)){
             return next();
         }
