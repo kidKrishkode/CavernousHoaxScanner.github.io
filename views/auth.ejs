@@ -19,14 +19,92 @@
     <link rel="stylesheet" href="../public/App.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
+<style>
+    body{
+        background: #392381;
+    }
+    .btn-outline-process{
+        background: var(--glass-color);
+        backdrop-filter: blur(2px);
+        color: #fff;
+        border-color: #fff;
+    }
+    .btn-holder{
+        width: 65%;
+        margin: 10px 20px;
+    }
+    small,.btn-invisible-process{
+        color: gainsboro;
+        text-align: justify;
+    }
+    hr{
+        width: 100%;
+        height: 1px;
+        border-radius: 5px;
+        background: silver;
+        margin-top: 40px;
+    }
+</style>
 <body>
-    
+    <section id="verifi-window">
+        <div class="boll-design"></div>
+        <div class="verifi-component flo">
+            <div class="verifi-component-left">
+                <div class="left-component upper"></div>
+                <div class="left-component lower">
+                    <div class="header flx">
+                        <div class="logo"></div>
+                        <div class="name">
+                            <h5>CHSWEB</h5>
+                            <h6>Cavernous Hoax Scanner</h6>
+                        </div>
+                    </div>
+                    <p>Experience the power of media technology, a core application by WHITE LOTUS that protects your identity in an evolving digital world, meet: Cavernous Hoax Scanner </p>
+                    <div class="flx btn-holder">
+                        <div class="btn btn-outline-process">Visite WHITE LOTUS</div>
+                        <div class="btn btn-invisible-process">Get your API key</div>
+                    </div>
+                </div>
+            </div>
+            <div class="verifi-component-right">
+                <div class="verifi-form">
+                    <div class="flx">
+                        <h3>Verify your self</h3>
+                        <div class="btn btn-outline-process" onclick="system.reCaptcha();"><i class="fa fa-refresh"></i></div>
+                    </div>
+                    <small>Fill the following capthca in right order under 3 attempts, if a captcha not loaded with in 5 second then report it and try some time later</small>
+                    <div class="form-group mb-2" style="margin-top: 20px;">
+                        <label for="captcha-img">Capthca</label>
+                        <div class="captcha-img" id="captcha-img"></div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="captcha-text">Fill</label>
+                        <input type="text" class="form-control" id="captcha-text" placeholder="Enter Capthca Here">
+                    </div>
+                    <div class="form-group">
+                        <div class="btn btn-info btn-block" onclick="system.verifyCaptcha();">Verify-Code</div>
+                    </div>
+                    <hr>
+                    <div class="captcha-attempts"></div>
+                </div>
+            </div>
+        </div>
+        <div class="text-muted captcha-footer">
+            <span class="flx"><img src="../public/favicon.ico" alt="chs"/><o>© <%= (new Date().getFullYear()) %> CHSWEB</o></span>
+            <span onclick="system.openTerms();">Terms</span>
+            <span onclick="system.openPrivacy();">Privacy</span>
+            <span onclick="system.openLicense();">Security</span>
+            <span onclick="route('/docs')">Docs</span>
+            <span><a href="mailto:info.whitelotus24@gmail.com?&subject=CHS WEB Query&body=My name is: <|Write your name|>,\nMy query is: <|Write your query|>.">Contact</a></span>
+            <span onclick="route('/docs')">Social Media</span>
+        </div>
+    </section>
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
     setTimeout(()=>{
-        system.captachaWindowOpen();
+        system.captachaInitial();
     },1000);
 </script>
 </html>
