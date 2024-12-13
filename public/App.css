@@ -1842,52 +1842,115 @@ footer .bottom-component .right-side a{
 #docsPage #docsList .drop > .right-api ~ .btn, #docsPage #docsList .drop:has(.left-api) .btn{
     margin-left: 42%;
 }
-.captcha h3{
-    color: var(--charm);
-    font-family: sans-serif;
+#verifi-window{
+    width: 100%;
+    height: 100vh;
+}
+#verifi-window .boll-design{
+    width: 300px;
+    height: 300px;
+    background-image: url('../images/ball-1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: rotateY(180deg);
+}
+#verifi-window .verifi-component{
+    width: 80%;
+    /* background: pink; */
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+#verifi-window .verifi-component .verifi-component-left, #verifi-window .verifi-component .verifi-component-right{
+    width: 45%;
+}
+#verifi-window .verifi-component .verifi-component-left .left-component{
+    width: 100%;
+    height: 250px;
+    /* background: blue; */
+    margin: 10px auto;
+    color: #fff;
+}
+#verifi-window .verifi-component .verifi-component-left .lower .header .logo{
+    width: 70px;
+    height: 70px;
+    background-image: url('../public/favicon.ico');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 5px 10px 5px 20px;
+    filter: brightness(0) invert(1);
+}
+#verifi-window .verifi-component .verifi-component-left .lower .header .name{
+    width: 85%;
+    padding: 15px;
+}
+.verifi-component-left .lower .header .name h5{
     font-weight: bold;
-    font-size: 32px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 25px;
+    margin: 0px;
 }
-.captcha .form-inline{
-    width: 60%;
-    justify-content: space-around;
-    margin: 20px auto;
+.verifi-component-left .lower .header .name h6{
+    font-size: 12px;
 }
-.captcha #captcha-img{
-    width: 250px;
+.verifi-component-left .lower p{
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px 20px;
+}
+#verifi-window .verifi-component .verifi-component-right .verifi-form{
+    width: 90%;
+    /* height: 500px; */
+    margin: 10px auto;
+    background: var(--glass-color);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 30px 40px;
+    color: #fff;
+}
+.verifi-component-right .verifi-form h3{
+    font-family: sans-serif;
+    font-size: 22px;
+}
+.verifi-component-right .verifi-form .captcha-img{
+    width: 100%;
     height: 100px;
+    margin: 0px;
     background: url('../images/haze.png');
     background-repeat: no-repeat;
     background-size: cover;
     padding: 0px;
     user-select: none;
 }
-.captcha #captcha-img img{
+.verifi-component-right .verifi-form .captcha-img img{
     position: relative;
     width: 100%;
     height: 100%;
 }
-.captcha #captcha-text{
-    width: 250px;
-}
-.captcha .captcha-attempts{
+.verifi-component-right .captcha-attempts{
     color: red;
     font-weight: bold;
     font-family: Consolas, 'Courier New', monospace;
     height: 40px;
 }
-.captcha .captcha-footer{   
-    position: relative;
-    bottom: -55px;
-    left: 0px;
+#verifi-window .captcha-footer{   
+    position: absolute;
+    bottom: 20px;
+    left: 30%;
     display: flex;
     justify-content: space-evenly;
     width: 40%;
     margin: 2px auto;
 }
-.captcha .captcha-footer span:hover,.captcha .captcha-footer span a{
+#verifi-window .captcha-footer span, #verifi-window .captcha-footer span a{
     cursor: pointer;
     color: grey;
+    font-size: 14px;
+}
+#verifi-window .captcha-footer span img{
+    width: 20px;
+    margin-right: 5px;
+    filter: contrast(0.2);
 }
 
 
@@ -2250,11 +2313,28 @@ footer .bottom-component .right-side a{
     #docsPage #docsList .drop:has(.left-web) .btn, #docsPage #docsList .drop:has(.left-api) .btn{
         margin-left: 40%;
     }
-    .captcha .form-inline{
-        width: 100%;
-    }
     .captcha .captcha-footer{
         bottom: -10px;
         width: 100%;
+    }
+    #verifi-window .verifi-component .verifi-component-left{
+        display: none;
+    }
+    #verifi-window .verifi-component, #verifi-window .verifi-component .verifi-component-right{
+        width: 100%;
+        left: 0;
+        top: 5%;
+    }
+    #verifi-window .verifi-component .verifi-component-right .verifi-form{
+        padding: 30px;
+    }
+    #verifi-window .captcha-footer{
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    #verifi-window .captcha-footer span{
+        margin-right: 10px;
     }
 }

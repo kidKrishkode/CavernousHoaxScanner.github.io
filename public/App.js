@@ -488,11 +488,7 @@ System.prototype.codeset = function(name, lang, id){
         document.getElementById(id).innerText = e+"\n\n";
     }
 }
-System.prototype.captachaWindowOpen = function(){
-    let tab = new TAB();
-    tab.open();
-    tab.innerContext(config.varchar.captcha_templet);
-    tab.mute();
+System.prototype.captachaInitial = function(){
     security.getCaptcha = eval(config.security.getCaptcha);
     document.querySelector('#captcha-img').innerHTML = `<img src=${security.getCaptcha(document)} alt='load'/>`;
 }
