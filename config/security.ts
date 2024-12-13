@@ -121,5 +121,11 @@ module.exports = {
             return true;
         }
         return false;
+    },
+    sessionKey: () => {
+        let left_key = module.exports.generateCaptcha();
+        let right_key = module.exports.generateCaptcha();
+        let key = 'chs'+left_key+right_key;
+        return key;
     }
 };
