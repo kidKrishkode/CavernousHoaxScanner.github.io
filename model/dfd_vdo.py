@@ -8,12 +8,12 @@ Original file is located at
 """
 
 import kagglehub
-yihaopuah_deep_fake_images_path = kagglehub.dataset_download('yihaopuah/deep-fake-images')
-mayankjha146025_fake_face_images_generated_from_different_gans_path = kagglehub.dataset_download('mayankjha146025/fake-face-images-generated-from-different-gans')
-bishalrajbanshi_realanddeepfakeimage_path = kagglehub.dataset_download('bishalrajbanshi/realanddeepfakeimage')
-sanikatiwarekar_deep_fake_detection_dfd_entire_original_dataset_path = kagglehub.dataset_download('sanikatiwarekar/deep-fake-detection-dfd-entire-original-dataset')
+# yihaopuah_deep_fake_images_path = kagglehub.dataset_download('yihaopuah/deep-fake-images')
+# mayankjha146025_fake_face_images_generated_from_different_gans_path = kagglehub.dataset_download('mayankjha146025/fake-face-images-generated-from-different-gans')
+# bishalrajbanshi_realanddeepfakeimage_path = kagglehub.dataset_download('bishalrajbanshi/realanddeepfakeimage')
+# sanikatiwarekar_deep_fake_detection_dfd_entire_original_dataset_path = kagglehub.dataset_download('sanikatiwarekar/deep-fake-detection-dfd-entire-original-dataset')
 shivamardeshna_real_and_fake_images_dataset_for_image_forensics_path = kagglehub.dataset_download('shivamardeshna/real-and-fake-images-dataset-for-image-forensics')
-abdullah122_rvf10k_10_path = kagglehub.dataset_download('abdullah122/rvf10k-10')
+# abdullah122_rvf10k_10_path = kagglehub.dataset_download('abdullah122/rvf10k-10')
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -95,7 +95,6 @@ dataGenerator = ImageDataGenerator(
 
 # Data generators for train, validation, and test
 train_generator = dataGenerator.flow_from_directory(
-    # '/kaggle/input/real-and-fake-images-dataset-for-image-forensics/Data Set 1/Data Set 1/train',
     shivamardeshna_real_and_fake_images_dataset_for_image_forensics_path+'/Data Set 1/Data Set 1/train',
     target_size=(256, 256),
     batch_size=32,
@@ -103,7 +102,6 @@ train_generator = dataGenerator.flow_from_directory(
 )
 
 valid_generator = dataGenerator.flow_from_directory(
-    # '/kaggle/input/real-and-fake-images-dataset-for-image-forensics/Data Set 1/Data Set 1/validation',
     shivamardeshna_real_and_fake_images_dataset_for_image_forensics_path+'/Data Set 1/Data Set 1/validation',
     target_size=(256, 256),
     batch_size=32,
@@ -111,7 +109,6 @@ valid_generator = dataGenerator.flow_from_directory(
 )
 
 test_generator = dataGenerator.flow_from_directory(
-    # '/kaggle/input/real-and-fake-images-dataset-for-image-forensics/Data Set 1/Data Set 1/test',
     shivamardeshna_real_and_fake_images_dataset_for_image_forensics_path+'/Data Set 1/Data Set 1/test',
     target_size=(256, 256),
     batch_size=32,
