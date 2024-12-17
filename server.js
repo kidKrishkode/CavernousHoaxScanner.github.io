@@ -25,12 +25,23 @@ try{
 require('./public/App.test.js');
 require('dotenv').config();
 
+class WEB{
+    constructor(port){
+        this.active = true;
+        this.port = port;
+        this.filename = path.basename(__filename);
+        this.appInfo = jsonfile.readFileSync('./public/manifest.json');
+        this.isVerified = false;
+        this.originalUrl = false;
+    }
+}
+
 const app = express();
 let server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const AppName = "Cavernous Hoax Scanner";
 let web = new WEB(PORT);
-let imagePath,width,height;
+let memory;
 let API_LINK = '';
 let single_img_bin = [];
 let response_bin = [];
@@ -88,17 +99,22 @@ app.use((req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
-        // console.log(req.path);
-        if(security.nonAuthPage(req.path)){
+        if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
             return next();
         }
-        if(!req.session.isVerified){
-            if(!req.session.originalUrl){
-                req.session.originalUrl = req.originalUrl;
+        setTimeout(()=>{
+            if(memory!=undefined){
+                const last_verified = (new Date().getTime()) - memory[1].time;
+                if(last_verified >= 30*60*1000){
+                    web.originalUrl = req.originalUrl;
+                    return res.redirect('/auth?=0');
+                }
+            }else{
+                web.originalUrl = req.originalUrl;
+                return res.redirect('/auth');
             }
-            return res.redirect('/auth?=0');
-        }
-        next();
+            next();
+        },1500);
     }catch(e){
         res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
     }
@@ -187,7 +203,7 @@ app.get('/nonAPIHost', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-    if(!req.session.isVerified){
+    if(!web.isVerified){
         res.status(200).render('auth');
     }else{
         res.redirect('*');
@@ -196,15 +212,21 @@ app.get('/auth', (req, res) => {
 
 app.post('/auth/verify', (req, res) => {
     const { captchaSolved } = req.body;
-    if('true' === security.decodedURI(captchaSolved)){
-        req.session.isVerified = true;
-        const redirectUrl = req.session.originalUrl || '/index';
+    if(Boolean(security.decodedURI(captchaSolved))){
+        web.isVerified = true;
+        const redirectUrl = req.session.originalUrl || web.originalUrl || '/index';
         req.session.originalUrl = null;
         res.status(200).json(redirectUrl);
     }else{
-        req.session.isVerified = false;
+        web.isVerified = false;
         res.status(200).json('');
     }
+});
+
+app.post('/memory', (req, res) => {
+    const { dbdata } = req.body;
+    memory = dbdata;
+    res.status(200).json({'ack': 'Remember user, Permit to route'});
 });
 
 app.get('/imgToPdf', (req, res) => {
@@ -332,8 +354,8 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin.length = 0;
-                console.log(response_bin);
-                // res.status(200).json(result);
+                // console.log(response_bin);
+                res.status(200).json(result);
             });
         }).catch((error) => {
             console.log("Error sending parts:", error);
@@ -399,13 +421,6 @@ app.get('/docs', (req, res) => {
         res.status(200).render('docs',{header, services, feed, faq, footer});
     });
 });
-
-function WEB(port){
-    this.active = true;
-    this.port = port;
-    this.filename = path.basename(__filename);
-    this.appInfo = jsonfile.readFileSync('./public/manifest.json');
-}
 
 WEB.prototype.noise_detect = function(data){
     try{
