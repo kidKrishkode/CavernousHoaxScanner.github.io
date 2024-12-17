@@ -99,7 +99,7 @@ app.use((req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
-        if(security.nonAuthPage(req.path) || hex.isHosted(req)){
+        if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
             return next();
         }
         setTimeout(()=>{
