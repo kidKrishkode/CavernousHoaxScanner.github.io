@@ -99,15 +99,24 @@ app.use((req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
-        if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
+        if(security.nonAuthPage(req.path) || hex.isHosted(req)){
             return next();
         }
         setTimeout(()=>{
             if(memory!=undefined){
-                const last_verified = (new Date().getTime()) - memory[1].time;
-                if(last_verified >= 30*60*1000){
-                    web.originalUrl = req.originalUrl;
-                    return res.redirect('/auth?=0');
+                if(params.has('autherize')){
+                    if(security.decodedURI(params.get('autherize'), public_key) < 30*60*1000){
+                        return next();
+                    }
+                }
+                try{
+                    const last_verified = (new Date().getTime()) - memory.find(function (element){return element.id == 0})==undefined?0:memory.find(function (element){return element.id == 0}).time;
+                    if(last_verified >= 30*60*1000){
+                        web.originalUrl = req.originalUrl;
+                        return res.redirect('/auth?=0');
+                    }
+                }catch(e){
+                    return next();
                 }
             }else{
                 web.originalUrl = req.originalUrl;
@@ -216,7 +225,7 @@ app.post('/auth/verify', (req, res) => {
         web.isVerified = true;
         const redirectUrl = req.session.originalUrl || web.originalUrl || '/index';
         req.session.originalUrl = null;
-        res.status(200).json(redirectUrl);
+        res.status(200).json(redirectUrl+'?autherize='+security.encodedData(new Date().getTime())+'&greet=true');
     }else{
         web.isVerified = false;
         res.status(200).json('');
