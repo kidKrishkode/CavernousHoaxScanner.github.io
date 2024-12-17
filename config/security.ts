@@ -15,6 +15,22 @@ module.exports = {
         }
         return str.toString();
     },
+    encodedData: (data) => {
+        let hash = [["0","*z"],["1","*y"],["2","*x"],["3","*w"],["4","*v"],["5","*u"],["6","*t"],["7","*s"],["8","*r"],["9","*q"],["&",0],["+",1],["=",2],["-",3],["a",4],["e",5],["i",6],["n",7],["u",8],["g",9],["r","!h"],["l","!i"],["t","!j"],["A","!p"],["E","*F"], ["H","LP"],["L","!P"],["T","@"],["S","/M"],["O","*o"]];
+        let str = data.toString();
+        for(let i=0; i<hash.length; i++){
+            str = str.replaceAll(hash[i][0], hash[i][1]);
+        }
+        return str.toString();
+    },
+    decodedData: (data) => {
+        let antihash = [["O","*o"],["S","/M"],["T","@"],["L","!P"],["H","LP"],["E","*F"],["A","!p"],["&",0],["+",1],["=",2],["-",3],["a",4],["e",5],["i",6],["n",7],["u",8],["g",9],["r","!h"],["l","!i"],["t","!j"],["0","*z"],["1","*y"],["2","*x"],["3","*w"],["4","*v"],["5","*u"],["6","*t"],["7","*s"],["8","*r"],["9","*q"]];
+        let str = data.toString();
+        for(let i=0; i<antihash.length; i++){
+            str = str.replaceAll(antihash[i][1], antihash[i][0]);
+        }
+        return str.toString();
+    },
     browser: (navigator) => { 
         var browserAgent = navigator['user-agent']; 
         var browserName, browserVersion, browserMajorVersion; 
@@ -90,13 +106,13 @@ module.exports = {
         try{
             text = module.exports.generateCaptcha();
             imageData = module.exports.generateImageCaptcha(document, text);
-            hased = module.exports.encodedURI(text, 1441);
+            hased = module.exports.encodedData(text);
         }catch(e){
             let generateCaptcha = eval(config.security.generateCaptcha);
             let generateImageCaptcha = eval(config.security.generateImageCaptcha);
             text = generateCaptcha();
             imageData = generateImageCaptcha(document, text);
-            hased = system.encodedURI(text, 1441);
+            hased = system.encodedData(text);
         }
         security.vitals = hased;
         return imageData.toString();
@@ -116,8 +132,11 @@ module.exports = {
         return code;
     },
     nonAuthPage: (path) => {
-        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/privacy', '/terms', '/license', '/nonAPIHost'];
+        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/privacy', '/terms', '/license', '/nonAPIHost', '/compiler', '/status', '/memory', '/load/single', '/load/response'];
         if(openPage.find(function (element){return element == path})){
+            return true;
+        }
+        if(path.toLowerCase().includes('/process')){
             return true;
         }
         return false;
