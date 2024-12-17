@@ -508,6 +508,7 @@ System.prototype.verifyCaptcha = function(){
     if(hased_captcha == security.vitals){
         local_memory[1] = {"id": 1, "verified_key": capthca, "time": (new Date().getTime())};
         system.pushDataBase();
+        system.sendMemory();
         setTimeout(()=>{
             document.querySelector('.captcha-attempts').textContent = "You are good to go!";
             fetch('/auth/verify', {
