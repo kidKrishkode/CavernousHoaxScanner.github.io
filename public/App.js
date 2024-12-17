@@ -357,6 +357,13 @@ System.prototype.encodedURI = function(url, key){
     }
     return str.toString();
 }
+System.prototype.encodedData = function(data){
+    let str = data.toString();
+    for(let i=0; i<config.varchar.encrypt.length; i++){
+        str = str.replaceAll(config.varchar.encrypt[i][0], config.varchar.encrypt[i][1]);
+    }
+    return str.toString();
+}
 System.prototype.setActiveMenu = function(menuName){
     const navMenu = document.querySelector('#side-menu');
     const navItems = navMenu.querySelectorAll('.nav-item');
@@ -497,21 +504,26 @@ System.prototype.reCaptcha = function(){
 }
 System.prototype.verifyCaptcha = function(){
     let capthca = document.querySelector('#captcha-text').value;
-    let hased_captcha = this.encodedURI(capthca, 1441);
+    let hased_captcha = this.encodedData(capthca);
     if(hased_captcha == security.vitals){
-        fetch('/auth/verify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                captchaSolved: system.encodedURI('true')
-            })
-        }).then(data => data.json()).then(data => {
-            route(data);
-        }).catch(err => {
-            console.log("Oops! system is busy to handle you");
-        });
+        local_memory[1] = {"id": 1, "verified_key": capthca, "time": (new Date().getTime())};
+        system.pushDataBase();
+        setTimeout(()=>{
+            document.querySelector('.captcha-attempts').textContent = "You are good to go!";
+            fetch('/auth/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    captchaSolved: system.encodedURI('true')
+                })
+            }).then(data => data.json()).then(data => {
+                route(data);
+            }).catch(err => {
+                console.log("Oops! system is busy to handle you");
+            });
+        },1000);
     }else{
         document.querySelector('.captcha-attempts').textContent = `>> Captcha not matched, trial ${security.trial}/3`;
         security.trial--;
@@ -521,6 +533,24 @@ System.prototype.verifyCaptcha = function(){
         }
     }
 }
+System.prototype.sendMemory = function(){
+    fetch('/memory', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            dbdata: local_memory
+        })
+    }).then(data => data.json()).then(data => {
+        console.log(data);
+    }).catch(err => {
+        console.log("Oops! system is busy to handle you");
+    });
+}
+setTimeout(()=>{
+    system.sendMemory();
+},1000);
 System.prototype.pushDataBase = function(){
     memory.saveArray(local_memory);
 }
