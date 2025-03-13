@@ -16,7 +16,6 @@
     "express-session": "^1.18.1",
     "jimp": "^0.22.12",
     "jsonfile": "^6.1.0",
-    "multer": "^1.4.5-lts.1",
-    "socket.io": "^4.7.5"
+    "multer": "^1.4.5-lts.1"
   }
 }
