@@ -8,7 +8,7 @@ const {spawn} = require('child_process');
 const querystring = require('querystring');
 const ejs = require('ejs');
 const jsonfile = require('jsonfile');
-const multer = require('multer');
+// const multer = require('multer');
 const session = require('express-session');
 let varchar, security, hex, compiler;
 try{
@@ -67,8 +67,8 @@ app.use(
     })
 );
 
-const storage = multer.memoryStorage();
-const upload = multer({storage: storage});
+// const storage = multer.memoryStorage();
+// const upload = multer({storage: storage});
 
 app.use((req, res, next) => {
     try{
@@ -341,7 +341,7 @@ app.get('/converter', (req, res) => {
     });
 });
 
-app.post('/converter/process', upload.single('file'), async (req, res) => {
+app.post('/converter/process', async (req, res) => {
     try{
         const extension = req.body.extension;
         let imageData;
@@ -384,7 +384,7 @@ app.get('/imgEditor', (req, res) => {
     });
 });
 
-app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
+app.post('/imgEditor/upload', async (req, res) => {
     try{
         const index = parseInt(req.body.i);
         const imagePart = req.body.filePart;
@@ -405,7 +405,7 @@ app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
     }
 });
 
-app.post('/index/process', upload.single('file'), async (req, res) => {
+app.post('/index/process', async (req, res) => {
     // try{
         const extension = req.body.extension;
         let imageData;
