@@ -363,8 +363,12 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin.length = 0;
-                // console.log(response_bin);
+                // console.log(result);
                 res.status(200).json(result);
+                // if(response_bin!=[]){
+                //     console.log(result);
+                // }
+                // res.status(200).json({error: 0});
             });
         }).catch((error) => {
             console.log("Error sending parts:", error);
@@ -388,7 +392,7 @@ app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
         imageParts[index][part - 1] = imagePart;
         if(imageParts[index][0] && imageParts[index][1]){
             const completeImageData = imageParts[index][0] + imageParts[index][1];
-            const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base4'));
+            const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
             const tempFilePath = path.join(__dirname, `/assets/editor/${index + 1}.png`);
             await image.writeAsync(`${tempFilePath}`);
             editor_img_path = tempFilePath.toString().replaceAll('\\','/');
@@ -399,6 +403,43 @@ app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
     }
+});
+
+app.post('/index/process', upload.single('file'), async (req, res) => {
+    // try{
+        const extension = req.body.extension;
+        let imageData;
+        let limit;
+        if(req.body.load!='true'){
+            imageData = req.body.imageData;
+            limit = 2;
+        }else{
+            imageData = hex.mergeListToString(single_img_bin);
+            limit = single_img_bin.length;
+            console.log("Limit of bin: "+limit);
+        }
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+            if(web.noise_detect(connection)) return web.handle_error(res, connection);
+            hex.chsAPI(`${API_LINK}/api/dfdScanner`, {
+                ext: extension,
+                img: '',
+                load: 'true',
+                key: varchar.API_KEY
+            }).then((result) => {
+                single_img_bin.length = 0;
+                console.log("Server get result as: "+result);
+                res.status(200).json(result);
+                // if(response_bin!=[]){
+                //     console.log(result);
+                // }
+                // res.status(200).json({error: 0});
+            });
+        }).catch((error) => {
+            console.log("Error sending parts:", error);
+        });
+    // }catch(e){
+    //     res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    // }
 });
 
 app.get('/imgEditor/open_editior', (req, res) => {
