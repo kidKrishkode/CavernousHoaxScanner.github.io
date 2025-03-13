@@ -43,7 +43,7 @@
                 <i class="fa fa-google"></i>
             </div>
             <div class="process-btn">
-                <div class="btn btn-process">Process</div>
+                <div class="btn btn-process" onclick="process();">Process</div>
             </div>
         </div>
         <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
@@ -116,32 +116,77 @@
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
 
-    function process(){
-        let extension = document.getElementById('extension-input').value.toLowerCase();
-        let fileInput = document.getElementById('file-input');
-        const file = fileInput.files[0];
+    function directUpload(file){
+        let extension = 'png';
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
             const imageData = reader.result;
-            fetch('/converter/process', {
+            fetch('/index/process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({extension, imageData})
             }).then(response => response.json()).then(data => {
-                document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.path,null,2).replace('D:/.vscode/Vs programmes/Df Detector/server-side','.')} alt='loading' id="dimg"/>`;
-                system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+data.extension);
-                document.getElementById('op1').innerHTML = `
-                    <div class="btn btn-process" onclick="route('');">Back</div>
-                    <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${data.extension}');"><i class="fa fa-download"></i> Download</div>
-                `;
-                document.getElementById('op2').style.display = 'none';
-                document.getElementById('op3').style.display = 'none';
-                document.getElementById('file-input').disabled = true;
+                afterResponce(data, extension);
             }).catch(e=>console.log(e));
         }
+    }
+    function process(){
+        let fileInput = document.getElementById('file-input');
+        if(fileInput.files.length!=0){
+            const file = fileInput.files[0];
+            document.querySelector('.progress-status').style.display = 'block';
+            // system.block_resource({input: "file-input"});
+            if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 900){
+                compressAndUpload(file, document.getElementById('media-size').textContent.replace('Kb','')*1);
+            }else{
+                directUpload(file);
+            }
+        }
+    }
+    function compressAndUpload(file, size){
+        const singlePartsAPI = eval(config.hex.singlePartsAPI);
+        const limit = Math.floor(size/900)+2;
+        const extension = 'png';
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(){
+            const imageData = reader.result;
+            singlePartsAPI('/load/single', imageData, limit).then((result) => {
+                fetch('/index/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        extension: extension,
+                        img: '',
+                        load: 'true'
+                    })
+                }).then(response => response.json()).then(data => {
+                    afterResponce(data, extension);
+                });
+            }).catch((error) => {
+                console.log("Error sending parts:", error);
+            });
+        }
+    }
+    function afterResponce(data, extension){
+        if(typeof data.error !== "undefined"){
+            return system.handelPyError(data.error);
+        }
+        document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.result,null,2)} alt='loading' id="dimg"/>`;
+        system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
+        document.getElementById('op1').innerHTML = `
+            <div class="btn btn-process" onclick="route('');">Back</div>
+            <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${extension}');"><i class="fa fa-download"></i> Download</div>
+        `;
+        document.getElementById('op2').style.display = 'none';
+        document.getElementById('op3').style.display = 'none';
+        document.getElementById('file-input').disabled = true;
+        document.querySelector('.progress-status').style.display = 'none';
     }
 </script>
 </html>
