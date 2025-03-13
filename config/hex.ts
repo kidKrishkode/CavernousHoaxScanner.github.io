@@ -182,10 +182,12 @@ module.exports = {
                         })
                     });
                     const data = await response.json();
+                    console.log(data);
                     if(data.ack === index){
                         return "true";
                     }
                 }catch(error){
+                    // console.log(error);
                     if(error.cause.errno==-4078 || error.cause.code=='ECONNREFUSED') return false;
                     console.log(`Error on attempt ${attempts} for part ${index}:`, error);
                 }
@@ -210,6 +212,8 @@ module.exports = {
                 },
                 body: JSON.stringify(token)
             });
+            let dume = await response;
+            console.log(dume);
             if(!response.ok){
                 const errorDetails = await response.json();
                 console.error('API Error:', errorDetails);

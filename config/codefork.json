@@ -4,7 +4,7 @@
         "lang": "Node Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "const@ s|fetch|n = f|require|n(s' node-fetch 'n);\n\nconst@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+        "code": "const@ s|fetch|n = f|require|n(s' node-fetch 'n);\n\nconst@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img |n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
     },
     {
         "id": 1,
@@ -18,14 +18,14 @@
         "lang": "Vanilla Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img |n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
     },
     {
         "id": 3,
         "lang": "Vanilla Js",
         "name": "Image Compressor",
         "method": "POST",
-        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageCompressor'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img|n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageCompressor'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img |n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
     },
     {
         "id": 4,
