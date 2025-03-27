@@ -90,6 +90,7 @@ app.use((req, res, next) => {
                 req.query = querystring.parse(encodedUrl);
             }
         }
+        if(security.secure_access(req.originalUrl)) return next();
         const my_browser = security.browser(req.headers);
         if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data) && hex.isHosted(req)){
             res.status(422).render('notfound',{error: 422, message: "Your browser is outdated and may not support certain features. Please upgrade to a modern browser."});
@@ -125,7 +126,7 @@ app.use((req, res, next) => {
             next();
         },1500);
     }catch(e){
-        res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it"});
+        res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it", statement: e});
     }
 });
 
@@ -427,7 +428,7 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin.length = 0;
-                console.log("Server get result as: "+result);
+                console.log(result);
                 res.status(200).json(result);
                 // if(response_bin!=[]){
                 //     console.log(result);
@@ -469,6 +470,27 @@ app.get('/about', (req, res) => {
 app.get('/docs', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('docs',{header, services, feed, faq, footer});
+    });
+});
+
+app.get('/cdn', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('cdnLanding',{header, services, feed, faq, footer});
+    });
+});
+
+app.post('/cdn_raw', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        ejs.renderFile(__dirname+'/views/cdnLanding.ejs', { header, services, feed, faq, footer }, (err, html) => {
+            if(err){
+              console.error("Error to send raw cdn page "+err);
+              res.status(500).send('Error to rendering cdn page template');
+            }else{
+              res.set("Content-Disposition", "attachment;filename=\"cdnLanding.html\"");
+              res.set("Content-Type", "text/html");
+              res.send(html);
+            }
+        });
     });
 });
 
