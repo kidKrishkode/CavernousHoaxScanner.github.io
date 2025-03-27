@@ -323,7 +323,7 @@ System.prototype.download_pdf = function(filePath, fileName){
     document.body.removeChild(link);
 }
 System.prototype.inphantCDN = function(){
-    window.location = "https://kidKrishkode.github.io/inphantApi.github.io/main.html?page=DocsPage&test=null&search=How%20to%20Use%20Our%20API&env=false";
+    window.location = "https://chscdn.vercel.app/";
 }
 System.prototype.themeToggle = function(id){
     if(theme == 0){
