@@ -212,8 +212,8 @@ module.exports = {
                 },
                 body: JSON.stringify(token)
             });
-            let dume = await response;
-            console.log(dume);
+            // let dume = await response;
+            // console.log(dume);
             if(!response.ok){
                 const errorDetails = await response.json();
                 console.error('API Error:', errorDetails);

@@ -132,7 +132,7 @@ module.exports = {
         return code;
     },
     nonAuthPage: (path) => {
-        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/privacy', '/terms', '/license', '/nonAPIHost', '/compiler', '/status', '/memory', '/load/single', '/load/response'];
+        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/privacy', '/terms', '/license', '/cdn', '/docs', '/nonAPIHost', '/compiler', '/status', '/memory', '/load/single', '/load/response'];
         if(openPage.find(function (element){return element == path})){
             return true;
         }
@@ -146,5 +146,15 @@ module.exports = {
         let right_key = module.exports.generateCaptcha();
         let key = 'chs'+left_key+right_key;
         return key;
+    },
+    secure_access: (url) =>{
+        let secure_page = ['/cdn', '*', '/varchar', '/privacy', '/terms', '/license',];
+        if(secure_page.find(function (element){return element == url})){
+            return true;
+        }
+        if(url.toLowerCase().includes('_raw')){
+            return true;
+        }
+        return false;
     }
 };
