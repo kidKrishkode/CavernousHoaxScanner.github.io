@@ -13,12 +13,13 @@
     <meta property="twitter:title" content="Cavernous Hoax Scanner CDN">
     <meta content="CHSCDN is a web-based Content Delivery Network (CDN) which utilizes JPEN stack technology to deliver pre-built JavaScript, TypeScript, and CSS libraries for smooth integration with CHSAPI." lang="en-us" name="description">
     <meta content="Cavernous Hoax Scanner, CDN, Deepfake Detector, DFD, Image tool, deepfake, image genetator, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
-    <title version="1.0">CHSCDN</title>
+    <title version="1.0">Cavernous Hoax Scanner's CDN</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://chsweb.vercel.app/public/App.css" />
-    <link rel="stylesheet" href="https://chsweb.vercel.app/public/index.css"  />
-    <link rel="icon" href="https://chsweb.vercel.app/public/favicon.ico"  />
+    <link rel="stylesheet" href="https://chsweb.vercel.app/public/App.css"/>
+    <link rel="stylesheet" href="https://chsweb.vercel.app/public/index.css"/>
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet"/>
+    <link rel="icon" href="https://chsweb.vercel.app/public/favicon.ico"/>
 </head>
 <style>
     :root{
@@ -27,6 +28,9 @@
         --bd-accent-rgb: 255, 228, 132;
         --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
         --bd-pink-rgb: 214, 51, 132;
+        --bs-border-color: #dee2e6;
+        --bs-body-color: #212529;
+        --bd-pre-bg: #f8f9fa;
     }
     .intro{
         padding-top: 80px;
@@ -66,6 +70,74 @@
         margin-top: 20px;
         margin-bottom: 120px;
     }
+    .cdnplug{
+        margin: 20px 0px 40px 0px;
+        display: flex;
+        flex-direction: row;
+        .cdnplug-component{
+            width: 50%;
+            padding: 24px 60px;
+            h5,i{
+                font-size: 28px;
+                color: var(--revers-white);
+            }
+            i{
+                color: #212529bf;
+            }
+        }
+        .left{
+            border-right: 1px solid slategray;
+        }
+    }
+    .btn-clipboard i{
+        font-size: 20px!important;
+    }
+    .highlight pre{
+        scrollbar-width: none;
+    }
+    .fw-normal{
+        font-weight: 400 !important;
+    }
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px) {
+        .api-container h5{
+            margin-top: 2%;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .apiLand .api-left h2{
+            font-size: 30px;
+            margin-left: 0px;
+        }
+        .apiLand .api-right img{
+            margin: 4px 5%;
+        }
+        .cdnplug{
+            flex-direction: column-reverse;
+            .cdnplug-component{
+                width: 100%;
+                padding: 24px 20px;
+                h5,i{
+                    font-size: 22px;
+                }
+            }
+            .left{
+                border-right: none;
+            }
+        }
+        .getstart{
+            text-align: center;
+            .d-flex{
+                display: block!important;
+            }
+        }
+        .bd-code-snippet{
+            margin: 1rem auto;
+            border-width: 1px;
+        }
+        .bd-clipboard{
+            display: block;
+        }
+    }
 </style>
 <body>
     <header id="header">
@@ -80,7 +152,7 @@
                 <div class="api-left api-container">
                     <h5>Build fast, media-tech sites</h5>
                     <h2>with <span>CHSCDN Plugins</span></h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia dolor vero voluptatem doloremque assumenda sint! Temporibus alias neque perferendis ullam explicabo dolores consectetur! Eveniet sapiente totam fugiat, autem accusantium nam?</p>
+                    <p style="color: #333333;">Powerful, fast and efficient solution for building media-tech websites with ease. Designed to simplify development, it provides a collection of pre-written CSS and JavaScript files tailored for boundless integration. With a focus on speed and usability, CHSCDN eliminates the need for complex configurations, offering a ready-to-use foundation for responsive and interactive designs.</p>
                     <div class="flx">
                         <div class="btn btn-process" onclick="route('https:/\/chsweb.vercel.app/cdnPlug')">Quick Start</div>
                         <div class="btn btn-invisible-process text-white" onclick="route('https:/\/chsweb.vercel.app/docs')">View CDN Document</div>
@@ -95,17 +167,82 @@
             <div class="product">
                 <div class="icon"></div>
                 <div class="head">Image Standards</div>
-                <div class="body">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laudantium cumque ex doloribus earum tempore rerum pariatur sapiente veniam saepe?</div>
+                <div class="body">Provides predefined CSS and JS codes to standardize image usage, ensuring optimal size, orientation, borders, and consistency across websites.</div>
             </div>
             <div class="product">
                 <div class="icon"></div>
                 <div class="head">CHSCDN Connector</div>
-                <div class="body">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laudantium cumque ex doloribus earum tempore rerum pariatur sapiente veniam saepe?</div>
+                <div class="body">Simplifies CHSAPI integration, enabling direct API calls without coding. It handles requests, responses, errors, and communicates with CHSWeb for support.</div>
             </div>
             <div class="product">
                 <div class="icon"></div>
                 <div class="head">Video Tailor</div>
-                <div class="body">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laudantium cumque ex doloribus earum tempore rerum pariatur sapiente veniam saepe?</div>
+                <div class="body">Offers prebuilt CSS and JS for video and iframes, ensuring global standards. It includes controls, sizing, borders, loading, and playback functions for media integration.</div>
+            </div>
+        </div>
+        <div class="getstart col-lg-7 mx-auto pb-3 mb-3 mb-md-5 text-md-center">
+            <div class="masthead-followup-icon d-inline-block mb-3" style="--bg-rgb: var(--bd-violet-rgb); padding: 16px 20px; font-size: 20px;">
+                <i class="fa fa-code"></i>
+            </div>
+            <h2 class="display-5 mb-3 fw-semibold lh-sm">Get started any way you want</h2>
+            <p class="fw-normal">
+                Jump right into building with meida-tech use the CDN plug, install it via package<br> manager to download the source code.
+            </p>
+            <p class="d-flex justify-content-md-start justify-content-md-center fw-normal">
+                <a href="https://chsweb.vercel.app/docs?search=cdninstall" class="icon-link icon-link-hover fw-semibold ps-md-4">Read installation docs <i class="fa fa-long-arrow-right"></i></a>
+            </p>
+        </div>
+        <div class="cdnplug">
+            <div class="cdnplug-component left">
+                <i class="fa fa-cube"></i>
+                <h5>Install via package manager</h5>
+                <p>Install CHSCDN's Python and JavaScript files via npm, pip, curl, or wget. These package-managed downloads provide quick access to prebuilt assets without additional documentation or build scripts. Package managed installs don't include documentation or our full build scripts. You can also <a href="https://chsweb.vercel.app/docs?search=package">use any demo from our Examples</a> to quickly jumpstart media-tech projects.</p>
+                <div class="bd-code-snippet">
+                    <div class="bd-clipboard">
+                        <button type="button" class="btn-clipboard">
+                            <i class="fa fa-clone"></i>
+                        </button>
+                    </div>
+                    <div class="highlight">
+                        <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="org">pip</span> <span class="gry">install</span> https://chscdn.vercel.app/download/zip/v1</span></span></code></pre>
+                    </div>
+                </div>
+                <div class="bd-code-snippet">
+                    <div class="bd-clipboard">
+                        <button type="button" class="btn-clipboard">
+                            <i class="fa fa-clone"></i>
+                        </button>
+                    </div>
+                    <div class="highlight">
+                        <pre tabindex="1" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="org">curl</span> -o ./chscdn/v1.zip <span class="grn">"https://chscdn.vercel.app/download/zip/v1"</span> && <span class="gry">unzip</span> -o ./chscdn/v1.zip -d ./chscdn/ && <span class="gry">rm</span> ./chscdn/v1.zip</span></span></code></pre>
+                    </div>
+                </div>
+                <p><a href="https://chsweb.vercel.app/docs?search=cdninstall">Read our installation docs</a> for more info and additional package managers</p>
+            </div>
+            <div class="cdnplug-component right">
+                <i class="fa fa-chrome"></i>
+                <h5>Include via CDN</h5>
+                <p>When you need to include CHSCDN's compiled CSS or JS, you can use our <a href="https://chscdn.vercel.app/">CDN</a> for boundless integration. Get started <a href="https://chsweb.vercel.app/docs?search=quickstartcdn">quickly</a> with our simple setup or <a href="https://chsweb.vercel.app/docs?search=cdn">explore examples</a> to enhance your project. You can also load specific scripts as needed for better control.</p>
+                <div class="bd-code-snippet">
+                    <div class="bd-clipboard">
+                        <button type="button" class="btn-clipboard">
+                            <i class="fa fa-clone"></i>    
+                        </button>
+                    </div>
+                    <div class="highlight">
+                        <pre tabindex="3" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://chscdn.vercel.app/cdn/v1/css/chscdn.min.css"</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span><span class="p">/&gt;</span></span></span></code></pre>
+                    </div>
+                </div>
+                <div class="bd-code-snippet">
+                    <div class="bd-clipboard">
+                        <button type="button" class="btn-clipboard">
+                            <i class="fa fa-clone"></i>    
+                        </button>
+                    </div>
+                    <div class="highlight">
+                        <pre tabindex="4" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://chscdn.vercel.app/cdn/v1/js/chscdn.js"</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="graph-repo">
