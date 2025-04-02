@@ -479,9 +479,14 @@ app.get('/cdn', (req, res) => {
     });
 });
 
-app.post('/cdn_raw', (req, res) => {
+app.post('/cdn_raw', async (req, res) => {
+    const codefork = await jsonfile.readFile('./config/codefork.json');
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        ejs.renderFile(__dirname+'/views/cdnLanding.ejs', { header, services, feed, faq, footer }, (err, html) => {
+        reactCode = codefork[6].code;
+        htmlCode = codefork[7].code;
+        jsCode = codefork[8].code;
+        jsonReponse = codefork[9].code;
+        ejs.renderFile(__dirname+'/views/cdnLanding.ejs', { header, services, feed, faq, footer, reactCode, htmlCode, jsCode, jsonReponse }, (err, html) => {
             if(err){
               console.error("Error to send raw cdn page "+err);
               res.status(500).send('Error to rendering cdn page template');
@@ -538,7 +543,7 @@ function callPythonProcess(list, functionValue){
 }
 
 app.get('*', (req, res) => {
-    res.status(404).render('notfound',{error: 404, message: "Page not found on this url, check the source or report it"});
+    res.status(404).render('notfound',{error: 404, message: "Page not found on this url, check the source or report it", statement: ""});
 });
 
 server.listen(PORT, (err) => {
