@@ -37,7 +37,7 @@
         <div class="progress-status">
             <div class="progress">Please wait a little..</div>
         </div>
-        <div class="flx containers-option">
+        <div class="flx containers-option" id="op1">
             <div class="social-opener">
                 <i class="fa fa-facebook"></i>
                 <i class="fa fa-google"></i>
@@ -49,10 +49,10 @@
         <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
         <img src="../images/3d_atom.png" alt="chs" class="right-middle-des"/>
         <img src="../images/arrow_circle.png" alt="chs" class="left-bottom-des"/>
-        <div class="glass-status flx">
+        <div class="glass-status flx" id="op2">
             <span class="head">Media Accepted:</span><span class="data" id="media-acc">No Media Found!</span>
         </div>
-        <div class="glass-status">
+        <div class="glass-status" id="op3">
             <div class="flx">
                 <span class="head">Media Type:</span><span class="data" id="media-type">Not Selected!</span>
             </div>
@@ -66,7 +66,7 @@
                 <span class="head">Media Dimantion:</span><span class="data" id="media-diamention">Not Selected!</span>
             </div>
         </div>
-        <div class="htsi appear hide">
+        <div class="htsi appear hide" id="op4">
             <h2>How to Use it.</h2>
             <div class="underline"></div>
             <div class="card-group flo">
@@ -129,7 +129,7 @@
                 },
                 body: JSON.stringify({extension, imageData})
             }).then(response => response.json()).then(data => {
-                afterResponce(data, extension);
+                afterResponce(data, imageData);
             }).catch(e=>console.log(e));
         }
     }
@@ -166,27 +166,37 @@
                         load: 'true'
                     })
                 }).then(response => response.json()).then(data => {
-                    afterResponce(data, extension);
+                    afterResponce(data, imageData);
                 });
             }).catch((error) => {
                 console.log("Error sending parts:", error);
             });
         }
     }
-    function afterResponce(data, extension){
+    function afterResponce(data, imageData){
         if(typeof data.error !== "undefined"){
             return system.handelPyError(data.error);
         }
-        document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.result,null,2)} alt='loading' id="dimg"/>`;
-        system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
-        document.getElementById('op1').innerHTML = `
-            <div class="btn btn-process" onclick="route('');">Back</div>
-            <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${extension}');"><i class="fa fa-download"></i> Download</div>
-        `;
-        document.getElementById('op2').style.display = 'none';
-        document.getElementById('op3').style.display = 'none';
-        document.getElementById('file-input').disabled = true;
-        document.querySelector('.progress-status').style.display = 'none';
+        console.log(data);
+        let tab = new TAB();
+        tab.open();
+        tab.innerContext(`<h3 style="text-align: left;font-size: 18px;margin-bottom: 30px;color: var(--lavender);">Deepfake Detection Report:</h3>
+            <image src=${imageData} alt="loading" style="width: 200px; margin: 5px auto 30px auto;"/>
+            <div class="flx" style="width: 300px; margin: 5px auto; color: slateblue;"><span>Result:</span><span>${data?.result?.class}</span></div>
+            <div class="flx" style="width: 300px; margin: 5px auto; color: slateblue;"><span>Accuracy:</span><span>${data?.result?.accuracy}</span></div>
+            <div class="btn btn-process" style="margin-top: 20px;" onclick="new TAB().close();">Done</div>
+        `);
+        // document.querySelector('.preview').innerHTML = `<img src=${imageData} alt='loading' id="dimg"/>`;
+        // // system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
+        // document.getElementById('op1').innerHTML = `
+        //     <div class="btn btn-process" onclick="route('');">Back</div>
+        //     <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'png');"><i class="fa fa-download"></i> Download</div>
+        // `;
+        // document.getElementById('op2').style.display = 'none';
+        // document.getElementById('op3').style.display = 'none';
+        // document.getElementById('op4').style.display = 'none';
+        // document.getElementById('file-input').disabled = true;
+        // document.querySelector('.progress-status').style.display = 'none';
     }
 </script>
 </html>

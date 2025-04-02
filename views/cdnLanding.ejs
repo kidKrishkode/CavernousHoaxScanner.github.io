@@ -28,6 +28,8 @@
         --bd-accent-rgb: 255, 228, 132;
         --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
         --bd-pink-rgb: 214, 51, 132;
+        --bs-danger-rgb: 220, 53, 69;
+        --bs-info-rgb: 13, 202, 240;
         --bs-border-color: #dee2e6;
         --bs-body-color: #212529;
         --bd-pre-bg: #f8f9fa;
@@ -36,7 +38,6 @@
         padding-top: 80px;
         margin: 0px 0px;
         height: 700px;
-        /* background-image: linear-gradient(180deg, transparent, transparent 85%), radial-gradient(ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(var(--bd-accent-rgb), 0.5), transparent 50%); */
         background-image: linear-gradient(180deg, transparent, transparent 85%), radial-gradient(ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(var(--bd-accent-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center right, rgba(var(--bd-violet-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center left, rgba(var(--bd-pink-rgb), 0.5), transparent 50%);
         .apiLand{
             margin-top: 0px;
@@ -98,6 +99,13 @@
     .fw-normal{
         font-weight: 400 !important;
     }
+    .swbt, .cmapi{
+        padding: 20px 60px;
+        margin: 20px 0px 40px 0px;
+    }
+    .cgrn{
+        color: green;
+    }
     @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px) {
         .api-container h5{
             margin-top: 2%;
@@ -110,6 +118,10 @@
         }
         .apiLand .api-right img{
             margin: 4px 5%;
+        }
+        .product-list-a{
+            margin-top: 50px;
+            margin-bottom: 80px;
         }
         .cdnplug{
             flex-direction: column-reverse;
@@ -137,6 +149,17 @@
         .bd-clipboard{
             display: block;
         }
+        .swbt, .cmapi{
+            padding: 20px;
+            h3{
+                font-size: 22px;
+            }
+            .highlight{
+                width: 330px;
+                margin: 0;
+                padding: 0.7rem 1rem;
+            }
+        }
     }
 </style>
 <body>
@@ -145,8 +168,8 @@
     </header>
     <section class="workspace" id="apiLandingPage">
         <img src="../images/glow1.png" onerror="this.src='https:/\/chsweb.vercel.app/images/glow1.png';" alt="chs" class="left-middle-des"/>
-        <img src="../images/3d_atom.png" onerror="this.src='https:/\/chsweb.vercel.app/images/3d_atom.png';" alt="chs" class="right-middle-des"/>
-        <img src="../images/arrow_circle.png" onerror="this.src='https:/\/chsweb.vercel.app/images/arrow_circle.png';" alt="chs" class="left-bottom-des"/>
+        <!-- <img src="../images/3d_atom.png" onerror="this.src='https:/\/chsweb.vercel.app/images/3d_atom.png';" alt="chs" class="right-middle-des"/>
+        <img src="../images/arrow_circle.png" onerror="this.src='https:/\/chsweb.vercel.app/images/arrow_circle.png';" alt="chs" class="left-bottom-des"/> -->
         <div class="intro">
             <div class="apiLand">
                 <div class="api-left api-container">
@@ -159,7 +182,7 @@
                     </div>
                 </div>
                 <div class="api-right api-container">
-                    <img src="../images/api_icon.png" onerror="this.src='https:/\/chsweb.vercel.app/images/api_icon.png';" alt="chs"/>
+                    <img src="../images/cdn_icon.png" onerror="this.src='https:/\/chsweb.vercel.app/images/cdn_icon.png';" alt="chs"/>
                 </div>
             </div>
         </div>
@@ -199,22 +222,22 @@
                 <p>Install CHSCDN's Python and JavaScript files via npm, pip, curl, or wget. These package-managed downloads provide quick access to prebuilt assets without additional documentation or build scripts. Package managed installs don't include documentation or our full build scripts. You can also <a href="https://chsweb.vercel.app/docs?search=package">use any demo from our Examples</a> to quickly jumpstart media-tech projects.</p>
                 <div class="bd-code-snippet">
                     <div class="bd-clipboard">
-                        <button type="button" class="btn-clipboard">
+                        <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#pmcdp1');">
                             <i class="fa fa-clone"></i>
                         </button>
                     </div>
                     <div class="highlight">
-                        <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="org">pip</span> <span class="gry">install</span> https://chscdn.vercel.app/download/zip/v1</span></span></code></pre>
+                        <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh" id="pmcdp1"><span class="line"><span class="cl"><span class="org">pip</span> <span class="gry">install</span> https://chscdn.vercel.app/download/zip/v1</span></span></code></pre>
                     </div>
                 </div>
                 <div class="bd-code-snippet">
                     <div class="bd-clipboard">
-                        <button type="button" class="btn-clipboard">
+                        <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#pmcdp2');">
                             <i class="fa fa-clone"></i>
                         </button>
                     </div>
                     <div class="highlight">
-                        <pre tabindex="1" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="org">curl</span> -o ./chscdn/v1.zip <span class="grn">"https://chscdn.vercel.app/download/zip/v1"</span> && <span class="gry">unzip</span> -o ./chscdn/v1.zip -d ./chscdn/ && <span class="gry">rm</span> ./chscdn/v1.zip</span></span></code></pre>
+                        <pre tabindex="1" class="chroma"><code class="language-sh" data-lang="sh" id="pmcdp2"><span class="line"><span class="cl"><span class="org">curl</span> -o ./chscdn/v1.zip <span class="grn">"https://chscdn.vercel.app/download/zip/v1"</span> && <span class="gry">unzip</span> -o ./chscdn/v1.zip -d ./chscdn/ && <span class="gry">rm</span> ./chscdn/v1.zip</span></span></code></pre>
                     </div>
                 </div>
                 <p><a href="https://chsweb.vercel.app/docs?search=cdninstall">Read our installation docs</a> for more info and additional package managers</p>
@@ -225,22 +248,122 @@
                 <p>When you need to include CHSCDN's compiled CSS or JS, you can use our <a href="https://chscdn.vercel.app/">CDN</a> for boundless integration. Get started <a href="https://chsweb.vercel.app/docs?search=quickstartcdn">quickly</a> with our simple setup or <a href="https://chsweb.vercel.app/docs?search=cdn">explore examples</a> to enhance your project. You can also load specific scripts as needed for better control.</p>
                 <div class="bd-code-snippet">
                     <div class="bd-clipboard">
-                        <button type="button" class="btn-clipboard">
+                        <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#cdns1');">
                             <i class="fa fa-clone"></i>    
                         </button>
                     </div>
                     <div class="highlight">
-                        <pre tabindex="3" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://chscdn.vercel.app/cdn/v1/css/chscdn.min.css"</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span><span class="p">/&gt;</span></span></span></code></pre>
+                        <pre tabindex="3" class="chroma"><code class="language-html" data-lang="html" id="cdns1"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://chscdn.vercel.app/cdn/v1/css/chscdn.min.css"</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span><span class="p">/&gt;</span></span></span></code></pre>
                     </div>
                 </div>
                 <div class="bd-code-snippet">
                     <div class="bd-clipboard">
-                        <button type="button" class="btn-clipboard">
+                        <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#cdns2');">
                             <i class="fa fa-clone"></i>    
                         </button>
                     </div>
                     <div class="highlight">
-                        <pre tabindex="4" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://chscdn.vercel.app/cdn/v1/js/chscdn.js"</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre>
+                        <pre tabindex="4" class="chroma"><code class="language-html" data-lang="html" id="cdns2"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://chscdn.vercel.app/cdn/v1/js/chscdn.js"</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swbt row g-md-5 pb-md-5 mb-5 align-items-center">
+            <div class="col-lg-8 mb-5">
+                <div class="masthead-followup-icon d-inline-block mb-3" style="--bg-rgb: var(--bd-pink-rgb); padding: 16px 20px; font-size: 20px; font-weight: bold;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="font-size: 26px" class="bi bi-braces fs-1" viewBox="0 0 16 16">
+                        <path d="M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6M13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6"/>
+                    </svg>
+                </div>
+                <h2 class="display-5 mb-3 fw-semibold lh-sm">Build and extend in real-time with Boilerplates</h2>
+                <p class="fw-normal">
+                    CHSCDN gives you the power to start your media tech projects easily with our pre-coded templates. Use our <a href="https://google.com/search?q=html+bolierplate&oq=html+bolierplate">HTML boilerplate</a> or React hookup template or <a href="https://google.com/search?q=node+modules&oq=node+modules">Node modules</a> to start right away—no coding necessary, simply <code>ctrl+c</code> and <code>ctrl+v</code>. Our API makes integration easy, enabling you to call functions without a hitch and get image data as a string. With a large number of utility functions, you can line-up your development flow line by line. Further, our pre-made CSS is extremely customizable, letting you reframe and rewrite it to your project requirements.
+                </p>
+                <p class="d-flex align-items-start flex-column fw-normal mb-0">
+                    <a href="https://chsweb.vercel.app/docs?search=template" class="icon-link icon-link-hover fw-semibold mb-3">Learn more about Templets <i class="fa fa-long-arrow-right"></i></a>
+                </p>
+            </div>
+            <div class="row gx-md-5">
+                <div class="col-lg-6 mb-3">
+                    <h3 class="fw-semibold">Using HTML Templates</h3>
+                    <p>Leverage our pre-built HTML templates to structure your projects efficiently. These templates provide a solid foundation, eliminating the need for repetitive coding. Simply integrate them into your workflow and customize as needed. </p>
+                    <div class="bd-code-snippet">
+                        <div class="bd-clipboard">    
+                            <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#hccp');">      
+                                <i class="fa fa-clone"></i>    
+                            </button>  
+                        </div>
+                        <div class="highlight" style="background-color: #ebf0f4;">
+                            <pre tabindex="5" class="chroma"><code class="language-html" data-lang="html" id="hccp"><%= htmlCode %></code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <h3 class="fw-semibold">Import via React Hookups</h3>
+                    <p>Easily integrate our pre-built React hookup templates to streamline your development process. Simply import the necessary components and modify the provided variables to match your project's needs.</p>
+                    <div class="bd-code-snippet">
+                        <div class="bd-clipboard">
+                            <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#rccp');">
+                                <i class="fa fa-clone"></i>
+                            </button>  
+                        </div>
+                        <div class="highlight" style="background-color: #ebf0f4;">
+                            <pre tabindex="6" class="chroma"><code class="language-javascript" data-lang="javascript" id="rccp"><%= reactCode %></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cmapi pb-md-5 mb-5">
+            <div class="col-lg-8 mb-5">
+                <div class="masthead-followup-icon d-inline-block mb-3 me-2" style="--bg-rgb: var(--bs-danger-rgb);">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="font-size: 26px" class="bi bi-menu-button-wide-fill fs-1" viewBox="0 0 16 16">
+                        <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v2A1.5 1.5 0 0 0 1.5 5h13A1.5 1.5 0 0 0 16 3.5v-2A1.5 1.5 0 0 0 14.5 0zm1 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m9.927.427A.25.25 0 0 1 12.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+                    </svg>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="font-size: 26px" class="bi bi-plus me-2 fs-2 text-body-secondary" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                <div class="masthead-followup-icon d-inline-block mb-3" style="--bg-rgb: var(--bs-info-rgb);">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="font-size: 26px" class="bi bi-braces-asterisk fs-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C2.25 2 1.49 2.759 1.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6M14.886 7.9v.164c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456v-1.3c-1.114 0-1.49-.362-1.49-1.456V4.352C14.51 2.759 13.75 2 12.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6M7.5 11.5V9.207l-1.621 1.621-.707-.707L6.792 8.5H4.5v-1h2.293L5.172 5.879l.707-.707L7.5 6.792V4.5h1v2.293l1.621-1.621.707.707L9.208 7.5H11.5v1H9.207l1.621 1.621-.707.707L8.5 9.208V11.5z"/>
+                    </svg>
+                </div>
+                <h2 class="display-5 mb-3 fw-semibold lh-sm">Components, meet the CHS API</h2>
+                <p class="fw-normal">
+                    New to CHSCDN, our <a href="https://chsweb.vercel.app/api">CHSAPI</a> integration is made for hassle-free implementation in frontend as well as backend applications. We've developed it with a strong feature set that simplifies calling and working with the CHS API like never before. It includes built-in response handlers, error handling, and adaptable utility functions to ease your workflow. Whether you're working with requests, processing responses, or integrating custom API interactions, CHSCDN gives you a smooth and efficient experience.
+                </p>
+                <p class="d-flex align-items-start flex-column fw-normal mb-0">
+                    <a href="https://chsweb.vercel.app/docs?search=chsapi" class="icon-link icon-link-hover fw-semibold mb-3">Learn more about CHSAPI <i class="fa fa-long-arrow-right"></i></a>
+                </p>
+            </div>
+            <div class="row gx-md-5">
+                <div class="col-lg-6 mb-3">
+                    <h3 class="fw-semibold">Shout for DeepFake Detection</h3>
+                    <p>CHS API provides a robust <a href="https://chsweb.vercel.app/">deepfake detection</a> tool, integration through CHSCDN being as easy as it can be. Pre-built functions and modules ensure calling the API and processing responses are as smooth as possible. Apart from deepfake detection, such utilities extend to other CHS API functionality, providing a robust and effective experience.</p>
+                    <div class="bd-code-snippet">
+                        <div class="bd-clipboard">    
+                            <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#jccu');">      
+                                <i class="fa fa-clone"></i>    
+                            </button>  
+                        </div>
+                        <div class="highlight" style="background-color: #ebf0f4;">
+                            <pre tabindex="5" class="chroma"><code class="language-html" data-lang="html" id="jccu"><%= jsCode %></code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <h3 class="fw-semibold">Responce JSON</h3>
+                    <p>CHSCDN manages CHS API responses effectively, returning only the real results and errors transparently. With native response handling, it guarantees your system receives clean, structured data or well-formed error messages for seamless integration.</p>
+                    <div class="bd-code-snippet">
+                        <div class="bd-clipboard">
+                            <button type="button" class="btn-clipboard" title="Copy the code in clipboard" onclick="system.copyCode('#ajr');">
+                                <i class="fa fa-clone"></i>
+                            </button>  
+                        </div>
+                        <div class="highlight" style="background-color: #ebf0f4;">
+                            <pre tabindex="6" class="chroma"><code class="language-javascript" data-lang="javascript" id="ajr"><%= jsonReponse %></code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -288,6 +411,17 @@
     },2000);
 </script>
 <script>
+    setTimeout(()=>{
+        system.compilerSetUp();
+    },1000);
+    setTimeout(()=>{
+        jsCompiler = eval(compiler.jsCompiler);
+        ideDeploy = eval(compiler.ideDeploy);
+        jsCompiler('#rccp');
+        jsCompiler('#jccu');
+        document.getElementById('hccp').innerHTML = document.getElementById('hccp').textContent;
+        document.getElementById('ajr').innerHTML = document.getElementById('ajr').textContent
+    },2000);
     setTimeout(()=>{
         const trafficAnalyser = eval(config.hex.trafficAnalyser);
         const line_graph = trafficAnalyser();
