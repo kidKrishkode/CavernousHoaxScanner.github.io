@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
 .blu{
     /* color: #0c8ff0; */
     color: #2c7bd4;
@@ -14,6 +15,9 @@
 }
 .grn{
     color: #00AAA2;
+}
+.cgrn{
+    color: green;
 }
 .gld{
     color: goldenrod;
@@ -118,7 +122,6 @@
     padding: 0px 0px 0px calc(28.3px * 5);
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
 .code-editor{
     border: 1px solid grey;
     width: 95%;

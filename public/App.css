@@ -1001,6 +1001,7 @@ footer .bottom-component .right-side a{
 .feed-area .single-feed p{
     text-align: center;
     height: 120px;
+    font-size: 12px;
 }
 .feed-area .single-feed hr{
     margin: 2px auto;
