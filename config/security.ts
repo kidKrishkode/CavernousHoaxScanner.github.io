@@ -132,7 +132,7 @@ module.exports = {
         return code;
     },
     nonAuthPage: (path) => {
-        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/privacy', '/terms', '/license', '/cdn', '/docs', '/nonAPIHost', '/compiler', '/status', '/memory', '/load/single', '/load/response'];
+        let openPage = ['/auth', '/auth/verify', '*', '/varchar', '/compiler', '/privacy', '/terms', '/license', '/cdn', '/docs', '/nonAPIHost', '/compiler', '/status', '/memory', '/load/single', '/load/response'];
         if(openPage.find(function (element){return element == path})){
             return true;
         }
@@ -148,7 +148,7 @@ module.exports = {
         return key;
     },
     secure_access: (url) =>{
-        let secure_page = ['/cdn', '*', '/varchar', '/privacy', '/terms', '/license',];
+        let secure_page = ['/cdn', '*', '/varchar', '/privacy', '/terms', '/license', '/compiler'];
         if(secure_page.find(function (element){return element == url})){
             return true;
         }

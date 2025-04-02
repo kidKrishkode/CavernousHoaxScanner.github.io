@@ -89,7 +89,7 @@ module.exports = {
     trafficAnalyser: () => {
         const labels = ['Aug24','Sep24','Oct24','Nov24','Dec24','Jan25','Feb25','Mar25','Apr25','May25','Jun25', 'Jul25'];
         const xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160];
-        const yValues = [7, 9, 16, 18, 18, 18, 20, 26, 33, 28, 37, 54];
+        const yValues = [7, 9, 16, 18, 24, 17, 20, 26, 33, 28, 37, 54];
         const currentMonth = new Date().getMonth()+1;
         let endMonth;
         if(currentMonth > 8){

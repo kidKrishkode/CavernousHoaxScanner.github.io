@@ -54,9 +54,9 @@ module.exports = {
         frog = frog.replaceAll(`do@`, `<span class='blu'>do</span>`);
         frog = frog.replaceAll(`return@`, `<span class='blu'>return</span>`);
         frog = frog.replaceAll(`async@`, `<span class='blu'>async</span>`);
-        frog = frog.replaceAll(`if@`, `<span class='blu'>if</span>`);
-        frog = frog.replaceAll(`else@`, `<span class='blu'>else</span>`);
-        frog = frog.replaceAll(`else if@`, `<span class='blu'>else if</span>`);
+        frog = frog.replaceAll(`if@`, `<span class='prp'>if</span>`);
+        frog = frog.replaceAll(`else@`, `<span class='prp'>else</span>`);
+        frog = frog.replaceAll(`else if@`, `<span class='prp'>else if</span>`);
         frog = frog.replaceAll(`import@`, `<span class='prp'>import</span>`);
         frog = frog.replaceAll(`from@`, `<span class='prp'>from</span>`);
         frog = frog.replaceAll(`export@`, `<span class='prp'>export</span>`);
@@ -68,8 +68,8 @@ module.exports = {
         frog = frog.replaceAll(`s'`, `<span class='gld'>'`);
         frog = frog.replaceAll(`'n`, `'</span>`);
         frog = frog.replaceAll(`//n`, `</span>`);
-        frog = frog.replaceAll(`//`, `<span class='grn'>//`);
-        frog = frog.replaceAll(`/*`, `<span class='grn'>/*`);
+        frog = frog.replaceAll(`//`, `<span class='cgrn'>//`);
+        frog = frog.replaceAll(`/*`, `<span class='cgrn'>/*`);
         frog = frog.replaceAll(`*/`, `*/</span>`);
         frog = frog.replaceAll(`await@`, `<span class='prp'>await</span>`);
         frog = frog.replaceAll(`window@`, `<span class='prp'>window</span>`);
