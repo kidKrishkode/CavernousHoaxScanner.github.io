@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="../public/App.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
+<style>
+    #ou1{
+        display: none;
+    }
+</style>
 <body onload="dfd.engine_start();">
     <header id="header">
         <%= header %>
@@ -64,6 +69,26 @@
             </div>
             <div class="flx">
                 <span class="head">Media Dimantion:</span><span class="data" id="media-diamention">Not Selected!</span>
+            </div>
+        </div>
+        <div class="glass-status" id="ou1">
+            <div class="flx">
+                <span class="head">Result:</span><span class="data" id="output-result">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Acuracy:</span><span class="data" id="output-accuracy">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Media Size:</span><span class="data" id="output-size">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Prototype 1:</span><span class="data" id="output-prototype1">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Prototype 2:</span><span class="data" id="output-prototype2">Not Selected!</span>
+            </div>
+            <div class="flx">
+                <span class="head">Detect Parameter:</span><span class="data" id="output-para">Not Selected!</span>
             </div>
         </div>
         <div class="htsi appear hide" id="op4">
@@ -178,25 +203,20 @@
             return system.handelPyError(data.error);
         }
         console.log(data);
-        let tab = new TAB();
-        tab.open();
-        tab.innerContext(`<h3 style="text-align: left;font-size: 18px;margin-bottom: 30px;color: var(--lavender);">Deepfake Detection Report:</h3>
-            <image src=${imageData} alt="loading" style="width: 200px; margin: 5px auto 30px auto;"/>
-            <div class="flx" style="width: 300px; margin: 5px auto; color: slateblue;"><span>Result:</span><span>${data?.result?.class}</span></div>
-            <div class="flx" style="width: 300px; margin: 5px auto; color: slateblue;"><span>Accuracy:</span><span>${data?.result?.accuracy}</span></div>
-            <div class="btn btn-process" style="margin-top: 20px;" onclick="new TAB().close();">Done</div>
-        `);
-        // document.querySelector('.preview').innerHTML = `<img src=${imageData} alt='loading' id="dimg"/>`;
-        // // system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
-        // document.getElementById('op1').innerHTML = `
-        //     <div class="btn btn-process" onclick="route('');">Back</div>
-        //     <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'png');"><i class="fa fa-download"></i> Download</div>
-        // `;
-        // document.getElementById('op2').style.display = 'none';
-        // document.getElementById('op3').style.display = 'none';
-        // document.getElementById('op4').style.display = 'none';
-        // document.getElementById('file-input').disabled = true;
-        // document.querySelector('.progress-status').style.display = 'none';
+        document.querySelector('.preview').innerHTML = `<img src=${imageData} alt='loading' id="dimg"/>`;
+        document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');">Back</div>`;
+        document.getElementById('ou1').style.display = 'block';
+        document.getElementById('output-result').textContent = data?.result?.class+" "+imageData.split('data:')[1].split('/')[0];
+        document.getElementById('output-accuracy').textContent = (data?.result?.accuracy || data?.result?.score) + " %";
+        document.getElementById('output-size').textContent = document.getElementById('media-size').textContent;
+        document.getElementById('output-prototype1').textContent = `${data?.result?.responce_tree?.prototype_1?.class} (${data?.result?.responce_tree?.prototype_1?.accuracy}%)`;
+        document.getElementById('output-prototype2').textContent = `${data?.result?.responce_tree?.prototype_2?.class} (${data?.result?.responce_tree?.prototype_2?.accuracy}%)`;
+        document.getElementById('output-para').textContent = ":) Your not write code here!";
+        document.getElementById('op2').style.display = 'none';
+        document.getElementById('op3').style.display = 'none';
+        document.getElementById('op4').style.display = 'none';
+        document.getElementById('file-input').disabled = true;
+        document.querySelector('.progress-status').style.display = 'none';
     }
 </script>
 </html>
