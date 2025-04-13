@@ -23,6 +23,13 @@
     body{
         overflow: hidden!important;
     }
+    small{
+        padding: 5px 10px;
+        background: #fe6e6e8a;
+        color: #fff;
+        border: 2px solid red;
+        border-radius: 5px;
+    }
 </style>
 <body>
     <section class="workspace" id="e404">
@@ -30,7 +37,7 @@
         <img src="../images/shape1.png" class="r-img" alt="load"/>
         <h1><%= error %>!</h1>
         <h4><%= message %></h4>
-        <small class="text-muted"><%= statement %></small>
+        <small class="text-muted"><%= typeof statement !== 'undefined' ? statement : "Please contact the developers" %></small>
     </section>
 </body>
 <script src="../public/App.js"></script>
