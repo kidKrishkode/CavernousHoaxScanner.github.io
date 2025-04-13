@@ -103,6 +103,7 @@ app.use((req, res, next) => {
         if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
             return next();
         }
+        next(); // for remove security check point
         setTimeout(()=>{
             if(memory!=undefined){
                 if(params.has('autherize')){
@@ -407,7 +408,7 @@ app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
 });
 
 app.post('/index/process', upload.single('file'), async (req, res) => {
-    // try{
+    try{
         const extension = req.body.extension;
         let imageData;
         let limit;
@@ -417,7 +418,6 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
         }else{
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
-            console.log("Limit of bin: "+limit);
         }
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
@@ -428,19 +428,16 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin.length = 0;
-                console.log(result);
+                if(web.noise_detect(result)) return web.handle_error(res, result);
+                // console.log(result);
                 res.status(200).json(result);
-                // if(response_bin!=[]){
-                //     console.log(result);
-                // }
-                // res.status(200).json({error: 0});
             });
         }).catch((error) => {
             console.log("Error sending parts:", error);
         });
-    // }catch(e){
-    //     res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
-    // }
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
 });
 
 app.get('/imgEditor/open_editior', (req, res) => {
