@@ -10,17 +10,21 @@ const files_structure = [
     'images/',
     'config/',
     'assets/',
-    'model/',
     'package.json'
 ];
 
 const node_module_path = path.join(__dirname,'node_modules').replace('\\public','');
 
 const py_packages = [
-    'opencv-python',
+    'fastapi',
+    'uvicorn',
+    'onnxruntime',
     'numpy',
+    'pillow',
     'svgwrite',
-    'fpdf'
+    'fpdf',
+    'aiohttp',
+    'requests'
 ];
 
 Object.keys(pkg.dependencies).forEach((dependency) => {

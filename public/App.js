@@ -345,9 +345,13 @@ System.prototype.themeToggle = function(id){
     system.pushDataBase();
 }
 System.prototype.setTheme = function(){
-    theme = local_memory[0].value;
-    for(let i=0; i<themeSet[theme].length; i++){
-        document.documentElement.style.setProperty(themeSet[theme][i][0], themeSet[theme][i][1]);
+    try{
+        theme = local_memory[0].value;
+        for(let i=0; i<themeSet[theme].length; i++){
+            document.documentElement.style.setProperty(themeSet[theme][i][0], themeSet[theme][i][1]);
+        }
+    }catch(e){
+        console.warn("Theme Warning:\nDue to poor os quality, theme initilization not possible in this device, Please use it manually\n\n");
     }
 }
 System.prototype.encodedURI = function(url, key){
