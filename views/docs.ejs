@@ -179,5 +179,9 @@
         system.codeset('Docs 1', 'Node Js', 'apiInSnipVanilla01');
         system.codeset('Image Converter', 'Vanilla Js', 'apiInSnipVanilla02');
     },1000);
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if(searchParam!=null){
+	    document.getElementById("searchData-docs").textContent = searchParam.replaceAll("%20"," ");
+    }
 </script>
