@@ -170,6 +170,7 @@
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
             // system.block_resource({input: "file-input"});
+            timeoutcheck();
             if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 900){
                 compressAndUpload(file, document.getElementById('media-size').textContent.replace('Kb','')*1);
             }else{
@@ -210,7 +211,7 @@
         }
         console.log(data);
         document.querySelector('.preview').innerHTML = `<img src=${imageData} alt='loading' id="dimg"/>`;
-        document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');">Back</div>`;
+        document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');"><i class="fa fa-long-arrow-left"></i> Try with another</div>`;
         document.getElementById('ou1').style.display = 'block';
         document.getElementById('output-result').textContent = data?.result?.class+" "+imageData.split('data:')[1].split('/')[0];
         document.getElementById('output-accuracy').textContent = (data?.result?.accuracy || data?.result?.score) + " %";
@@ -226,5 +227,20 @@
         document.getElementById('file-input').disabled = true;
         document.querySelector('.progress-status').style.display = 'none';
     }
+    function timeoutcheck(){
+        setTimeout(()=>{
+            let result = document.getElementById('output-result').textContent;
+            if(result=='Not Selected!' || result==undefined){
+                system.handelPyError({"code": 408, "message": "Process failed due to the timeout. Process take more then 15s to compile and turn around from the CHSAPI. Please try again later."});
+            }
+        },15000);
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+function generatePDF(){
+    const element = document.getElementById('dfdPage');
+    html2pdf().from(element).save();
+}
 </script>
 </html>
