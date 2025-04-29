@@ -410,20 +410,20 @@ app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
 app.post('/index/process', upload.single('file'), async (req, res) => {
     try{
         const extension = req.body.extension;
-        let imageData;
+        let mediaData;
         let limit;
         if(req.body.load!='true'){
-            imageData = req.body.imageData;
+            mediaData = req.body.imageData;
             limit = 2;
         }else{
-            imageData = hex.mergeListToString(single_img_bin);
+            mediaData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
         }
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, mediaData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/dfdScanner`, {
                 ext: extension,
-                img: '',
+                media: '',
                 load: 'true',
                 key: varchar.API_KEY
             }).then((result) => {
@@ -436,6 +436,7 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
             console.log("Error sending parts:", error);
         });
     }catch(e){
+        console.log(e);
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
     }
 });
