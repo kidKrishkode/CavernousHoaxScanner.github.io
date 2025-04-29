@@ -37,9 +37,9 @@ Our aim is to provide a robust system that:
 The JPEN stack is a technology stack that combines the power of JSON, Python, Embedded JavaScript, and Node.js. JSON (J) is used for level data interchange and storage, providing a lightweight and flexible format for data exchange. Python (P) is used for mechine learning scripting, offering a robust and versatile language for building machine learning empower web applications. Embedded JavaScript (E) allows for dynamic client-side scripting, enabling interactive user experiences. Finally, Node.js (N) provides the runtime environment for executing JavaScript code on the server-side, enabling fast and scalable web development. Together, the JPEN stack enables developers to build scalable, and data driven or deep learning combined web applications.
 
 ## Developers 👩‍💻👨‍💻
-- **Frontend Developer/Lead Developer**: Souvik Kar
+- **Frontend Developer**: Souvik Kar
 - **UI/UX Developer**: Rajanya Chakraborty 
-- **Backend Developer**: Krishnendu Mitra 
+- **Backend Developer/Lead Developer**: Krishnendu Mitra 
 - **Machine Learning Specialist**: Saptarshi Pramanik 
 
 ## Why We Created This Project ❓
