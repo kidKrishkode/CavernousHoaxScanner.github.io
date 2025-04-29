@@ -166,6 +166,9 @@
     }
     function process(){
         let fileInput = document.getElementById('file-input');
+        if(document.getElementById('media-type').textContent=='Video'){
+            return;
+        }
         if(fileInput.files.length!=0){
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
@@ -180,29 +183,51 @@
     }
     function compressAndUpload(file, size){
         const singlePartsAPI = eval(config.hex.singlePartsAPI);
-        const limit = Math.floor(size/900)+2;
+        let limit = Math.floor(size/900)+2;
         const extension = 'png';
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
             const imageData = reader.result;
-            singlePartsAPI('/load/single', imageData, limit).then((result) => {
-                fetch('/index/process', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        extension: extension,
-                        img: '',
-                        load: 'true'
-                    })
-                }).then(response => response.json()).then(data => {
-                    afterResponce(data, imageData);
+
+            compressBase64Image(imageData).then(compressed_imageData => {
+                limit = Math.floor(getBase64SizeKB(compressed_imageData)/900)+2;
+                singlePartsAPI('/load/single', compressed_imageData, limit).then((result) => {
+                    fetch('/index/process', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            extension: extension,
+                            img: '',
+                            load: 'true'
+                        })
+                    }).then(response => response.json()).then(data => {
+                        afterResponce(data, imageData);
+                    });
+                }).catch((error) => {
+                    console.log("Error sending parts:", error);
                 });
-            }).catch((error) => {
-                console.log("Error sending parts:", error);
             });
+
+            // singlePartsAPI('/load/single', imageData, limit).then((result) => {
+            //     fetch('/index/process', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({
+            //             extension: extension,
+            //             img: '',
+            //             load: 'true'
+            //         })
+            //     }).then(response => response.json()).then(data => {
+            //         afterResponce(data, imageData);
+            //     });
+            // }).catch((error) => {
+            //     console.log("Error sending parts:", error);
+            // });
         }
     }
     function afterResponce(data, imageData){
@@ -233,7 +258,7 @@
             if(result=='Not Selected!' || result==undefined){
                 system.handelPyError({"code": 408, "message": "Process failed due to the timeout. Process take more then 15s to compile and turn around from the CHSAPI. Please try again later."});
             }
-        },25000);
+        },15000);
     }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
