@@ -154,6 +154,26 @@ module.exports = {
     reward: (res) => {
         res.redirect('/nonAPIHost');
     },
+    alphaCall: async (uri) => {
+        const url = uri;
+        let num1 = Math.floor(Math.random()*10);
+        let num2 = Math.floor(Math.random()*10);
+        let sum = num1+num2;
+        try{
+            const response = await fetch(url+`?a=${num1}&b=${num2}`, {
+                method: 'GET',
+            });
+            if(!response.ok){
+                const errorDetails = await response.json();
+                return errorDetails;
+            }
+            const result = await response.json();
+            if(result.sum==sum) return true;
+            return result;
+        }catch(error){
+            return error;
+        }
+    },
     singlePartsAPI: async (url, mainString, limit) => {
         const parts = [];
         if(mainString==undefined){
