@@ -283,8 +283,28 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+function session_key(){
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/*#!|^%$&';
+    let result = '';
+    for (let i = 0; i < 32; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        result += chars[randomIndex];
+    }
+    return result;
+}
+let session = session_key();
+function getReportCard(){
+    fetch('/report', {
+        method: 'GET',
+    }).then(res => res.text()).then((data)=>{
+        document.getElementById('reportCard_holder').innerHTML = data;
+        document.getElementById('reportCard_holder').style.display = "block";
+        document.getElementById('session_key').textContent = session;
+    });
+}
+getReportCard();
 function generatePDF(){
-    const element = document.getElementById('dfdPage');
+    const element = document.getElementById('reportCard');
     html2pdf().from(element).save();
 }
 </script>

@@ -1,0 +1,259 @@
+<style>
+    #reportCard{
+        width: 100%;
+        height: 100%;
+        padding: 25px;
+        padding-bottom: 0px;
+        margin: 0px;
+    }
+    #reportCard .head{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .logo{
+            width: 15%;
+        }
+        .header{
+            width: 85%;
+            text-align: center;
+            padding: 0px 40px;
+        }
+    }
+    #reportCard .head .logo .logo-img{
+        width: 100%;
+        margin: 0% 0px;
+    }
+    #reportCard .head .header h2{
+        color: #6e13aff2;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    #reportCard .head .header p, #reportCard .head .header .flx span{
+        font-size: 10px;
+    }
+    .flw{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .info-head{
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f1f1f;
+        margin-right: 4px;
+    }
+    .info-body{
+        font-size: 12px;
+        font-weight: 600;
+        color: slategray;
+        margin: 0px 4px;
+    }
+    #reportCard .containers{
+        width: 80%;
+        background: #ececec;
+    }
+    #reportCard .containers .drop-box{
+        height: 300px;
+        background: #ececec;
+    }
+    #reportCard .containers .drop-box .preview,#reportCard .preview img, #reportCard .preview video{
+        width: auto;
+    }
+    .main_repot{
+        margin: 10px 0px;
+        padding: 10px 8px;
+        width: 100%;
+        background: #f6f6f6;
+        .info-head{
+            color: slateblue;
+        }
+    }
+    .txt-center{
+        text-align: center;
+    }
+    .des-1{
+        width: 40%;
+        height: 90%;
+        background-image: url('../images/tco.png');
+        opacity: 0.3;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        z-index: -1;
+    }
+    .des-2{
+        width: 100%;
+        height: 30%;
+        opacity: 0.2;
+        background-image: url('../images/cta.png');
+        position: absolute;
+        bottom: -20%;
+        left: 0px;
+        z-index: -1;
+    }
+</style>
+<section id="reportCard">
+    <div class="head">
+        <div class="logo">
+            <img src="../public/favicon.ico" alt="chs" class="logo-img"/>
+        </div>
+        <div class="header">
+            <h2>DeepFake Detection Report</h2>
+            <p class="text-muted">Cavernous Hoax Scanner, a cutting-edge tool designed to detect and analyze deepfake images & videos. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness.</p>
+            <div class="flx">
+                <span>info.whitelotus24x7@gmail.com</span>
+                <span>https://chsweb.vercel.app/</span>
+                <span>https://chscdn.vercel.app/</span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <main>
+        <div class="flw">
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 30%;">Session ID:</div>
+                <div class="info-body" style="width: 70%;" id="session_key"></div>
+            </div>
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Report Download Time:</div>
+                <div class="info-body" style="width: 50%;">
+                    <%= (new Date()).getDate()<10?'0'+(new Date()).getDate():(new Date()).getDate() %>/<%= (new Date()).getMonth()+1<10?'0'+((new Date()).getMonth()+1):(new Date()).getMonth()+1 %>/<%= (new Date()).getFullYear()<10?'0'+(new Date()).getFullYear():(new Date()).getFullYear() %> <%= (new Date()).getHours()<10?'0'+(new Date()).getHours():(new Date()).getHours() %>:<%= (new Date()).getMinutes()+1<10?'0'+((new Date()).getMinutes()+1):(new Date()).getMinutes()+1 %>:<%= (new Date()).getSeconds()<10?'0'+(new Date()).getSeconds():(new Date()).getSeconds() %>
+                </div>
+            </div>
+        </div>
+        <div class="flx">
+            <div class="info-head">Requested Media:</div>
+        </div>
+        <div class="containers">
+            <div class="drop-box">
+                <div class="preview">
+                    <img src="../images/image2.jpg" alt="chs"/>
+                </div>
+            </div>
+        </div>
+        <div class="main_repot">
+            <div class="flx">
+                <div class="info-head" style="width: 30%;">Detection Result:</div>
+                <div class="info-body" style="width: 70%;" id="r-result">Real Image</div>
+            </div>
+            <div class="flx">
+                <div class="info-head" style="width: 30%;">Detection Confidence:</div>
+                <div class="info-body" style="width: 70%;" id="r-accuracy">78.26%</div>
+            </div>
+        </div>
+        <div class="flx">
+            <div class="info-head">Media Properties:</div>
+        </div>
+        <br>
+        <div class="flw">
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Media Type:</div>
+                <div class="info-body" style="width: 50%;" id="r-media_type">Image</div>
+            </div>
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Media Size:</div>
+                <div class="info-body" style="width: 50%;" id="r-media_size">7KB</div>
+            </div>
+        </div>
+        <div class="flw">
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Media Dimention:</div>
+                <div class="info-body" style="width: 50%;" id="r-media_dim">127x80</div>
+            </div>
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Media Duratio:</div>
+                <div class="info-body" style="width: 50%;" id="r-media_duratio">Static</div>
+            </div>
+        </div>
+        <div class="flw">
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Media Ratio:</div>
+                <div class="info-body" style="width: 50%;" id="r-media_ratio">16:9</div>
+            </div>
+            <div class="flx" style="width: 50%;">
+                <div class="info-head" style="width: 50%;">Base64 Convertion:</div>
+                <div class="info-body" style="width: 50%;">Possible</div>
+            </div>
+        </div>
+        <br>
+        <div class="flx">
+            <div class="info-head">Cavernous Hoax Scanner's Model:</div>
+        </div>
+        <br>
+        <div class="flw">
+            <div class="flx" style="width: 25%;">
+                <div class="info-head txt-center" style="width: 100%;">Model Name</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-head txt-center" style="width: 100%;">Prediction</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-head txt-center" style="width: 100%;">Confidence</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-head txt-center" style="width: 100%;">Resize</div>
+            </div>
+        </div>
+        <div class="flw">
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">Prototype 1</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_1_c">Real</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_1_a">78%</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">128x128</div>
+            </div>
+        </div>
+        <div class="flw">
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">Prototype 2</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_2_c">Fake</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_2_a">94.72%</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">224x224</div>
+            </div>
+        </div>
+        <div class="flw">
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">Prototype 3</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_3_c">Real</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_3_a">51.4%</div>
+            </div>
+            <div class="flx" style="width: 25%;">
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">128x128</div>
+            </div>
+        </div>
+        <br>
+        <div class="flx" style="width: 50%;">
+            <div class="info-head" style="width: 30%;">API Route:</div>
+            <div class="info-body" style="width: 70%;">https://chsapi.vercel.app/api/dfdScanner</div>
+        </div>
+        <div class="flx" style="width: 70%;">
+            <div class="info-head" style="width: 30%;">API Key:</div>
+            <div class="info-body" style="width: 70%;">Private Key (3045dd*******e702******25a**fa38)</div>
+        </div>
+        <hr>
+        <div class="flx" style="width: 50%;">
+            <div class="info-head" style="width: 30%;">Note That:</div>
+        </div>
+        <div class="flx">
+            <div class="info-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate blanditiis itaque debitis voluptatum minus et quo mollitia, ea modi voluptas, sit explicabo neque quas veniam ipsam ratione. Nemo non aliquam sint sequi atque aliquid soluta corrupti, consequatur eaque corporis incidunt?</div>
+        </div>
+    </main>
+    <div class="des-1"></div>
+    <div class="des-2"></div>
+</section>
