@@ -302,7 +302,7 @@ function getReportCard(){
         document.getElementById('session_key').textContent = session;
     });
 }
-getReportCard();
+//getReportCard();
 function generatePDF(){
     const element = document.getElementById('reportCard');
     html2pdf().from(element).save();
