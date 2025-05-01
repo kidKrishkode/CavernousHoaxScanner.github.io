@@ -156,7 +156,9 @@ app.get('/varchar', async (req, res) => {
         dragAndSort: hex.dragAndSort.toString(),
         trafficAnalyser: hex.trafficAnalyser.toString(),
         popularityTest: hex.popularityTest.toString(),
-        singlePartsAPI: hex.singlePartsAPI.toString()
+        singlePartsAPI: hex.singlePartsAPI.toString(),
+        alphaCall: hex.alphaCall.toString(),
+        alphaLink: API_LINK
     }, security: {
         getCaptcha: security.getCaptcha.toString(),
         generateImageCaptcha: security.generateImageCaptcha.toString(),
@@ -238,6 +240,10 @@ app.post('/memory', (req, res) => {
     const { dbdata } = req.body;
     memory = dbdata;
     res.status(200).json({'ack': 'Remember user, Permit to route'});
+});
+
+app.get('/report', (req, res) => {
+    res.status(200).render('reportCard');
 });
 
 app.get('/imgToPdf', (req, res) => {
