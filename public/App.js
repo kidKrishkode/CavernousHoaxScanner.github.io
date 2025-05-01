@@ -161,6 +161,9 @@ System.prototype.setUp = function(){
                 }); 
             });
         }
+        setTimeout(()=>{
+            this.apiConnection();
+        },2000);
         memory.pullDataBase();
         if(local_memory!=[]){
             setTimeout(()=>{
@@ -190,12 +193,12 @@ System.prototype.VisiblePage = function(){
             document.querySelector("#"+pageSet[i]).style.display = "block";
         }
         system.setActiveMenu(currentPage[currentPage.length-1]);
-        // setTimeout(()=>{
-        //     document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
-        // },500000);
-        // setTimeout(()=>{
-        //     document.body.removeChild(document.querySelector('.jelly'));
-        // },500000+35000);
+        setTimeout(()=>{
+            document.body.innerHTML += `<img src="../images/jelly.gif" alt="load" class="jelly"/>`;
+        },500000);
+        setTimeout(()=>{
+            document.body.removeChild(document.querySelector('.jelly'));
+        },500000+35000);
         system.feedScroll();
         
     }catch(e){
@@ -381,11 +384,39 @@ System.prototype.setActiveMenu = function(menuName){
         return false;
     }
 }
+System.prototype.apiConnection = async function(){
+    let alphaCall = eval(config.hex.alphaCall);
+    try{
+        let connection = await alphaCall(config.hex.alphaLink+'/test');
+        if(connection==true){
+            console.log(200);
+        }else if(connection?.error){
+            document.getElementById('alpha').style.display = "block";
+            document.getElementById('alpha-message').textContent = (connection.status.code+', '+connection.error);
+        }else{
+            document.getElementById('alpha').style.display = "block";
+            document.getElementById('alpha-message').textContent = (connection);
+        }
+    }catch(e){
+        document.getElementById('alpha').style.display = "block";
+        document.getElementById('alpha-message').textContent = e;
+    }
+    setTimeout(()=>{
+        this.removeConnection();
+    },5000);
+}
+System.prototype.removeConnection = function(){
+    try{
+        document.getElementById('alpha').style.display = "none";
+    }catch(e){
+        console.log('Alpha call not present to remove!');
+    }
+}
 System.prototype.handelPyError = function(error){
     try{
         if(!system.error_layout){
             let temp = config.varchar.error_templet;
-            temp = temp.replaceAll('<|error.code|>',error.code!=undefined?error.code:422);
+            temp = temp.replaceAll('<|error.code|>',error.code!=undefined?error.code=='false'?504:error.code:422);
             temp = temp.replaceAll('<|error.message|>',error.message!=undefined?error.message:"The server understood the content type of the request content, and the syntax of the request content was correct, but it was unable to process the contained instructions.");
             document.body.innerHTML += temp;
             document.body.style.overflowY = "hidden";
