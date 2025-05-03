@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Cavernous Hoax Scanner">
+    <meta property="og:image" content="../images/side-img.png" name="og:image">
+    <meta itemprop="image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
+    <meta property="og:site_name" content="Cavernous Hoax Scanner">
+    <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Cavernous Hoax Scanner">
+    <meta content="CHS is a web-based platform for deepfake detection that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <title version="1.0">Cavernous Hoax Scanner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="icon" href="../public/favicon.ico"/>
+</head>
+<style>
+    :root{
+        --bs-body-bg-rgb: 255, 255, 255;
+        --bs-primary-rgb: 13, 110, 253;
+        --bd-accent-rgb: 255, 228, 132;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+        --bd-pink-rgb: 214, 51, 132;
+        --bs-danger-rgb: 220, 53, 69;
+        --bs-info-rgb: 13, 202, 240;
+        --bs-border-color: #dee2e6;
+        --bs-body-color: #212529;
+        --bd-pre-bg: #f8f9fa;
+    }
+    body{
+        /* font-size: 14px; */
+        font-weight: normal;
+    }
+    .intro{
+        padding-top: 80px;
+        margin: 0px 0px;
+        height: 700px;
+        background-image: linear-gradient(180deg, transparent, transparent 85%), radial-gradient(ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(var(--bd-accent-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center right, rgba(var(--bd-violet-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center left, rgba(var(--bd-pink-rgb), 0.5), transparent 50%);
+        .apiLand{
+            margin-top: 0px;
+        }
+    }
+    .code-editor:before{
+        display: none;
+    }
+    .api-container h5{
+        margin-top: 16%;
+        margin-bottom: 2px;
+        font-size: 28px;
+        font-family: sans-serif;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: #fff;
+        text-shadow: -0.5px -0.5px 0 var(--lavender), 0.5px -0.5px 0 var(--lavender), -0.5px 0.5px 0 var(--lavender), 0.5px 0.5px 0 var(--lavender);
+    }
+    .api-container h2{
+        margin-top: 0px!important;
+        span{
+            background: linear-gradient(50deg, #2323ff 30%, #ec2c75 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .left-middle-des{
+        top: 80%!important;
+    }
+    .apiLand .api-right{
+        img{
+            width: 100%;
+            margin-top: 20%;
+        }
+    }
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px) {
+        .api-container h5{
+            margin-top: 2%;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .apiLand .api-left h2{
+            font-size: 30px;
+            margin-left: 0px;
+        }
+        .apiLand .api-right img{
+            margin-bottom: 40px;
+        }
+    }
+</style>
+<body>
+    <section class="workspace">
+        <!-- <img src="../images/glow1.png" onerror="this.src='https:/\/chsweb.vercel.app/images/glow1.png';" alt="chs" class="left-middle-des"/> -->
+        <div class="intro">
+            <div class="apiLand">
+                <div class="api-left api-container">
+                    <h5>Let's detect from here</h5>
+                    <h2><span>Cavernous Hoax Scanner</span></h2>
+                    <p style="color: #333333;">Welcome to Cavernous Hoax Scanner, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.</p>
+                    <div class="flx">
+                        <div class="btn btn-process" onclick="route('/index')">Quick Start</div>
+                        <div class="btn btn-invisible-process text-white" onclick="route('/docs')">View Document</div>
+                    </div>
+                </div>
+                <div class="api-right api-container">
+                    <img src="../images/main_icon.png" onerror="this.src='https:/\/chsweb.vercel.app/images/main_icon.png';" alt="chs"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="../public/App.js"></script>
+<script src="../public/default.min.js"></script>
+<script>
+    currentPage.push('main');
+
+</script>
+</html>
