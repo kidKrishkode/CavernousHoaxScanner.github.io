@@ -220,27 +220,40 @@
         reader.readAsDataURL(file);
         reader.onload = function(){
             const videoData = reader.result;
-
-            compressBase64Video(videoData).then(compressed_videoData => {
-                limit = Math.floor(getBase64SizeKB(compressed_videoData)/900)+2;
-                singlePartsAPI('/load/single', compressed_videoData, limit).then((result) => {
-                    fetch('/index/process', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            extension: extension,
-                            vdo: '',
-                            load: 'true'
-                        })
-                    }).then(response => response.json()).then(data => {
-                        afterResponce(data, videoData);
-                    });
-                }).catch((error) => {
-                    console.log("Error sending parts:", error);
-                });
+            compressBase64Video(videoData).then(async (compressed_videoData) => {
+                const frames = await extractFramesFromBase64Video(compressed_videoData);
+                let prediction_list = [];
+                for (let i = 0; i < frames.length; i++) {
+                    let image_data = frames[i].image;
+                    image_data = await compressBase64Image(image_data);
+                    let limit = Math.floor(getBase64SizeKB(image_data) / 900) + 2;
+                    try{
+                        await singlePartsAPI('/load/single', image_data, limit);
+                        const response = await fetch('/index/process', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                extension: extension,
+                                img: '',
+                                load: 'true'
+                            })
+                        });
+                        const data = await response.json();
+                        prediction_list.push({
+                            second: frames[i].second,
+                            ...data?.result
+                        });
+                    } catch (error) {
+                        console.error(`Error on frame ${i}:`, error);
+                    }
+                }
+                // console.log('Final prediction list:', prediction_list);
+                let data = {'result': analyzeClassificationSequence(prediction_list)};
+                afterResponce(data, videoData);
             });
+
         }
     }
     
@@ -302,7 +315,7 @@ function getReportCard(){
         document.getElementById('session_key').textContent = session;
     });
 }
-//getReportCard();
+// getReportCard();
 function generatePDF(){
     const element = document.getElementById('reportCard');
     html2pdf().from(element).save();
