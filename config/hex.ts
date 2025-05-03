@@ -159,18 +159,42 @@ module.exports = {
         let num1 = Math.floor(Math.random()*10);
         let num2 = Math.floor(Math.random()*10);
         let sum = num1+num2;
+        // try{
+        //     const response = await fetch(url+`?a=${num1}&b=${num2}`, {
+        //         method: 'GET',
+        //     });
+        //     if(!response.ok){
+        //         const errorDetails = await response.json();
+        //         return errorDetails;
+        //     }
+        //     const result = await response.json();
+        //     if(result.sum==sum) return true;
+        //     return result;
+        // }catch(error){
+        //     return error;
+        // }
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 seconds
+
         try{
-            const response = await fetch(url+`?a=${num1}&b=${num2}`, {
+            const response = await fetch(`${url}?a=${num1}&b=${num2}`, {
                 method: 'GET',
+                signal: controller.signal
             });
+
+            clearTimeout(timeoutId);
+
             if(!response.ok){
                 const errorDetails = await response.json();
                 return errorDetails;
             }
             const result = await response.json();
-            if(result.sum==sum) return true;
+            if (result.sum == sum) return true;
             return result;
         }catch(error){
+            if(error.name === 'AbortError'){
+                return 408;
+            }
             return error;
         }
     },
