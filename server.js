@@ -139,6 +139,12 @@ const promises = [
     ejs.renderFile('./views/faq.ejs')
 ];
 
+app.get('/main', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('main');
+    });
+});
+
 app.get('/', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('index',{header, services, feed, faq, footer});
@@ -466,9 +472,10 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('about',{header, services, feed, faq, footer});
-    });
+    // Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+    //     res.status(200).render('about',{header, services, feed, faq, footer});
+    // });
+    res.status(200).redirect('https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/#about-us');
 });
 
 app.get('/docs', (req, res) => {
@@ -477,10 +484,8 @@ app.get('/docs', (req, res) => {
     });
 });
 
-app.get('/cdn', (req, res) => {
-    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('cdnLanding',{header, services, feed, faq, footer});
-    });
+app.get('/blogs', (req, res) => {
+    res.status(200).redirect('https://www.youtube.com/@whitelotus4');
 });
 
 app.post('/cdn_raw', async (req, res) => {
