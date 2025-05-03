@@ -92,7 +92,84 @@
         left: 0px;
         z-index: -1;
     }
+    #blbg{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 99;
+        .logo {
+            width: 150px;
+            height: 150px;
+            background-image: url('../public/logo1500.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 30%;
+            left: 45%;
+        }
+    }
+    #blbg .progress-status{
+        width: 60%;
+        margin: 2px auto;
+        position: absolute;
+        top: 80%;
+        left: 20%;
+    }
+    #blbg .progress{
+        width: 100%;
+        height: 18px;
+        display: inline-block;
+        background-color: var(--charm);
+        background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.25) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.25) 75%, transparent 75%, transparent);
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        padding: 7px 0px;
+        background-size: 1em 1em;
+        box-sizing: border-box;
+        animation: barStripe 1s linear infinite;
+    }
+    #blbg .warning{
+        position: absolute;
+        bottom: 5%;
+        left: 0%;
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        color: orange;
+        font-family: consolas;
+        animation: warning 0.7s linear infinite;
+    }
+    @keyframes warning{
+        0%{
+            color: orange;
+        }50%{
+            color: black;
+        }100%{
+            color: orange;
+        }
+    }
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px){
+        #blbg{
+            .logo {
+                width: 120px;
+                height: 120px;
+                top: 35%;
+                left: 35%;
+            }
+        }
+    }
 </style>
+<section id="blbg">
+    <div class="logo"></div>
+    <div class="progress-status">
+        <div class="progress">Creating document report..</div>
+    </div>
+    <div class="warning">>> Please don't Interact or touch the screen</div>
+</section>
 <section id="reportCard">
     <div class="head">
         <div class="logo">
@@ -127,19 +204,19 @@
         </div>
         <div class="containers">
             <div class="drop-box">
-                <div class="preview">
-                    <img src="../images/image2.jpg" alt="chs"/>
+                <div class="preview" id="preview">
+                    
                 </div>
             </div>
         </div>
         <div class="main_repot">
             <div class="flx">
                 <div class="info-head" style="width: 30%;">Detection Result:</div>
-                <div class="info-body" style="width: 70%;" id="r-result">Real Image</div>
+                <div class="info-body" style="width: 70%;" id="r-result"></div>
             </div>
             <div class="flx">
                 <div class="info-head" style="width: 30%;">Detection Confidence:</div>
-                <div class="info-body" style="width: 70%;" id="r-accuracy">78.26%</div>
+                <div class="info-body" style="width: 70%;" id="r-accuracy"></div>
             </div>
         </div>
         <div class="flx">
@@ -149,17 +226,17 @@
         <div class="flw">
             <div class="flx" style="width: 50%;">
                 <div class="info-head" style="width: 50%;">Media Type:</div>
-                <div class="info-body" style="width: 50%;" id="r-media_type">Image</div>
+                <div class="info-body" style="width: 50%;" id="r-media_type"></div>
             </div>
             <div class="flx" style="width: 50%;">
                 <div class="info-head" style="width: 50%;">Media Size:</div>
-                <div class="info-body" style="width: 50%;" id="r-media_size">7KB</div>
+                <div class="info-body" style="width: 50%;" id="r-media_size"></div>
             </div>
         </div>
         <div class="flw">
             <div class="flx" style="width: 50%;">
                 <div class="info-head" style="width: 50%;">Media Dimention:</div>
-                <div class="info-body" style="width: 50%;" id="r-media_dim">127x80</div>
+                <div class="info-body" style="width: 50%;" id="r-media_dim"></div>
             </div>
             <div class="flx" style="width: 50%;">
                 <div class="info-head" style="width: 50%;">Media Duratio:</div>
@@ -169,7 +246,7 @@
         <div class="flw">
             <div class="flx" style="width: 50%;">
                 <div class="info-head" style="width: 50%;">Media Ratio:</div>
-                <div class="info-body" style="width: 50%;" id="r-media_ratio">16:9</div>
+                <div class="info-body" style="width: 50%;" id="r-media_ratio"></div>
             </div>
             <div class="flx" style="width: 50%;">
                 <div class="info-head" style="width: 50%;">Base64 Convertion:</div>
@@ -200,10 +277,10 @@
                 <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">Prototype 1</div>
             </div>
             <div class="flx" style="width: 25%;">
-                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_1_c">Real</div>
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_1_c"></div>
             </div>
             <div class="flx" style="width: 25%;">
-                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_1_a">78%</div>
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_1_a"></div>
             </div>
             <div class="flx" style="width: 25%;">
                 <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">128x128</div>
@@ -214,10 +291,10 @@
                 <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">Prototype 2</div>
             </div>
             <div class="flx" style="width: 25%;">
-                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_2_c">Fake</div>
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_2_c"></div>
             </div>
             <div class="flx" style="width: 25%;">
-                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_2_a">94.72%</div>
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_2_a"></div>
             </div>
             <div class="flx" style="width: 25%;">
                 <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">224x224</div>
@@ -228,10 +305,10 @@
                 <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">Prototype 3</div>
             </div>
             <div class="flx" style="width: 25%;">
-                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_3_c">Real</div>
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_3_c"></div>
             </div>
             <div class="flx" style="width: 25%;">
-                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_3_a">51.4%</div>
+                <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;" id="r-pro_3_a"></div>
             </div>
             <div class="flx" style="width: 25%;">
                 <div class="info-body txt-center" style="width: 100%; margin-bottom: 8px;">128x128</div>
@@ -251,7 +328,9 @@
             <div class="info-head" style="width: 30%;">Note That:</div>
         </div>
         <div class="flx">
-            <div class="info-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate blanditiis itaque debitis voluptatum minus et quo mollitia, ea modi voluptas, sit explicabo neque quas veniam ipsam ratione. Nemo non aliquam sint sequi atque aliquid soluta corrupti, consequatur eaque corporis incidunt?</div>
+            <div class="info-body">
+                This is a system-generated report intended to assist in data interpretation and analysis. While every effort has been made to ensure accuracy, there is a possibility of minor discrepancies or errors due to automated processing. We kindly advise you to review the report thoroughly before making any critical decisions based on its content.
+            </div>
         </div>
     </main>
     <div class="des-1"></div>

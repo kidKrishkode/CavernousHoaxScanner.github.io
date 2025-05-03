@@ -93,9 +93,9 @@
             <div class="flx">
                 <span class="head">Prototype 3:</span><span class="data" id="output-prototype3">Not Selected!</span>
             </div>
-            <div class="flx">
+            <!-- <div class="flx">
                 <span class="head">Detect Parameter:</span><span class="data" id="output-para">Not Selected!</span>
-            </div>
+            </div> -->
         </div>
         <div class="htsi appear hide" id="op4">
             <h2>How to Use it.</h2>
@@ -213,6 +213,7 @@
             });
         }
     }
+    let video_first_frame = '';
     function videoUpload(file){
         const singlePartsAPI = eval(config.hex.singlePartsAPI);
         const extension = 'webm';
@@ -223,6 +224,8 @@
             compressBase64Video(videoData).then(async (compressed_videoData) => {
                 const frames = await extractFramesFromBase64Video(compressed_videoData);
                 let prediction_list = [];
+                let responce_tree = [];
+                video_first_frame = frames[0].image;
                 for (let i = 0; i < frames.length; i++) {
                     let image_data = frames[i].image;
                     image_data = await compressBase64Image(image_data);
@@ -245,12 +248,15 @@
                             second: frames[i].second,
                             ...data?.result
                         });
+                        responce_tree.push(data?.result?.responce_tree);
                     } catch (error) {
                         console.error(`Error on frame ${i}:`, error);
                     }
                 }
-                // console.log('Final prediction list:', prediction_list);
-                let data = {'result': analyzeClassificationSequence(prediction_list)};
+                let responce_tree_summarize = summarizePrototypeResults(responce_tree);
+                let result = analyzeClassificationSequence(prediction_list);
+                result.responce_tree = responce_tree_summarize;
+                let data = {'result': result};
                 afterResponce(data, videoData);
             });
 
@@ -267,18 +273,18 @@
         }else{
             document.querySelector('.preview').innerHTML = `<img src=${mediaData} alt='loading' id="dimg"/>`;
         }
-        document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');"><i class="fa fa-long-arrow-left"></i> Try with another</div>`;
+        document.getElementById('op1').innerHTML = `<div class="btn btn-process" onclick="route('');"><i class="fa fa-long-arrow-left"></i> Try with another</div>
+            <div class="btn btn-info" onclick="download_report();"><i class="fa fa-download"></i> Download</div>
+        `;
         document.getElementById('ou1').style.display = 'block';
         document.getElementById('output-result').textContent = data?.result?.class+" "+mediaData.split('data:')[1].split('/')[0];
         document.getElementById('output-accuracy').textContent = (data?.result?.accuracy || data?.result?.score) + " %";
         document.getElementById('output-size').textContent = document.getElementById('media-size').textContent;
         document.getElementById('output-dim').textContent = document.getElementById('media-diamention').textContent;
-        if(document.getElementById('media-type').textContent!='Video'){
-            document.getElementById('output-prototype1').textContent = `${data?.result?.responce_tree?.prototype_1?.class} (${data?.result?.responce_tree?.prototype_1?.accuracy}%)`;
-            document.getElementById('output-prototype2').textContent = `${data?.result?.responce_tree?.prototype_2?.class} (${data?.result?.responce_tree?.prototype_2?.accuracy}%)`;
-            document.getElementById('output-prototype3').textContent = `${data?.result?.responce_tree?.prototype_3?.class} (${data?.result?.responce_tree?.prototype_3?.accuracy}%)`;
-            document.getElementById('output-para').textContent = '';
-        }
+        document.getElementById('output-prototype1').textContent = `${data?.result?.responce_tree?.prototype_1?.class} (${data?.result?.responce_tree?.prototype_1?.accuracy}%)`;
+        document.getElementById('output-prototype2').textContent = `${data?.result?.responce_tree?.prototype_2?.class} (${data?.result?.responce_tree?.prototype_2?.accuracy}%)`;
+        document.getElementById('output-prototype3').textContent = `${data?.result?.responce_tree?.prototype_3?.class} (${data?.result?.responce_tree?.prototype_3?.accuracy}%)`;
+        // document.getElementById('output-para').textContent = '';
         document.getElementById('op2').style.display = 'none';
         document.getElementById('op3').style.display = 'none';
         document.getElementById('op4').style.display = 'none';
@@ -313,9 +319,36 @@ function getReportCard(){
         document.getElementById('reportCard_holder').innerHTML = data;
         document.getElementById('reportCard_holder').style.display = "block";
         document.getElementById('session_key').textContent = session;
+        if(video_first_frame!=''){
+            document.getElementById('preview').innerHTML = `<img src=${video_first_frame} alt="chs"/>`;
+        }else{
+            document.getElementById('preview').innerHTML = document.querySelectorAll('.preview')[1].innerHTML;
+        }
+        document.getElementById('r-result').textContent = document.getElementById('output-result').textContent;
+        document.getElementById('r-accuracy').textContent = document.getElementById('output-accuracy').textContent;
+        document.getElementById('r-media_type').textContent = document.getElementById('media-type').textContent;
+        document.getElementById('r-media_size').textContent = document.getElementById('media-size').textContent;
+        document.getElementById('r-media_dim').textContent = document.getElementById('media-diamention').textContent;
+        document.getElementById('r-media_duratio').textContent = document.getElementById('media-due').textContent;
+        let width = document.getElementById('media-diamention').textContent.split('x')[0];
+        let height = document.getElementById('media-diamention').textContent.split('x')[1];
+        document.getElementById('r-media_ratio').textContent = getAspectRatio(width, height);
+        document.getElementById('r-pro_1_c').textContent = document.getElementById('output-prototype1').textContent.split(' ')[0]; 
+        document.getElementById('r-pro_2_c').textContent = document.getElementById('output-prototype2').textContent.split(' ')[0];
+        document.getElementById('r-pro_3_c').textContent = document.getElementById('output-prototype3').textContent.split(' ')[0];
+        document.getElementById('r-pro_1_a').textContent = document.getElementById('output-prototype1').textContent.split(' ')[1].replace('(','').replace(')',''); 
+        document.getElementById('r-pro_2_a').textContent = document.getElementById('output-prototype2').textContent.split(' ')[1].replace('(','').replace(')','');
+        document.getElementById('r-pro_3_a').textContent = document.getElementById('output-prototype3').textContent.split(' ')[1].replace('(','').replace(')','');
+        generatePDF();
     });
 }
-// getReportCard();
+function download_report(){
+    getReportCard();
+    // generatePDF();
+    setTimeout(()=>{
+        document.getElementById('reportCard_holder').style.display = "none";
+    },4000);
+}
 function generatePDF(){
     const element = document.getElementById('reportCard');
     html2pdf().from(element).save();
