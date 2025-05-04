@@ -1331,6 +1331,14 @@ footer .bottom-component .right-side a{
     margin: 6px auto;
     background: grey;
 }
+.api-workflow-left .api-sideflow{
+    width: 95%;
+    height: 100%;
+    margin: 0px auto;
+    background-image: url('../images/api_sideflow.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
 .api-workflow .api-workflow-right{
     width: 85%;
     background: var(--mit-color);
@@ -1836,6 +1844,10 @@ footer .bottom-component .right-side a{
     position: absolute;
     right: 2%;
     margin-top: 10px;
+}
+#docsPage #docsList .drop .flx .swaped-right-web .desktop-view:before{
+    position: absolute;
+    left: 2%;
 }
 #docsPage #docsList .drop > .right-web ~ .btn, #docsPage #docsList .drop:has(.left-web) .btn{
     margin-left: 20px;
@@ -2368,5 +2380,8 @@ footer .bottom-component .right-side a{
     }
     #alpha{
         width: 80%;
+    }
+    .right-web .desktop-view:before{
+        width: 100%!important;
     }
 }
