@@ -141,7 +141,7 @@ const promises = [
 
 app.get('/main', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('main');
+        res.status(200).render('main',{header, services, feed, faq, footer});
     });
 });
 
