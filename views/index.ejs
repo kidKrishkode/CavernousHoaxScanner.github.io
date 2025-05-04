@@ -153,6 +153,7 @@
         reader.readAsDataURL(file);
         reader.onload = function(){
             const imageData = reader.result;
+            timeoutcheck();
             fetch('/index/process', {
                 method: 'POST',
                 headers: {
@@ -170,7 +171,6 @@
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
             // system.block_resource({input: "file-input"});
-            timeoutcheck();
             if(document.getElementById('media-type').textContent=='Video'){
                 videoUpload(file);
             }else{
@@ -194,6 +194,7 @@
             compressBase64Image(imageData).then(compressed_imageData => {
                 limit = Math.floor(getBase64SizeKB(compressed_imageData)/900)+2;
                 singlePartsAPI('/load/single', compressed_imageData, limit).then((result) => {
+                    timeoutcheck();
                     fetch('/index/process', {
                         method: 'POST',
                         headers: {
@@ -215,12 +216,14 @@
     }
     let video_first_frame = '';
     function videoUpload(file){
+        let progress = document.querySelector('.progress');
         const singlePartsAPI = eval(config.hex.singlePartsAPI);
         const extension = 'webm';
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
             const videoData = reader.result;
+            setTimeout(()=>{progress.textContent = "Video frame evaluate start...";},1000);
             compressBase64Video(videoData).then(async (compressed_videoData) => {
                 const frames = await extractFramesFromBase64Video(compressed_videoData);
                 let prediction_list = [];
@@ -228,9 +231,11 @@
                 video_first_frame = frames[0].image;
                 for (let i = 0; i < frames.length; i++) {
                     let image_data = frames[i].image;
+                    progress.textContent = "Frame "+(i+1)+" start compressing...";
                     image_data = await compressBase64Image(image_data);
                     let limit = Math.floor(getBase64SizeKB(image_data) / 900) + 2;
                     try{
+                        progress.textContent = "Frame "+(i+1)+" sending to detect...";
                         await singlePartsAPI('/load/single', image_data, limit);
                         const response = await fetch('/index/process', {
                             method: 'POST',
@@ -243,6 +248,7 @@
                                 load: 'true'
                             })
                         });
+                        // timeoutcheck();
                         const data = await response.json();
                         prediction_list.push({
                             second: frames[i].second,
@@ -253,6 +259,7 @@
                         console.error(`Error on frame ${i}:`, error);
                     }
                 }
+                progress.textContent = "Response data analysing...";
                 let responce_tree_summarize = summarizePrototypeResults(responce_tree);
                 let result = analyzeClassificationSequence(prediction_list);
                 result.responce_tree = responce_tree_summarize;
@@ -297,7 +304,7 @@
             if(result=='Not Selected!' || result==undefined){
                 system.handelPyError({"code": 408, "message": "Process failed due to the timeout. Process take more then 15s to compile and turn around from the CHSAPI. Please try again later."});
             }
-        },15000);
+        },20000);
     }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

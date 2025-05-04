@@ -20,6 +20,12 @@
     <link rel="stylesheet" href="../public/index.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
+<style>
+    .desktop-view img{
+        width: 95%;
+        border-radius: 5px;
+    }
+</style>
 <body>
     <header id="header">
         <%= header %>
@@ -28,7 +34,7 @@
         <div class="big-gretter">
             <h6>WHITE LOTUS present</h6>
             <div class="header"><div class="flo"><o>from CHS import </o><span>{media-Tech}</span></div>quickly and easily</div>
-            <p class="text-muted">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae quae vel earum dolores, maiores qui repellendus voluptate eum culpa inventore quod nisi harum sit ipsum praesentium laboriosam fugit distinctio.</p>
+            <p class="text-muted">Welcome to Cavernous Hoax Scanner, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.</p>
             <div class="flx">
                 <div class="btn btn-process" onclick="route('/apiPlug')">Get your API</div>
                 <div class="btn btn-invisible-process" onclick="route('/index')"><i class="fa fa-diamond"></i> Deepfake Detection</div>
@@ -80,6 +86,48 @@
             <li class="drop">
                 <div class="flx">
                     <div class="left-web">
+                        <h2>CHS: Your Ultimate <span>Deepfake Detection</span> & <span>Media Processing</span> Solution</h2>
+                        <p>Cavernous Hoax Scanner (CHS) is a sophisticated tool for identifying deepfake images and videos with accuracy. The name itself indicates that CHS is expert in the detection 
+                            of fake media, proving the authenticity of digital content. Its functionality, though, doesn't stop there. CHS is also equipped with robust capabilities such as image 
+                            conversion, image compression, image-to-PDF conversion, and AI-driven image generation, which makes it a handy media processing tool.
+                            <br>
+                            CHS is a final-year college project by Team White Lotus, created to cater to the increasing issue of digital misinformation. The system consists of two parts:</p>
+                        <ul class="nostyle">
+                            <li class="tic">CHS Web – An easy-to-use interface where users can upload and analyze media in real-time.</li>
+                            <li class="tic">CHS API – An API that is developer-friendly and enables easy integration of CHS's deepfake detection and media processing capabilities into third-party applications.</li>
+                        </ul>
+                        <p>With CHS, users can authenticate digital media with ease while taking advantage of other tools for effective image handling and transformation.</p>
+                    </div>
+                    <div class="right-web">
+                        <span class="desktop-view"><iframe src="/" alt="chs" class="desktop-view" aria-disabled="true"></iframe></span>
+                    </div>
+                </div>
+                <div class="btn btn-process">Try Now!</div>
+            </li>
+            <li class="drop">
+                <div class="flx">
+                    <div class="right-web swaped-right-web">
+                        <span class="desktop-view"><iframe src="/converter" alt="chs" class="desktop-view" aria-disabled="true"></iframe></span>
+                    </div>
+                    <div class="left-web">
+                        <h2>More Than Just Deepfake Detection – <span>Explore</span> CHS's Powerful Features!</h2>
+                        <p>Though CHS (Cavernous Hoax Scanner) is mostly aimed at deepfake image and video detection, it has a variety of other media processing and artificial 
+                            intelligence-based services to offer. These are some of the things CHS presently has to offer:
+                        <ul class="nostyle">
+                            <li class="tic">Image Compressor – Trims down image file size without sacrificing quality.</li>
+                            <li class="tic">Image Converter – Converts images from one format to another (e.g., PNG to JPG, SVG to PNG, JPEG to PNG, etc.).</li>
+                            <li class="tic">AI Image Generator – Generates images based on user-supplied text through powerful AI models.</li>
+                            <li class="tic">Image to PDF – Converts one or more user-uploaded images into PDFs.</li>
+                            <li class="tic">Sentiment Analysis (API-based) – Identifies the sentiment and tone of any given text.</li>
+                            <li class="tic">Video to Image (API-based) – Unframe video file without sacrificing quality.</li>
+                        </ul>
+                        <p>These are today's available features in CHS, but the system keeps on changing. The future upgrades will improve current functions and bring in new, innovative features to further empower CHS!</p>
+                    </div>
+                </div>
+            </li>
+            <li class="drop">
+                <div class="flx">
+                    <div class="left-web">
                         <h2>Just need to upload the media, <span>CHS</span> will convert it</h2>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia blanditiis provident eligendi asperiores nihil! Repellat soluta eum exercitationem? Architecto, at! Aspernatur exercitationem blanditiis et quia sed, reiciendis maxime alias, ad accusantium velit est dolorum provident, corrupti sunt facere tenetur sequi!</p>
                         <ul class="nostyle">
@@ -90,10 +138,36 @@
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime modi soluta, quidem expedita quasi quod cum aliquam rerum, corporis quisquam non, praesentium ea iure doloremque.</p>
                     </div>
                     <div class="right-web">
-                        <span class="desktop-view"><iframe src="/converter" alt="chs" class="desktop-view" aria-disabled="true"></iframe></span>
+                        <span class="desktop-view"><img src="../images/s3.png" style="width: 75%;" alt="chs"></span>
                     </div>
                 </div>
                 <div class="btn btn-process">Try Now!</div>
+            </li>
+            <li class="drop">
+                <div class="flx">
+                    <div class="right-web">
+                        <span class="desktop-view"><img src="../images/s6.png" alt="chs" style="width: 75%;"></span>
+                    </div>
+                    <div class="left-web">
+                        <h2>Media <span>Format</span> Policy: What You Need to Know Before Uploading</h2>
+                        <p>Cavernous Hoax Scanner (CHS) is a powerful yet web-based deepfake detection platform, and like any online system, it follows strict rules regarding media format to ensure security, speed, and accuracy. These limitations are essential and come into play when users upload their media files.</p>
+                        <p>For images, CHS only accepts legitimate image files under specific guidelines:</p>
+                        <ul class="nostyle">
+                            <li class="tic">The uploaded file must genuinely be an image—not a disguised media file pretending to be one.</li>
+                            <li class="tic">Allowed extensions include: <strong>jpg, jpeg, png, gif, svg, bmp, webp, jfif, tga</strong> only.</li>
+                            <li class="tic">Even if the extension is valid, CHS uses internal verification to block tampered or fake image types.</li>
+                            <li class="tic">Image size must fall between <strong>5KB</strong> and <strong>30MB</strong>, regardless of resolution or aspect ratio.</li>
+                        </ul>
+                        <p>For videos, similar but slightly modified rules apply:</p>
+                        <ul class="nostyle">
+                            <li class="tic">The media must be a real video file and not just a renamed or malformed file.</li>
+                            <li class="tic">Accepted formats are: <strong>mp4, mov, webm, avi, mkv</strong> only.</li>
+                            <li class="tic">CHS checks the authenticity of the content even if the extension appears valid.</li>
+                            <li class="tic">Video file sizes must range from <strong>20KB</strong> to <strong>400MB</strong>.</li>
+                        </ul>
+                        <p>If the media complies with these requirements, CHS accepts the upload and begins the preprocessing workflow seamlessly.</p>
+                    </div>
+                </div>
             </li>
             <li class="drop">
                 <div class="flx reverse-column">
@@ -179,9 +253,14 @@
         system.codeset('Docs 1', 'Node Js', 'apiInSnipVanilla01');
         system.codeset('Image Converter', 'Vanilla Js', 'apiInSnipVanilla02');
     },1000);
+
+</script>
+<script>
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     if(searchParam!=null){
-	    document.getElementById("searchData-docs").textContent = searchParam.replaceAll("%20"," ");
+        document.getElementById('searchData-docs').value = searchParam;
+        search_product('searchData-docs','drop');
     }
 </script>
+</html>

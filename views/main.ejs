@@ -11,110 +11,307 @@
     <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Cavernous Hoax Scanner">
-    <meta content="CHS is a web-based platform for deepfake detection that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="CHS is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
     <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
     <title version="1.0">Cavernous Hoax Scanner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="stylesheet" href="../public/index.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
 <style>
-    :root{
-        --bs-body-bg-rgb: 255, 255, 255;
-        --bs-primary-rgb: 13, 110, 253;
-        --bd-accent-rgb: 255, 228, 132;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-        --bd-pink-rgb: 214, 51, 132;
-        --bs-danger-rgb: 220, 53, 69;
-        --bs-info-rgb: 13, 202, 240;
-        --bs-border-color: #dee2e6;
-        --bs-body-color: #212529;
-        --bd-pre-bg: #f8f9fa;
+    .left-web h2{
+        margin-top: 15%;
     }
-    body{
-        /* font-size: 14px; */
-        font-weight: normal;
+    .right-api h2{
+        margin-top: 10%;
     }
-    .intro{
-        padding-top: 80px;
-        margin: 0px 0px;
-        height: 700px;
-        background-image: linear-gradient(180deg, transparent, transparent 85%), radial-gradient(ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(var(--bd-accent-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center right, rgba(var(--bd-violet-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center left, rgba(var(--bd-pink-rgb), 0.5), transparent 50%);
-        .apiLand{
-            margin-top: 0px;
-        }
+    .desktop-view img{
+        width: 95%;
+        border-radius: 5px;
     }
-    .code-editor:before{
-        display: none;
+    .top-left-border{
+        border-top: 1px solid slategray;
+        border-left: 1px solid slategray;
     }
-    .api-container h5{
-        margin-top: 16%;
-        margin-bottom: 2px;
-        font-size: 28px;
-        font-family: sans-serif;
-        font-weight: 600;
-        letter-spacing: 2px;
-        color: #fff;
-        text-shadow: -0.5px -0.5px 0 var(--lavender), 0.5px -0.5px 0 var(--lavender), -0.5px 0.5px 0 var(--lavender), 0.5px 0.5px 0 var(--lavender);
+    .link{
+        font-size: 14px;
+        color: #0a7777;
+        font-weight: bold;
+        cursor: pointer;
     }
-    .api-container h2{
-        margin-top: 0px!important;
+    .open-head{
+        color: var(--revers-white);
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 10px 0% 20px 10%;
         span{
-            background: linear-gradient(50deg, #2323ff 30%, #ec2c75 50%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--charm);
+            font-weight: bold;
         }
     }
-    .left-middle-des{
-        top: 80%!important;
+    .open-link{
+        margin-left: 10%;
     }
-    .apiLand .api-right{
-        img{
-            width: 100%;
-            margin-top: 20%;
-        }
+    .api-workflow {
+        width: 70%;
+        height: 500px;
+        margin: 20px auto 80px auto;
     }
-    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px) {
-        .api-container h5{
-            margin-top: 2%;
-            font-size: 18px;
-            letter-spacing: 1px;
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px){
+        .open-head, .open-link{
+            margin-left: 20px;
         }
-        .apiLand .api-left h2{
-            font-size: 30px;
-            margin-left: 0px;
-        }
-        .apiLand .api-right img{
-            margin-bottom: 40px;
+        .api-workflow {
+            width: 90%;
+            height: 200px;
         }
     }
 </style>
 <body>
-    <section class="workspace">
-        <!-- <img src="../images/glow1.png" onerror="this.src='https:/\/chsweb.vercel.app/images/glow1.png';" alt="chs" class="left-middle-des"/> -->
-        <div class="intro">
-            <div class="apiLand">
-                <div class="api-left api-container">
-                    <h5>Let's detect from here</h5>
-                    <h2><span>Cavernous Hoax Scanner</span></h2>
-                    <p style="color: #333333;">Welcome to Cavernous Hoax Scanner, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.</p>
-                    <div class="flx">
-                        <div class="btn btn-process" onclick="route('/index')">Quick Start</div>
-                        <div class="btn btn-invisible-process text-white" onclick="route('/docs')">View Document</div>
-                    </div>
+    <header id="header">
+        <%= header %>
+    </header>
+    <section class="workspace" id="docsPage">
+        <div class="big-gretter">
+            <h6>WHITE LOTUS present</h6>
+            <div class="header"><div class="flo"><o>All media services </o><span>{media-Tech}</span></div>in one platform</div>
+            <p class="text-muted">Welcome to Cavernous Hoax Scanner, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.</p>
+            <div class="flx">
+                <div class="btn btn-process" onclick="route('/index')"><i class="fa fa-diamond"></i> Deepfake Detection</div>
+                <div class="btn btn-invisible-process" onclick="route('/docs')">View Document</div>
+            </div>
+            <div class="gretter-code-padd">
+                <div class="robot">
+                    <div class="message appear invisible">Ahoy hoy users, welcome to our main page, here you explore our work and contribute with us!</div>
                 </div>
-                <div class="api-right api-container">
-                    <img src="../images/main_icon.png" onerror="this.src='https:/\/chsweb.vercel.app/images/main_icon.png';" alt="chs"/>
+                <div class="rocket"></div>
+                <div class="gretter-code-marg">
+                    <div class="flo gretter-code">
+                        <ul class="code-option">
+                            <li><i class="fa fa-clone"></i></li>
+                            <li><i class="fa fa-code-fork"></i></li>
+                            <li><i class="fa fa-lightbulb-o"></i></li>
+                            <li><i class="fa fa-thumbs-o-up"></i></li>
+                        </ul>
+                        <div class="code-editor">
+                            <div class="code-wrapper">
+                                <pre class="code language-python" contenteditable="false" spellcheck="false" id="apiInSnipVanilla01">
+                                    Py-Script Code
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="search-docs-head"></div>
+        <ol class="search-product-data" id="docsList">
+            <li class="drop">
+                <div class="flx">
+                    <div class="left-web">
+                        <h2>CHS: Your Ultimate <span>Deepfake Detection</span> & <span>Media Processing</span> Solution</h2>
+                        <a href="/docs" class="link">Explore more >>></a>
+                    </div>
+                    <div class="right-web">
+                        <span class="desktop-view"><img src="../images/main1.png" class="top-left-border" alt="chs"/></span>
+                    </div>
+                </div>
+            </li>
+            <li class="drop">
+                <div class="flx reverse-column">
+                    <div class="left-api">
+                        <div class="flo sample-code">
+                            <ul class="code-option">
+                                <li><i class="fa fa-clone" onclick="system.copyCode('#apiInSnipVanilla02');"></i></li>
+                                <li><i class="fa fa-code-fork" onclick="system.downloadCode('#apiInSnipVanilla02','index.js');"></i></li>
+                                <li><i class="fa fa-lightbulb-o"></i></li>
+                                <li><i class="fa fa-thumbs-o-up"></i></li>
+                            </ul>
+                            <div class="code-editor">
+                                <div class="code-wrapper">
+                                    <pre class="code language-js" contenteditable="false" spellcheck="false" id="apiInSnipVanilla02">
+                                        Java-Script Code
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-api">
+                        <h2>More Than Just Deepfake Detection – <span>Explore</span> CHS's Powerful Features!</h2>
+                        <a href="https://chscdn.vercel.app/" class="link">Visite CHSCDN >>></a>
+                    </div>
+                </div>
+            </li>
+            <li class="drop">
+                <div class="product-list product-list-a appear hide">
+                    <div class="product">
+                        <div class="icon"></div>
+                        <div class="head">Image Compressor</div>
+                        <div class="body">Reduce your image size without losing quality. Ideal for web uploads, faster sharing, and storage efficiency</div>
+                    </div>
+                    <div class="product">
+                        <div class="icon"></div>
+                        <div class="head">Deepfake Detector</div>
+                        <div class="body">Scan media for deepfakes using advanced AI detection. Ensure authenticity and protect against manipulated content</div>
+                    </div>
+                    <div class="product">
+                        <div class="icon"></div>
+                        <div class="head">Image Converter</div>
+                        <div class="body">Easily switch image file types like JPG, PNG, and more. Maintain quality while converting across various formats</div>
+                    </div>
+                </div>
+            </li>
+            <li class="drop">
+                <h2 class="open-head">Explore <span>CHSAPI</span>'s inner mechanisms</h2>
+                <a href="/api" class="link open-link">Generate your API >>></a>
+                <div class="api-workflow appear hide">
+                    <div class="api-workflow-left">
+                        <div class="api-logo">
+                            <div class="api-icon"></div>
+                            <div class="api-name">API Workflow</div>
+                        </div>
+                        <hr>
+                        <div class="api-sideflow"></div>
+                    </div>
+                    <div class="api-workflow-right">
+                        <div class="api-grid">
+                            <div class="api-diagram"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="drop">
+                <div class="product-list product-list-b appear hide">
+                    <div class="product">
+                        <div class="icon"></div>
+                        <div class="head">Face Morphisum</div>
+                        <div class="body">Authenticate or verify identity through facial transformation tech. Secure, smart, and tailored for biometric use</div>
+                    </div>
+                    <div class="product">
+                        <div class="icon"></div>
+                        <div class="head">Image to PDF Maker</div>
+                        <div class="body">Convert your images into high-quality PDFs within seconds. Fast, reliable, and perfect for documents or sharing visuals</div>
+                    </div>
+                    <div class="product">
+                        <div class="icon"></div>
+                        <div class="head">Image Generator</div>
+                        <div class="body">Transform your creative ideas into visuals using AI. Generate stunning images simply by describing them in natural language</div>
+                    </div>
+                </div>
+            </li>
+            <li class="drop">
+                <h2 class="open-head">Popularity of CHS is <span>increase</span> per day</h2>
+                <div class="graph-repo">
+                    <div class="graph-component graph-left">
+                        <h2>Traffic Analysis <span>Monthly updated</span></h2>
+                        <canvas class="graph" id="lineChart">Graph</canvas>
+                    </div>
+                    <div class="graph-component graph-right">
+                        <h2>Popular Service</h2>
+                        <div class="head">Populization data depend on Traffic</div>
+                        <canvas class="graph pieChart">Pie</canvas>
+                        <ul class="pie-ul"></ul>
+                    </div>
+                </div>
+            </li>
+        </ol>
     </section>
+    <div id="moreProduct" class="appear hide">
+        <%= services %>
+    </div>
+    <div id="customerFeed" class="appear invisible">
+        <%= feed %>
+    </div>
+    </section>
+    <aside id="faq-help" class="appear hide">
+        <%= faq %>
+    </aside>
+    <footer id="footer">
+        <%= footer %>
+    </footer>
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
+    pageSet.push('header', 'docsPage', 'moreProduct', 'faq-help', 'footer');
+    appearSet.push(['.message', 80], ['.api-workflow', 180], ['#moreProduct', 180],['.product-list-a', 120], ['.product-list-b', 1280], ['#customerFeed', 20], ['#faq-help', 1280]); 
     currentPage.push('main');
+    document.getElementById('header').innerHTML = document.getElementById('header').textContent;
+    document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
+    document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
+    document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+    document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const messages = [
+            "Image Converter",
+            "DeepFake Detection",
+            "Image to PDF",
+            "Face Morphism",
+            "Image Compressor",
+            "Sentiment Analysis"
+        ];
+        let index = 0;
+        const spanElement = document.querySelector('.big-gretter .header span');
+        const updateText = () => {
+            spanElement.textContent = "";
+            spanElement.style.display = "none";
+            spanElement.classList.remove('typeEffect');
+            void spanElement.offsetWidth;
+            spanElement.classList.add('typeEffect');
+            spanElement.textContent = messages[index];
+            spanElement.style.display = "block";
+            index = (index + 1) % messages.length;
+        };
+        updateText();
+        setInterval(updateText, 9000);
+    });
+    setTimeout(() => {
+        system.codeset('Docs 1', 'Node Js', 'apiInSnipVanilla01');
+        system.codeset('CDN Use', 'Vanilla Js', 'apiInSnipVanilla02');
+    },1000);
+</script>
+<script>
+    setTimeout(()=>{
+        const trafficAnalyser = eval(config.hex.trafficAnalyser);
+        const line_graph = trafficAnalyser();
 
+        const xValues = line_graph.xValues;
+        const yValues = line_graph.yValues;
+
+        new Chart("lineChart", {
+            type: "line",
+            data: {
+                labels: line_graph.labels,
+                datasets: [{
+                    fill: true,
+                    lineTension: 0,
+                    backgroundColor: "rgba(110, 19, 175, 0.3)",
+                    borderColor: "rgba(50, 0, 255, 0.1)",
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Visitor density according to Time flow"
+                },
+                scales: {
+                    yAxes: [{ticks: {min: 0, max: 60}}],
+                }
+            }
+        });
+    },1000);
+
+    setTimeout(()=>{
+        let pie = document.querySelector('.pieChart');
+        let ul = document.querySelector('.pie-ul');
+        let popularityTest = eval(config.hex.popularityTest);
+        popularityTest(ul, pie);
+    },1000);
 </script>
 </html>
