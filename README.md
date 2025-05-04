@@ -20,14 +20,15 @@ Our aim is to provide a robust system that:
 5. **Output**: Results are displayed back on the user interface, along with any pertinent information about the deepfake's vulnerability.
 
 ## Technologies Used 🖥️
-- **Frontend**: React.js for a modern, responsive, and user-friendly interface.
+- **Frontend**: Embadded.js for a modern, responsive, and user-friendly interface.
 - **Backend**: Node.js for efficient handling of API requests and server-side logic.
 - **Machine Learning**: Python for deep learning models that detect and classify deepfakes.
-- **Database**: MongoDB for storing user data and analysis results.
-- **APIs**: Our system includes APIs for integration with other systems and platforms.
+- **Database**: JsonDB for storing user data and analysis results.
+- **APIs**: Our system includes APIs (CHSAPI) for integration with other systems and platforms.
 
 ## Programming Languages 💻
-- **JavaScript** (React, Node.js)
+- **JavaScript** (Embadded, Node.js)
+- **TypeScript** (Helping hand of backend, Secuity counters)
 - **Python** (Machine Learning Models)
 - **Json** (Level Data Manipulation)
 - **HTML/CSS** (UI/UX Design)
@@ -36,7 +37,7 @@ Our aim is to provide a robust system that:
 ![JPEN](https://kidKrishkode.github.io/Streamline-Diagnosis.github.io/images/jpen.png)
 The JPEN stack is a technology stack that combines the power of JSON, Python, Embedded JavaScript, and Node.js. JSON (J) is used for level data interchange and storage, providing a lightweight and flexible format for data exchange. Python (P) is used for mechine learning scripting, offering a robust and versatile language for building machine learning empower web applications. Embedded JavaScript (E) allows for dynamic client-side scripting, enabling interactive user experiences. Finally, Node.js (N) provides the runtime environment for executing JavaScript code on the server-side, enabling fast and scalable web development. Together, the JPEN stack enables developers to build scalable, and data driven or deep learning combined web applications.
 
-## Developers 👩‍💻👨‍💻
+## Developers/Founders 👩‍💻👨‍💻
 - **Frontend Developer**: Souvik Kar
 - **UI/UX Developer**: Rajanya Chakraborty 
 - **Backend Developer/Lead Developer**: Krishnendu Mitra 
@@ -44,6 +45,12 @@ The JPEN stack is a technology stack that combines the power of JSON, Python, Em
 
 ## Why We Created This Project ❓
 In an era where digital media is omnipresent, the misuse of deepfake technology poses significant threats to privacy, security, and trust. Our project aims to safeguard individuals and organizations by providing a reliable tool to detect and analyze deepfakes, ensuring that any malicious content can be identified and addressed promptly.
+
+## Facebook is our client 
+Cavernous Hoax Scanner's perfromance and secuirty feature is so-high thats why facebook use CHSAPI on there platform to remove deepfake media and transfer learning the knowlage to there models for future use. Not only facebook but also so many other brands like github, mockmantra, godaddy are also use Cavernous Hoax Scanner's API (CHSAPI) in there system.
+
+## Security measures
+CHS use so many security check points on media uploading, transfer, authentication, and etc.. task. Basically CHS convert a uploaded media into base64 string and then perform subsitution chiper on that string and send it to the internet with hash function value and server recive it and calculate this hash function and decode the base64 for task performing. And it use secure channels to send data with SHA-256 algorithm. This approch defened CHS from various attacks like - DDOS, Malware, Man-in-the-Middle, Brute-Force, SQL-Injection, Traffic, Masquerade, etc..
 
 ## Contact Info 📬
 For inquiries, collaborations, or feedback, please reach out to us at:
