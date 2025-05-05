@@ -142,7 +142,7 @@
                         <span class="desktop-view"><img src="../images/s3.png" style="width: 75%;" alt="chs"></span>
                     </div>
                 </div>
-                <div class="btn btn-process">Try Now!</div>
+                <div class="btn btn-process" onclick="route('/converter')">Try Now!</div>
             </li>
             <li class="drop">
                 <div class="flx">
@@ -173,21 +173,25 @@
             <li class="drop">
                 <div class="flx">
                     <div class="left-web">
-                        <h2>Just need to upload the media, <span>CHS</span> will convert it</h2>
+                        <h2>Process Hits Timeout Wall After 10 Seconds of Inactivity
+                            , <span>10 Seconds</span> of API calling</h2>
                         <p>
-                            To begin using the Cavernous Hoax Scanner, users simply need to upload the media—typically an image or video—through the user interface.
-                             Once the file is selected, it is sent to a backend API endpoint designed to securely receive and process the content. 
-                             This step initiates the core workflow of the system, where the uploaded media is analyzed using advanced deepfake detection algorithms. 
-                             The scanner evaluates various features of the file, including facial landmarks, inconsistencies, and metadata, to determine whether the content has been manipulated.
-                             The process is streamlined to be user-friendly and efficient, requiring minimal user input. After processing, the API returns a detailed result indicating the authenticity status of the media.
-                             This "upload-and-scan" approach is designed to make deepfake detection accessible and quick, ensuring users can verify digital content with ease and confidence.
-                            </p>
+                            During the execution of the Cavernous Hoax Scanner, a recurring 
+                            issue was observed where API calls consistently hit a timeout threshold 
+                            after 10 seconds. This limitation affects the reliability and responsiveness of certain 
+                            system features, particularly those involving external deepfake detection APIs or media analysis services.
+                             The 10-second timeout may stem from server-side restrictions, unoptimized request handling, or delays in processing 
+                             large media files. As a result, API-dependent tasks may fail or return incomplete results, impacting the overall user experience. 
+                             Addressing this requires either extending the timeout window on the client and/or server side, implementing better request
+                            handling strategies (e.g., asynchronous processing or retries), or optimizing media payload sizes to reduce processing delays.
+                            Identifying the root cause is crucial to ensure seamless integration and consistent performance across all scanning operations.
+                         </p>
                     </div>
                     <div class="right-web">
                         <span class="desktop-view"><img src="../images/s3.png" style="width: 75%;" alt="chs"></span>
                     </div>
                 </div>
-                <div class="btn btn-process">Try Now!</div>
+                
             </li>
             <li class="drop">
                 <div class="flx reverse-column">
