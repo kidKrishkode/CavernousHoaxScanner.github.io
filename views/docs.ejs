@@ -175,16 +175,19 @@
                     <div class="left-web">
                         <h2>Process Hits Timeout Wall <span>10 Seconds</span> of API calling</h2>
                         <p>
-                            During the execution of the Cavernous Hoax Scanner, a recurring 
-                            issue was observed where API calls consistently hit a timeout threshold 
-                            after 10 seconds. This limitation affects the reliability and responsiveness of certain 
-                            system features, particularly those involving external deepfake detection APIs or media analysis services.
-                             The 10-second timeout may stem from server-side restrictions, unoptimized request handling, or delays in processing 
-                             large media files. As a result, API-dependent tasks may fail or return incomplete results, impacting the overall user experience. 
-                             Addressing this requires either extending the timeout window on the client and/or server side, implementing better request
-                            handling strategies (e.g., asynchronous processing or retries), or optimizing media payload sizes to reduce processing delays.
-                            Identifying the root cause is crucial to ensure seamless integration and consistent performance across all scanning operations.
+                            In the current implementation of the Cavernous Hoax Scanner, one of the key technical challenges encountered is the timeout limitation during API interactions. 
+                            Specifically, the system is designed to call external or internal APIs to process media files for deepfake analysis. However, if the API does not respond within 10 seconds, 
+                            the process hits a hard timeout wall, terminating the operation prematurely. This timeout is due to vercel serverless API dependencies.
+                        </p>
+                        <p>This bottleneck becomes critical when handling larger media files or when the scanning process involves compute-intensive tasks such as frame-by-frame facial analysis, voice
+                            spectral matching, or real-time AI inference. Once the 10-second threshold is crossed, the user may face abrupt failures, incomplete scan results, or misleading errors "408".
                          </p>
+                            
+                        <p>
+                            To resolve this, options include implementing asynchronous handling using background workers (e.g., Celery with Redis), increasing the timeout threshold at the server/API level, 
+                            or introducing staged processing with user notifications on progress. Optimizing the processing pipeline and introducing a retry mechanism could also provide a smoother user experience. 
+                            Proper logging and timeout error handling should be in place to ensure transparency and easier debugging during production deployment.
+                        </p>
                     </div>
                     <div class="right-web">
                         <span class="desktop-view"><img src="../images/s3.png" style="width: 75%;" alt="chs"></span>
