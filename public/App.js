@@ -325,9 +325,6 @@ System.prototype.download_pdf = function(filePath, fileName){
     link.click();
     document.body.removeChild(link);
 }
-System.prototype.inphantCDN = function(){
-    window.location = "https://chscdn.vercel.app/";
-}
 System.prototype.themeToggle = function(id){
     if(theme == 0){
         for(let i=0; i<themeSet[1].length; i++){
@@ -393,6 +390,9 @@ System.prototype.apiConnection = async function(){
         }else if(connection?.error){
             document.getElementById('alpha').style.display = "block";
             document.getElementById('alpha-message').textContent = (connection.status.code+', '+connection.error);
+        }else if(connection.startsWith("SyntaxError: Unexpected token '<',")){
+            document.getElementById('alpha').style.display = "block";
+            document.getElementById('alpha-message').textContent = "CHSAPI send any kind of html content file...";
         }else{
             document.getElementById('alpha').style.display = "block";
             document.getElementById('alpha-message').textContent = (connection);
@@ -416,7 +416,7 @@ System.prototype.handelPyError = function(error){
     try{
         if(!system.error_layout){
             let temp = config.varchar.error_templet;
-            temp = temp.replaceAll('<|error.code|>',error.code!=undefined?error.code=='false'?504:error.code:422);
+            temp = temp.replaceAll('<|error.code|>',error.code!=undefined?error.code==false?504:error.code:422);
             temp = temp.replaceAll('<|error.message|>',error.message!=undefined?error.message:"The server understood the content type of the request content, and the syntax of the request content was correct, but it was unable to process the contained instructions.");
             document.body.innerHTML += temp;
             document.body.style.overflowY = "hidden";

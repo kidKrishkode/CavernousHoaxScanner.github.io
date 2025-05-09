@@ -349,7 +349,7 @@ li .active{
     background: var(--mit-color);
     transition: 1s ease-in-out;
 }  
-#dfdPage .containers .drop-box, #converterPage .containers .drop-box,#pdfPage .containers .drop-box, #reportCard .containers .drop-box{
+#dfdPage .containers .drop-box, #converterPage .containers .drop-box,#pdfPage .containers .drop-box, #reportCard .containers .drop-box, .imageCompare .drop-box{
     position: relative;
     width: 100%;
     height: 400px;
@@ -373,7 +373,7 @@ li .active{
     text-align: center;
     color: var(--charm);
 }  
-#dfdPage .containers .drop-box .preview, #converterPage .containers .drop-box .preview,#pdfPage .containers .drop-box .preview, #reportCard .containers .drop-box .preview{
+#dfdPage .containers .drop-box .preview, #converterPage .containers .drop-box .preview,#pdfPage .containers .drop-box .preview, #reportCard .containers .drop-box .preview, .imageCompare .drop-box .preview{
     position: relative;
     width: 100%;
     height: 100%;
@@ -1983,7 +1983,7 @@ footer .bottom-component .right-side a{
         overflow: hidden;
     }
 }
-#reportCard_holder{
+#reportCard_holder, #heatmap_holder{
     display: none;
     width: 100%;
     height: 100%;
