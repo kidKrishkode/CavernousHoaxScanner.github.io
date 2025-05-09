@@ -252,6 +252,10 @@ app.get('/report', (req, res) => {
     res.status(200).render('reportCard');
 });
 
+app.get('/heatmap', (req, res) => {
+    res.status(200).render('heatmap');
+});
+
 app.get('/imgToPdf', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('pdfConverter',{header, services, feed, faq, footer});
@@ -423,7 +427,7 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
     try{
         const extension = req.body.extension;
         let mediaData;
-        let limit;
+        let limit, heatmap;
         if(req.body.load!='true'){
             mediaData = req.body.imageData;
             limit = 2;
@@ -431,13 +435,21 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
             mediaData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
         }
+        if(req.body?.heatmap){
+            if(req.body.heatmap!='true'){
+                heatmap = 'false';
+            }else{
+                heatmap = req.body.heatmap;
+            }
+        }
         await hex.singlePartsAPI(`${API_LINK}/load/single`, mediaData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/dfdScanner`, {
                 ext: extension,
                 media: '',
                 load: 'true',
-                key: varchar.API_KEY
+                key: varchar.API_KEY,
+                heatmap: heatmap
             }).then((result) => {
                 single_img_bin.length = 0;
                 if(web.noise_detect(result)) return web.handle_error(res, result);
