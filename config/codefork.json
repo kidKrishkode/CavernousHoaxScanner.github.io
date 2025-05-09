@@ -4,66 +4,150 @@
         "lang": "Node Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "const@ s|fetch|n = f|require|n(s' node-fetch 'n);\n\nconst@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img |n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = g|require|n(s'chscdn'n).default;\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the desire image extension//n\nlet@ s|desire_extension|n = s'png'n;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 1,
         "lang": "React Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "< html@ |lang='en'n >\n< head@ >\n\t< meta@ |charset='utf-8'n >\n\t< meta@ |name='viewport'n |content='width=device-width, initial-scale=1'n >\n\t< title@ |version='1.0'n >$|title|$< /title@ >\n< /head@ >\n< body@ >\n\t$|body|$\n< /body@ >\n< !-- link the api plugins in your project (below) -- >\nHello World\n$|apiplugin|$\n< !-- link the script file where your request is encoded -- >\n&lt; script@ |src='./main.js'n >< /script@ >\n< /html@ >"
+        "code": "0"
     },
     {
         "id": 2,
         "lang": "Vanilla Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageConverter'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img |n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the desire image extension//n\nlet@ s|desire_extension|n = s'jpg'n;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image convert'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 3,
-        "lang": "Vanilla Js",
-        "name": "Image Compressor",
+        "lang": "Python",
+        "name": "Image Converter",
         "method": "POST",
-        "code": "const@ s|link|n = s'https:/|/chsapi.vercel.app/api/ImageCompressor'n;\n\nlet@ s|formate|n = s'png'n; //Assign require image extension//n\n\n/*Give your base64 image data which want to convert\ninto another image formate*/\nlet@ s|image_data|n = s'data:image/jpg,base64;.....'n;\n\nfetch@( s|link|n, {\n\ts|method|n: s'POST'n,\n\ts|header|n: {\n\t\ts'Content'n: s'application/json'n,\n\t},\n\ts|body|n: JSON@|.stringify({s|form|n: s|formate|n, s|img |n: s|image_data|n})\n}).then@(s|response|n => s|response|n|.json()).then@( s|data|n => {\n\tconsole@|.log(s|data|n); //output response in json data//n\n}).catch@(s|e|n => console@|.error(s|e|n));\n"
+        "code": "0"
     },
     {
         "id": 4,
+        "lang": "Node Js",
+        "name": "Image Compressor",
+        "method": "POST",
+        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = g|require|n(s'chscdn'n).default;\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the compress/quality parcentage//n\nlet@ s|quality|n = 70;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|quality|n: s|desire_quality|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
+    },
+    {
+        "id": 5,
+        "lang": "React Js",
+        "name": "Image Compressor",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 6,
+        "lang": "Vanilla Js",
+        "name": "Image Compressor",
+        "method": "POST",
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the compress/quality parcentage//n\nlet@ s|quality|n = 70;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|quality|n: s|desire_quality|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
+    },
+    {
+        "id": 7,
+        "lang": "Python",
+        "name": "Image Compressor",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 8,
+        "lang": "Node Js",
+        "name": "Deepfake Detector",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 9,
+        "lang": "React Js",
+        "name": "Deepfake Detector",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 10,
+        "lang": "Vanilla Js",
+        "name": "Deepfake Detector",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 11,
+        "lang": "Python",
+        "name": "Deepfake Detector",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 12,
+        "lang": "Node Js",
+        "name": "Image to PDF",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 13,
+        "lang": "React Js",
+        "name": "Image to PDF",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 14,
+        "lang": "Vanilla Js",
+        "name": "Image to PDF",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 15,
+        "lang": "Python",
+        "name": "Image to PDF",
+        "method": "POST",
+        "code": "0"
+    },
+    {
+        "id": 16,
         "lang": "Python",
         "name": "Image Converter",
         "method": "Define",
         "code": "from@ g|fastapi|n import@ g|FastAPI|n, f|Query|n\nfrom@ g|fastapi|n.g|middleware|n.g|cors |n import@ g|CORSMiddleware|n\nfrom@ g|pydantic|n import@ g|BaseModel|n\nimport@ g|Preprocessor|n\nimport@ g|TaskMaster|n\n\ns|app|n = g|FastAPI|n()\n\ns|app|n.f|add_middleware|n(g|Preprocessor|n.s|CORSMiddleware|n)\n\nclasse g|ImageData|n(g|BaseModel|n):\n\ts|form|n: g|str|n\n\ts|img |n: g|str|n\n\n@s|app|n.f|get|n(s'/api/imageConverter'n)\ndef read_root/(s|data|n: g|ImageData|n):\n\ts|src|n = g|TaskMaster|n.f|convert_img |n(s|data|n.s|img |n, s|data|n.s|form|n)\n\treturn@ g|Responce|n.f|model|n(s|src|n, g|Preprocessor|n.f|timeStamp|n())\n\n"
     },
     {
-        "id": 5,
+        "id": 17,
         "lang": "Node Js",
         "name": "Docs 1",
         "method": "GET",
         "code": "from@ g|whitelotus |n import@ g|CHSWEB|n, g|CHSAPI|n, f|chscdn|n;\nimport@ g|Preprocessor|n;\n\npublic@ function async@ index/(CHSWEB: g|class |n, CHSAPI: g|class |n){\n\t$s|this |n->s|load|n->f|model|n(s'Greetings from CHS'n);\n\tawait@ g|CHSAPI|n.s|data|n[s'request'n]() = $s|this |n->f|greet_model|n(() => \n\t\tif@(g|CHSAPI|n.s|data|n[s'responce'n].f|is_valid|n())\n\t\t\tg|CHSWEB|n->s|load|n->s|view|n(s'user/index'n);\n\t}).catch@(s|error|n =>\n\t\tconsole@|.log(s'Failed to greet user for unwanted conditions!'n)\n\t);\n}\n\nif@ s|__name__|n == s'__main__'n{\n\ts|user_data|n = {s'user'n: s|API_KEY|n};\n\ts|app|n = g|Index|n(s|user_data|n);\n}\n"
     },
     {
-        "id": 6,
+        "id": 18,
         "lang": "React Js",
         "name": "CDN Plug",
         "method": "GET",
         "code": "// Import chscdn using npm at first//n\nimport@ g|React|n from@ s'react'n;\nimport@ s'chscdn/style.css 'n;\nimport@ { s|chscdn |n } from@ s'chscdn/script'n; // Importing from the package //n \n\nconst@ f|App |n = () => {\n\t// Create an instance of the chscdn class //n\n\tconst@ s|cdnInstance|n = new@ g|chscdn|n();\n\t/*....\n\n\tuse that pre-buid code as you want\n\n\t....*/\n\treturn@ (\n\t\t<>\n\t\t</>\n\t);\n};\n\nexport@ default@ f|App|n;\n\n"
     },
     {
-        "id": 7,
+        "id": 19,
         "lang": "HTML",
         "name": "CDN Plug",
         "method": "GET",
         "code": "<span class='cp'>&lt;!doctype html&gt;</span>\n<span class='nt'>&lt;html</span> <span class='na'>lang=</span><span class='s'>'en'</span><span class='nt'>&gt;</span>\n<span class='nt'>&lt;head&gt;</span>\n\t<span class='c'>&lt;!-- Required meta tags --&gt;</span>\n\t<span class='nt'>&lt;meta</span> <span class='na'>charset=</span><span class='s'>'UTF-8'</span><span class='nt'>/&gt;</span>\n\t<span class='nt'>&lt;meta</span> <span class='na'>name=</span><span class='s'>'viewport'</span> <span class='na'>content=</span><span class='s'>'width=device-width, initial-scale=1'</span><span class='nt'>/&gt;</span>\n\t<span class='c'>&lt;!-- CHSCDN CSS --&gt;</span>\n\t<span class='nt'>&lt;link</span> <span class='na'>rel=</span><span class='s'>'stylesheet'</span> <span class='na'>href=</span><span class='s'>'https://chscdn.vercel.app/cdn/v1/css/chscdn.min.css'</span> <span class='na'>crossorigin=</span><span class='s'>'anonymous'</span><span class='nt'>/&gt;</span>\n\t<span class='nt'>&lt;title <span class='na'>version=</span><span class='s'>'1.0'</span>&gt;</span>document<span class='nt'>&lt;/title&gt;</span>\n<span class='nt'>&lt;/head&gt;</span>\n<span class='nt'>&lt;style&gt;</span>\n\t<span class='c'>/* Write your css code here */</span>\n<span class='nt'>&lt;/style&gt;</span>\n<span class='nt'>&lt;body&gt;</span>\n\t<span class='c'>&lt;!-- Write your website code here --&gt;</span>\n<span class='nt'>&lt;/body&gt;</span>\n<span class='nt'>&lt;script </span><span class='na'>src=</span><span class='s'>'https://chscdn.vercel.app/cdn/v1/js/chscdn.js'</span><span class='nt'>&gt;&lt;/script&gt;</span>\n<span class='nt'>&lt;script&gt;</span>\n\t<span class='c'>// Write your js code here </span>\n<span class='nt'>&lt;/script&gt;</span>\n<span class='nt'>&lt;/html&gt;</span>\n\n"
     },
     {
-        "id": 8,
+        "id": 20,
         "lang": "Vanilla Js",
         "name": "CDN Use",
         "method": "GET",
         "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'deepfake detect'n, s|media|n: s|base64_image|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n?.s|class |n);\n}\n\n"
     },
     {
-        "id": 9,
+        "id": 21,
         "lang": "JSON",
         "name": "API response",
         "method": "GET",
