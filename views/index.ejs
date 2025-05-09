@@ -62,6 +62,9 @@
                 <span class="head">Media Type:</span><span class="data" id="media-type">Not Selected!</span>
             </div>
             <div class="flx">
+                <span class="head">Media Extension:</span><span class="data" id="media-exc">Not Selected!</span>
+            </div>
+            <div class="flx">
                 <span class="head">Media Size:</span><span class="data" id="media-size">Not Selected!</span>
             </div>
             <div class="flx">
@@ -93,9 +96,9 @@
             <div class="flx">
                 <span class="head">Prototype 3:</span><span class="data" id="output-prototype3">Not Selected!</span>
             </div>
-            <!-- <div class="flx">
-                <span class="head">Detect Parameter:</span><span class="data" id="output-para">Not Selected!</span>
-            </div> -->
+            <div class="flx">
+                <span class="head">Detect Parameter:</span><span class="data" id="output-para">Not Applicable!</span>
+            </div>
         </div>
         <div class="htsi appear hide" id="op4">
             <h2>How to Use it.</h2>
@@ -149,6 +152,7 @@
 
     function directUpload(file){
         let extension = 'png';
+        let heatmap = 'true';
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
@@ -159,7 +163,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({extension, imageData})
+                body: JSON.stringify({extension, imageData, heatmap})
             }).then(response => response.json()).then(data => {
                 afterResponce(data, imageData);
             }).catch(e=>console.log(e));
@@ -170,7 +174,7 @@
         if(fileInput.files.length!=0){
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
-            // system.block_resource({input: "file-input"});
+            system.block_resource({input: "file-input", selector: []});
             if(document.getElementById('media-type').textContent=='Video'){
                 videoUpload(file);
             }else{
@@ -190,7 +194,6 @@
         reader.readAsDataURL(file);
         reader.onload = function(){
             const imageData = reader.result;
-
             compressBase64Image(imageData).then(compressed_imageData => {
                 limit = Math.floor(getBase64SizeKB(compressed_imageData)/900)+2;
                 singlePartsAPI('/load/single', compressed_imageData, limit).then((result) => {
@@ -203,7 +206,8 @@
                         body: JSON.stringify({
                             extension: extension,
                             img: '',
-                            load: 'true'
+                            load: 'true',
+                            heatmap: 'true'
                         })
                     }).then(response => response.json()).then(data => {
                         afterResponce(data, imageData);
@@ -269,7 +273,6 @@
 
         }
     }
-    
     function afterResponce(data, mediaData){
         if(typeof data.error !== "undefined"){
             return system.handelPyError(data.error);
@@ -291,7 +294,9 @@
         document.getElementById('output-prototype1').textContent = `${data?.result?.responce_tree?.prototype_1?.class} (${data?.result?.responce_tree?.prototype_1?.accuracy}%)`;
         document.getElementById('output-prototype2').textContent = `${data?.result?.responce_tree?.prototype_2?.class} (${data?.result?.responce_tree?.prototype_2?.accuracy}%)`;
         document.getElementById('output-prototype3').textContent = `${data?.result?.responce_tree?.prototype_3?.class} (${data?.result?.responce_tree?.prototype_3?.accuracy}%)`;
-        // document.getElementById('output-para').textContent = '';
+        if(data?.result?.responce_tree?.prototype_1?.heatmap){
+            document.getElementById('output-para').innerHTML = `<div class="btn btn-process" onclick="getHeatmap('${mediaData}', '${data.result.responce_tree.prototype_1.heatmap}');">View Parameters</div>`;
+        }
         document.getElementById('op2').style.display = 'none';
         document.getElementById('op3').style.display = 'none';
         document.getElementById('op4').style.display = 'none';
@@ -360,5 +365,44 @@ function generatePDF(){
     const element = document.getElementById('reportCard');
     html2pdf().from(element).save();
 }
+</script>
+<script>
+    function getHeatmap(realImage, heatmapImage){
+        fetch('/heatmap', {
+            method: 'GET',
+        }).then(res => res.text()).then((data)=>{
+            document.getElementById('heatmap_holder').innerHTML = data;
+            document.getElementById('heatmap_holder').style.display = "block";
+            document.getElementById('img-com-1').src = realImage;
+            document.getElementById("img-com-2").src = heatmapImage==undefined?realImage:heatmapImage;
+            setTimeout(()=>{
+                imageComparesion();
+            },3000);
+        });
+    }
+    function closeHeatmap(){
+        document.getElementById('heatmap_holder').innerHTML = '';
+        document.getElementById('heatmap_holder').style.display = "none";
+    }
+    function openFullscreen(){
+        var elem = document.documentElement;
+        if(elem.requestFullscreen){
+            elem.requestFullscreen();
+        }else if(elem.webkitRequestFullscreen){
+            elem.webkitRequestFullscreen();
+        }else if(elem.msRequestFullscreen){
+            elem.msRequestFullscreen();
+        }
+    }
+    function closeFullscreen(){
+        var elem = document.documentElement;
+        if(document.exitFullscreen){
+            document.exitFullscreen();
+        }else if(document.webkitExitFullscreen){
+            document.webkitExitFullscreen();
+        }else if(document.msExitFullscreen){
+            document.msExitFullscreen();
+        }
+    }
 </script>
 </html>

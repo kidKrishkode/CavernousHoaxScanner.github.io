@@ -33,7 +33,7 @@
             <div class="api-left api-container">
                 <div class="flx head">
                     <h3>create your CHS API:</h3>
-                    <div class="btn btn-outline-primary"><i class="fa fa-book"></i> User Guide</div>
+                    <div class="btn btn-outline-primary" onclick="route('/docs');"><i class="fa fa-book"></i> User Guide</div>
                 </div>
                 <hr/>
                 <div class="body">
@@ -96,7 +96,7 @@
             <div class="api-right api-container">
                 <div class="flx head">
                     <h3>Code Snippets:</h3>
-                    <div class="btn btn-outline-primary" onclick="system.chsCDN();"><i class="fa fa-code"></i> CHSCDN</div>
+                    <div class="btn btn-outline-primary" onclick="route('https:/\/chscdn.vercel.app/');"><i class="fa fa-code"></i> CHSCDN</div>
                 </div>
                 <hr/>
                 <div class="body">
@@ -106,8 +106,8 @@
                         <div class="form-group">
                             <select class="form-control" id="apilang" onchange="selectLang();">
                                 <option>React Js</option>
-                                <option selected="true">Node Js</option>
-                                <option>Vanilla Js</option>
+                                <option>Node Js</option>
+                                <option selected="true">Vanilla Js</option>
                                 <option>Python</option>
                             </select>
                         </div>
@@ -168,7 +168,7 @@
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
-    codeset('Image Converter', 'Node Js');
+    codeset('Image Converter', 'Vanilla Js');
 
     function selectLang(){
         let lang = document.getElementById('apilang').value;

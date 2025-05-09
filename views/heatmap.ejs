@@ -1,0 +1,170 @@
+<style>
+    .imageCompare{
+        width: 100%;
+        height: 100%;
+    }
+    .imageCompare .head{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background: var(--eclipse);
+        .btn-group{
+            width: 30%;
+            .icons{
+            width: 30%;
+            }
+        }
+        .icons{
+            color: #fff;
+            margin: 8px 0px;
+            text-align: right;
+        }
+    }
+    .imageCompare .drop-box{
+        width: 70%!important;
+        height: 500px!important;
+        margin: 20px auto;
+    }
+    .img-comp-container{
+        width: 100%;
+        height: 100%;
+    }
+    .img-comp-img{
+        position: absolute;
+        /* max-width: 100%;
+        max-height: 100%; */
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .img-comp-img img{
+        display: block;
+        vertical-align: middle;
+        /* width: max-content;
+        height: max-content; */
+        width: max-content;
+        margin: auto;
+    }
+    .img-comp-slider{
+        position: absolute;
+        z-index: 9;
+        cursor: ew-resize;
+        width: 40px;
+        height: 40px;
+        background-color: var(--charm);
+        border: 2px solid #fff;
+        transform: rotate(45deg);
+    }
+    #compare-b{
+        display: none;
+    }
+    .compare .heading{
+        width: 70%;
+        margin: 10px auto;
+        h4{
+            font-family: sans-serif;
+            color: var(--lavender);
+            font-weight: 600;
+        }
+        i,svg{
+            width: 30px;
+            height: 30px;
+            font-size: 26px;
+            color: var(--eclipse);
+            margin: 5px 0px;
+            cursor: pointer;
+        }
+    }
+    .scale{
+        width: 28%;
+        height: 50px;
+        margin: 10px auto;
+        background-image: url('../images/scale.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50% 50%;
+    }
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px){
+        .imageCompare .drop-box{
+            width: 90%!important;
+            height: 300px!important;
+        }
+        .img-comp-slider{
+            width: 20px;
+            height: 20px;
+        }
+        .compare .heading{
+            width: 90%;
+        }
+        .scale{
+            width: 80%;
+        }
+    }
+</style>
+<div class="imageCompare">
+    <div class="head">
+        <div class="btn icons back-icon" id="slide-length">Heatmap Comparetor</div>
+        <div class="btn-group">
+            <div class="btn icons" onclick="closeFullscreen();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen-exit" viewBox="0 0 16 16">
+                    <path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5m5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5M0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5m10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0z"/>
+                </svg>
+            </div>
+            <div class="btn icons" onclick="openFullscreen();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
+                    <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/>
+                </svg>
+            </div>
+            <div class="btn icons" onclick="closeHeatmap();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="comparesion">
+        <div class="compare" id="compare-a">
+            <div class="heading flx">
+                <h4>Heatmap Image</h4>
+                <i class="fa fa-toggle-off" onclick="toogleComparesion('compare-b');"></i>
+            </div>
+            <div class="drop-box">
+                <div class="preview">
+                    <div class="img-comp-container">
+                        <div class="img-comp-img">
+                            <img src="https://raw.githubusercontent.com/Mario-Duarte/CodePen/main/assets/marioPhoto-2.jpg" id="img-com-2" alt="chs"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="compare" id="compare-b">
+            <div class="heading flx">
+                <h4>Input Image</h4>
+                <i class="fa fa-toggle-on" onclick="toogleComparesion('compare-a');"></i>
+            </div>
+            <div class="drop-box">
+                <div class="preview">
+                    <div class="img-comp-container">
+                        <div class="img-comp-img">
+                            <img src="https://raw.githubusercontent.com/Mario-Duarte/CodePen/main/assets/marioPhoto-1.jpg" id="img-com-1" alt="chs"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="drop-box">
+        <div class="preview">
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                    <img src="https://raw.githubusercontent.com/Mario-Duarte/CodePen/main/assets/marioPhoto-2.jpg" id="img-com-2" alt="chs"/>
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                    <img src="https://raw.githubusercontent.com/Mario-Duarte/CodePen/main/assets/marioPhoto-1.jpg" id="img-com-1" alt="chs"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scale"></div>
+</div>
