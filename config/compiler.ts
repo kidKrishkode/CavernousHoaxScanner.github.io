@@ -21,9 +21,13 @@ module.exports = {
             }   
         }
     },
-    appointCode: (name, lang, compiler) => {
+    appointCode: (...arguments) => {
+        let name = arguments[0];
+        let lang = arguments[1]; 
+        let compiler = arguments[2]; 
+        let method = arguments[3]==undefined?'POST':arguments[3];
         for(let i=0; i<compiler.codefork.length; i++){
-            if(compiler.codefork[i].lang == lang && compiler.codefork[i].name == name){
+            if(compiler.codefork[i].lang == lang && compiler.codefork[i].name == name && compiler.codefork[i].method == method){
                 return compiler.codefork[i].code+'\n';
             }
         }
