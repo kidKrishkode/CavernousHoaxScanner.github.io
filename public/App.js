@@ -390,7 +390,7 @@ System.prototype.apiConnection = async function(){
         }else if(connection?.error){
             document.getElementById('alpha').style.display = "block";
             document.getElementById('alpha-message').textContent = (connection.status.code+', '+connection.error);
-        }else if(connection.startsWith("SyntaxError: Unexpected token '<',")){
+        }else if(String(connection).startsWith("SyntaxError: Unexpected token '<',")){
             document.getElementById('alpha').style.display = "block";
             document.getElementById('alpha-message').textContent = "CHSAPI send any kind of html content file...";
         }else{
