@@ -153,13 +153,13 @@
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
-    codeset('Image Converter', 'Python');
+    codeset('Image Converter', 'Python', 'Define');
 
-    function codeset(name, lang){
+    function codeset(name, lang, method){
         try{
             setTimeout(()=>{
                 appointCode = eval(compiler.appointCode);
-                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler);
+                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler, method);
                 // updateLine = eval(compiler.updateLineNumbers);
                 pyInterpreter = eval(compiler.pyInterpreter);
                 ideDeploy = eval(compiler.ideDeploy);

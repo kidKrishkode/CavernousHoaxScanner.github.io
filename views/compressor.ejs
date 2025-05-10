@@ -13,25 +13,45 @@
     <meta property="twitter:title" content="Cavernous Hoax Scanner">
     <meta content="CHS is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
     <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
-    <title version="1.0">Image Converter - Cavernous Hoax Scanner</title>
+    <title version="1.0">Image Compressor - Cavernous Hoax Scanner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/App.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
-<body onload="converter.engine_start();">
+<style>
+    .selecter label{
+        color: var(--lavender);
+        font-weight: 600;
+    }
+    input[type="range"] {
+        accent-color: var(--charm);
+    }
+    .selecter{
+        width: 40%!important;
+    }
+    #rangevalue{
+        width: 15%;
+        color: #0c8ff0;
+        background: transparent;
+        border: none;
+        user-select: none;
+        outline: none;
+    }
+</style>
+<body onload="compressor.engine_start();">
     <header id="header">
         <%= header %>
     </header>
     <section class="workspace" id="converterPage">
         <img src="../images/3d_donut.png" alt="chs" class="right-top-des"/>
-        <h2>Image Converter</h2>
+        <h2>Image Compressor</h2>
         <div class="underline"></div>
         <div class="containers">
             <div class="drop-box">
                 <div class="placeholder"><i class="fa fa-file-image-o" style="font-size: 30px;"></i><br>Drag and drop an image, or click to select</div>
                 <div class="preview"></div>
-                <input type="file" id="file-input" accept="image/*" name="file-input" onchange="converter.engine_active();">
+                <input type="file" id="file-input" accept="image/*" name="file-input" onchange="compressor.engine_active();">
             </div>
         </div>
         <div class="progress-status">
@@ -39,14 +59,9 @@
         </div>
         <div class="flx containers-option" id="op1">
             <div class="selecter">
-                <select class="form-control" id="extension-input" onchange="" name="extension-input">
-                    <option>Jpg</option>
-                    <option>Jpeg</option>
-                    <option selected="true">Png</option>
-                    <option>Gif</option>
-                    <option>Bmp</option>
-                    <option>Svg</option>
-                </select>
+                <label for="quality">Compress:</label>
+                <input type="range" id="quality" name="quality" min="0" max="100" value="70" oninput="rangevalue.value=value"/>
+                <input type="number" id="rangevalue" name="quality" min="0" max="100" value="70" oninput="quality.value=value"/>
             </div>
             <div class="process-btn">
                 <div class="btn btn-process" onclick="process();">Process</div>
@@ -115,7 +130,7 @@
 <script>
     pageSet.push('header','converterPage','moreProduct', 'faq-help', 'footer');
     appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
-    currentPage.push('converter');
+    currentPage.push('compressor');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
@@ -128,7 +143,7 @@
         reader.readAsDataURL(file);
         reader.onload = function(){
             const imageData = reader.result;
-            fetch('/converter/process', {
+            fetch('/compressor/process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -144,7 +159,7 @@
         if(fileInput.files.length!=0){
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
-            system.block_resource({input: "file-input", selector: ["extension-input"]});
+            system.block_resource({input: "file-input", selector: ["quality","rangevalue"]});
             if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 900){
                 compressAndUpload(file, document.getElementById('media-size').textContent.replace('Kb','')*1);
             }else{
@@ -161,7 +176,7 @@
         reader.onload = function(){
             const imageData = reader.result;
             singlePartsAPI('/load/single', imageData, limit).then((result) => {
-                fetch('/converter/process', {
+                fetch('/compressor/process', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
