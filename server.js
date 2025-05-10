@@ -396,6 +396,12 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
     }
 });
 
+app.get('/compressor', (req, res) => {
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('compressor',{header, services, feed, faq, footer});
+    });
+});
+
 app.get('/imgEditor', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('imgEditor',{header, services, feed, faq, footer});
@@ -503,10 +509,10 @@ app.get('/blogs', (req, res) => {
 app.post('/cdn_raw', async (req, res) => {
     const codefork = await jsonfile.readFile('./config/codefork.json');
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        reactCode = codefork[6].code;
-        htmlCode = codefork[7].code;
-        jsCode = codefork[8].code;
-        jsonReponse = codefork[9].code;
+        reactCode = codefork[18].code;
+        htmlCode = codefork[19].code;
+        jsCode = codefork[20].code;
+        jsonReponse = codefork[21].code;
         ejs.renderFile(__dirname+'/views/cdnLanding.ejs', { header, services, feed, faq, footer, reactCode, htmlCode, jsCode, jsonReponse }, (err, html) => {
             if(err){
               console.error("Error to send raw cdn page "+err);
