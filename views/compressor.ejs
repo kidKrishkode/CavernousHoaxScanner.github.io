@@ -138,7 +138,7 @@
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
     
     function directUpload(file){
-        let extension = document.getElementById('extension-input').value.toLowerCase();
+        let quality = document.getElementById('rangevalue').value.toLowerCase();
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
@@ -148,9 +148,9 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({extension, imageData})
+                body: JSON.stringify({quality, imageData})
             }).then(response => response.json()).then(data => {
-                afterResponce(data, extension);
+                afterResponce(data, quality);
             }).catch(e=>console.log(e));
         }
     }
@@ -170,7 +170,7 @@
     function compressAndUpload(file, size){
         const singlePartsAPI = eval(config.hex.singlePartsAPI);
         const limit = Math.floor(size/900)+2;
-        const extension = document.getElementById('extension-input').value.toLowerCase();
+        const quality = document.getElementById('rangevalue').value.toLowerCase();
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(){
@@ -182,24 +182,24 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        extension: extension,
+                        quality: quality,
                         img: '',
                         load: 'true'
                     })
                 }).then(response => response.json()).then(data => {
-                    afterResponce(data, extension);
+                    afterResponce(data, quality);
                 });
             }).catch((error) => {
                 console.log("Error sending parts:", error);
             });
         }
     }
-    function afterResponce(data, extension){
+    function afterResponce(data, quality){
         if(typeof data.error !== "undefined"){
             return system.handelPyError(data.error);
         }
         document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.result,null,2)} alt='loading' id="dimg"/>`;
-        system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
+        // system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
         document.getElementById('op1').innerHTML = `
             <div class="btn btn-process" onclick="route('');">Back</div>
             <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${extension}');"><i class="fa fa-download"></i> Download</div>

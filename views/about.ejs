@@ -13,20 +13,240 @@
     <meta property="twitter:title" content="Cavernous Hoax Scanner">
     <meta content="CHS is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
     <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
-    <title version="1.0">Cavernous Hoax Scanner</title>
+    <title version="1.0">About - Cavernous Hoax Scanner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../public/App.css"/>
-    <link rel="icon" href="../public/favicon.ico"/>
+    <link rel="stylesheet" href="../public/App.css" />
+    <link rel="icon" href="../public/favicon.ico" />
 </head>
+<style>
+    .head{
+        padding: 3rem 0;
+        text-align: center;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    }
+    .head h1{
+        background: linear-gradient(50deg, #2323ff 30%, #ec2c75 50%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    .head p{
+        margin-top: 1rem;
+    }
+    .container{
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section{
+        padding: 4rem 0;
+        text-align: center;
+        transition: 1s ease-in-out;
+    }
+    .section h2{
+        margin-bottom: 1.5rem;
+        color: var(--charm);
+        text-transform: uppercase;
+    }
+    .section p{
+        max-width: 800px;
+        margin: 0 auto;
+        color: #aaa;
+    }
+    .team-members,
+    .services{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+    .member,
+    .service-item{
+        background: linear-gradient(135deg, var(--blend-color), var(--bg-color));
+        padding: 2rem;
+        border-radius: 10px;
+        width: 30%;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+    .member:hover,
+    .service-item:hover{
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+    .member img{
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid var(--charm);
+        object-fit: cover;
+    }
+    .member h3{
+        font-size: 1.6rem;
+        margin: 1rem 0 0.5rem;
+        color: var(--charm);
+    }
+    .service-item h3{
+        font-size: 1.6rem;
+        margin: 1rem 0;
+        color: #ff0080;
+    }
+    .service-item p{
+        color: var(--reverse-white);
+    }
+    .futuristic-border{
+        width: 100px;
+        height: 5px;
+        background: linear-gradient(135deg, var(--charm), #ff0080);
+        margin: 1rem auto;
+    }
+    .about p{
+        max-width: 100%;
+        padding: 10px 20px;
+        text-align: justify;
+    }
+    @media (max-width: 768px) {
+        .team-members,
+        .services{
+            flex-direction: column;
+            align-items: center;
+        }
+        .member,
+        .service-item{
+            width: 80%;
+        }
+    }
+    @media (max-width: 480px) {
+        head h1{
+            font-size: 2rem;
+        }
+        head p{
+            font-size: 1rem;
+        }
+        .section h2{
+            font-size: 2rem;
+        }
+        .member,
+        .service-item{
+            width: 100%;
+        }
+        .section p{
+            font-size: 1rem;
+        }
+    }
+</style>
+
 <body>
     <header id="header">
         <%= header %>
     </header>
     <section class="workspace" id="aboutPage">
-        
+        <div class="head">
+            <div class="container">
+                <h1>Cavernous Hoax Scanner</h1>
+                <p class="text-muted">Welcome to Cavernous Hoax Scanner, a cutting-edge tool designed to detect and analyze deepfake images. Deepfakes are synthetic media where a person in an existing image or video is replaced with someone else's likeness. With the increasing sophistication of deepfake technology, it's crucial to have reliable methods to identify and mitigate potential misuse.</p>
+            </div>
+        </div>
+        <section class="section" style="background: var(--mit-color);">
+            <div class="container">
+                <h2>Who We Are</h2>
+                <div class="futuristic-border"></div>
+                <p>
+                    We are a team of experts driven by a passion for technology and innovation. With a futuristic
+                    approach,
+                    we aim to transform ideas through modern solutions and advanced technology. Meet the minds
+                    behind our success.
+                </p>
 
-        
+                <div class="team-members">
+                    <div class="member" onclick="route('https:/\/github.com/Souvik-Kar-704')">
+                        <img src="https://avatars.githubusercontent.com/u/176465832?v=4"
+                            alt="Team Member">
+                        <h3>Souvik Kar</h3>
+                        <p>Frontend Developer</p>
+                    </div>
+                    <div class="member" onclick="route('https:/\/github.com/Rajanya265')">
+                        <img src="https://avatars.githubusercontent.com/u/182195057?v=4"
+                            alt="Team Member">
+                        <h3>Rajanya Chakrobarty</h3>
+                        <p>UI/UX Designer</p>
+                    </div>
+                    <div class="member" onclick="route('https:/\/github.com/codebysaptarshi')">
+                        <img src="https://avatars.githubusercontent.com/u/167850731?v=4"
+                            alt="Team Member">
+                        <h3>Saptarshi Paramanik</h3>
+                        <p>Machine Learning Expert</p>
+                    </div>
+                    <div class="member" onclick="route('https:/\/github.com/kidKrishkode')">
+                        <img src="https://avatars.githubusercontent.com/u/150600460?v=4"
+                            alt="Team Member">
+                        <h3>Krishnendu Mitra</h3>
+                        <p>Backend Developer</p>
+                    </div>
+                </div>
+                <div class="btn btn-process" onclick="route('https:/\/github.com/WHITELOTUS4')">Visite WHITE LOTUS</div>
+            </div>
+        </section>
+        <section class="section" style="background-color: var(--bg-color);">
+            <div class="container">
+                <h2>Why Us</h2>
+                <div class="futuristic-border"></div>
+                <p>
+                    We focus on delivering high-quality, futuristic solutions. Our team is committed to staying at the
+                    forefront of technological advancements.
+                </p>
+                <div class="services">
+                    <div class="service-item">
+                        <h3>Accuracy</h3>
+                        <p class="text-muted">Our deepfake detection technology stands out for its unparalleled accuracy, delivering precise results that outperform any other website in the industry. With cutting-edge algorithms and rigorous testing, we ensure that our users receive the most accurate deepfake detection available. Trust us for reliable and trustworthy results.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>Media Based Expertise</h3>
+                        <p class="text-muted">Our team of experts excels in handling diverse media formats, including images, videos, and audio files. With extensive experience in media processing, we develop robust solutions for a wide range of applications, from image generation and compression to conversion, deepfake detection, and more..</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>Fast and Friendly</h3>
+                        <p class="text-muted">Our system is designed for speed and simplicity, delivering rapid responses to meet your needs. With an intuitive and user-friendly interface, we make it easy for you to navigate and utilize our tools, ensuring a seamless experience.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>Certified Report</h3>
+                        <p class="text-muted">Our platform provides detailed and official output for each service, with certified report features available for select tools. These reports offer clarity and authenticity, serving as verifiable proof of the results. Get official documentation for your records.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>Trusted</h3>
+                        <p class="text-muted">Our services are trusted by industry giants like Facebook, GitHub, and AI Dictionary, among others. With new platforms partnering with us every day, our reputation speaks for itself. We invite you to experience our reliability firsthand - try our service and earn your trust in us.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3>Future Adaptive</h3>
+                        <p class="text-muted">Our models continuously learn and adapt to new data, ensuring staying ahead of the curve. We regularly update our system with new features, enhancements, and bug fixes, guaranteeing a seamless and evolving experience for our users.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section about" id="aboutTeam" style="background: var(--mit-color);">
+            <h2>About WHITE LOTUS</h2>
+            <div class="futuristic-border"></div>
+            <p class="text-muted">WHITE LOTUS was born out of curiosity and a shared vision to create meaningful solutions for everyday life. Established on <a href="https://www.google.com/search?q=February+14%2C+2023">February 14, 2023</a>, our team came into existence with a simple yet powerful goal—to develop useful systems and applications that would be accessible to everyone free of cost. Though our journey started recently, our passion and dedication 
+                have propelled us forward, allowing us to contribute to the world of technology in remarkable ways.  
+                Our first breakthrough came at our college tech fest, where we presented our <a href="https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/">weather web project</a>, marking the beginning of our exciting expedition into development and innovation. Shortly afterward, we participated in our university's hackathon, where we built a <a href="https://whitelotus4.github.io/FaceMorphism.github.io/Publick/index.html">face detection system</a>, showcasing our ability to merge creativity with real-world applications. 
+                Our momentum continued, leading us to create a chess game for another college hackathon, proving that our skills were versatile and ever-evolving.  
+                However, our ambitions extend far beyond competitions. We have continued to develop numerous applications, each designed with a purpose—to simplify tasks and improve digital accessibility. Some of our noteworthy projects include an online book publication system, an online library, <a href="https://chatwhirl.vercel.app/join">ChatWhirl</a>—a dynamic chat meeting application, and an intelligent 
+                chatbot. Additionally, we engineered <a href="/main">Cavernous Hoax Scanner</a>, a specialized tool that focuses on deepfake detection, along with an image converter, image compressor, and image-to-PDF functionality. With each step, WHITE LOTUS reaffirms its commitment to serving users by providing well-designed, practical utilities.  <br><br>
+                At the heart of WHITE LOTUS are our founding members—Souvik Kar, Krishnendu Mitra, Rajanya Chakrobarty, and Hritic Modok—each bringing their unique energy, expertise, and creativity to our growing community. However, our journey has never been limited to just a few individuals. Over time, many talented and driven individuals have joined hands with us, forming 
+                the WHITE LOTUS Community, a collective where innovation thrives, ideas flourish, and contributions shape a better future.<br><br>
+                Our name, WHITE LOTUS, carries deeper significance beyond our projects and developments. It represents the five basic elements—fire, water, air, earth, and space, symbolizing the personalities and spiritual energies of our founding members. Furthermore, the name is inspired by <a href="https://www.google.com/search?q=goddess+saraswati">Goddess Saraswati</a>, the divine figure of wisdom and knowledge, a constant reminder 
+                of our pursuit of intellectual growth and technological advancement.  
+                Beyond software development, WHITE LOTUS strongly believes in social responsibility and personal enrichment. We actively participate in various extracurricular and humanitarian activities such as blood donation camps, football tournaments, tree plantation drives, social awareness campaigns, and even music and dance programs. Our team understands 
+                that knowledge and creativity flourish best when they are nurtured alongside community welfare, artistic expression, and compassionate outreach.  
+                At WHITE LOTUS, we are more than a team of developers and creators—we are visionaries who seek to empower, inspire, and innovate. Our journey is one of constant evolution, and we remain committed to shaping the future through collaboration, inclusivity, and boundless creativity. Whether through our technological projects, social initiatives, or community-driven 
+                efforts, we continue to strive for excellence, pushing the boundaries of what is possible and making a meaningful difference in the world.  
+            </p>
+        </section>
+
     </section>
     <div id="moreProduct" class="appear hide">
         <%= services %>
@@ -44,14 +264,15 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script>
-    pageSet.push('header','aboutPage','moreProduct', 'faq-help', 'footer');
-    appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
+    pageSet.push('header', 'aboutPage', 'moreProduct', 'faq-help', 'footer');
+    appearSet.push(['#moreProduct', 180], ['#faq-help', 180]);
     currentPage.push('about');
     document.getElementById('header').innerHTML = document.getElementById('header').textContent;
     document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
-    
+
 </script>
+
 </html>
