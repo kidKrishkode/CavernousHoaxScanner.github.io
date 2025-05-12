@@ -319,7 +319,7 @@ li .active{
     margin: 0px;
     display: list-item;
 }
-#dfdPage, #moreProduct, #converterPage, #pdfPage, #apiPlugPage, #apiLandingPage, #docsPage{
+#dfdPage, #moreProduct, #converterPage, #pdfPage, #apiPlugPage, #apiLandingPage, #docsPage, #aboutPage{
     display: none;
 }
 #dfdPage h2,#converterPage h2,#pdfPage h2{
@@ -1972,6 +1972,7 @@ footer .bottom-component .right-side a{
     bottom: 5px;
     right: 5px;
     box-shadow: 0px 0px 8px 1px grey;
+    z-index: 99;
     .alert-heading{
         font-size: 22px;
     } 
@@ -2104,6 +2105,8 @@ footer .bottom-component .right-side a{
     }
     #moreProduct{
         width: 100%;
+        max-width: 100%;
+        overflow: hidden;
     }
     .services-area{
         height: 250px;

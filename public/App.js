@@ -508,12 +508,13 @@ System.prototype.block_resource = function(ids){
     }
     document.getElementById(ids.input).disabled = true;
 }
-System.prototype.codeset = function(name, lang, id){
+System.prototype.codeset = function(...args){
+    let [name, lang, id, method] = args;
     try{
         let appointCode, pyInterpreter, jsCompiler;
         setTimeout(()=>{
             appointCode = eval(compiler.appointCode);
-            document.getElementById(id).innerText = appointCode(name, lang, compiler);
+            document.getElementById(id).innerText = appointCode(name, lang, compiler, method);
             if(lang == 'Python'){
                 pyInterpreter = eval(compiler.pyInterpreter);
                 pyInterpreter(`#${id}`);
