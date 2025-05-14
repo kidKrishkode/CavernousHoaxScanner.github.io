@@ -186,7 +186,7 @@
         document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.result,null,2)} alt='loading' id="dimg"/>`;
         system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
         document.getElementById('op1').innerHTML = `
-            <div class="btn btn-process" onclick="route('');">Back</div>
+            <div class="btn btn-process" onclick="route('');"><i class="fa fa-long-arrow-left"></i> Try with another</div>
             <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${extension}');"><i class="fa fa-download"></i> Download</div>
         `;
         document.getElementById('op2').style.display = 'none';
