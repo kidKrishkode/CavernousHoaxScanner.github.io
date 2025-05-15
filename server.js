@@ -381,10 +381,6 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
             }).then((result) => {
                 single_img_bin.length = 0;
                 res.status(200).json(result);
-                // if(response_bin!=[]){
-                //     console.log(result);
-                // }
-                // res.status(200).json({error: 0});
             });
         }).catch((error) => {
             console.log("Error sending parts:", error);
