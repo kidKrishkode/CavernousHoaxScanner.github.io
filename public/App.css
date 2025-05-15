@@ -188,6 +188,7 @@ li .active{
 }
 #service-menu li a{
     color: #17a2b8;
+    overflow: hidden;
 }
 #e404{
     height: 100vh;
