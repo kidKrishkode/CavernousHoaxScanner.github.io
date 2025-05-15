@@ -241,8 +241,6 @@ module.exports = {
                 },
                 body: JSON.stringify(token)
             });
-            // let dume = await response;
-            // console.log(dume);
             if(!response.ok){
                 const errorDetails = await response.json();
                 console.error('API Error:', errorDetails);
@@ -255,11 +253,120 @@ module.exports = {
             return false;
         }
     },
+    MultiPartsAPI: async (url, mainString_list, limit) => {
+        if(mainString_list==undefined){
+            mainString_list=[];
+        }
+        for(let j=0; j<mainString_list.length; j++){
+            const parts = [];
+            const single_limit = Math.floor(limit/mainString_list.length)==0?2:Math.floor(limit/mainString_list.length);
+            const partLength = Math.ceil(mainString_list[j].length / single_limit);
+            for(let i = 0; i < single_limit; i++){
+                parts.push(mainString_list[j].slice(i * partLength, (i + 1) * partLength));
+            }
+            // console.log(j, partLength);
+            async function sendPart(part, index, limit){
+                let attempts = 0;
+                while(attempts < 3){
+                    attempts++;
+                    try{
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                img: part,
+                                limit: limit,
+                                index: index,
+                                total_no: mainString_list.length,
+                                no: j
+                            })
+                        });
+                        const data = await response.json();
+                        console.log(data);
+                        if(data.ack[0] === j && data.ack[1] === index){
+                            return "true";
+                        }
+                    }catch(error){
+                        if(error.cause.errno==-4078 || error.cause.code=='ECONNREFUSED') return false;
+                        console.log(`Error on attempt ${attempts} for part ${index}:`, error);
+                    }
+                }
+                return false;
+            }
+            for(let i = 0; i < parts.length; i++){
+                const isSuccess = await sendPart(parts[i], i, limit);
+                if(!isSuccess){
+                    return 24;
+                }
+            }
+        }
+        return "true";
+    },
+    createPDFBase64: async (imageList, PDFDocument) => {
+        function base64ToBuffer(base64){
+            return Buffer.from(base64.split(",")[1], "base64");
+        }
+    
+        return new Promise((resolve, reject) => {
+            try{
+                const doc = new PDFDocument({ autoFirstPage: false, size: [210, 297] });
+                const buffers = [];
+    
+                doc.on("data", (chunk) => buffers.push(chunk));
+                doc.on("end", () => resolve("data:application/pdf;base64," + Buffer.concat(buffers).toString("base64")));
+    
+                imageList.forEach((imgBase64) => {
+                    if(!imgBase64.startsWith("data:image")){
+                        throw new Error("Invalid base64 image format");
+                    }
+    
+                    const imgBuffer = base64ToBuffer(imgBase64);
+                    const img = doc.openImage(imgBuffer);
+                    
+                    const pageWidth = 210;
+                    const pageHeight = 297;
+                    
+                    const imgAspect = img.width / img.height;
+                    const pageAspect = pageWidth / pageHeight;
+    
+                    let newWidth, newHeight;
+                    if(imgAspect > pageAspect){
+                        newWidth = pageWidth;
+                        newHeight = pageWidth / imgAspect;
+                    }else{
+                        newHeight = pageHeight;
+                        newWidth = pageHeight * imgAspect;
+                    }
+    
+                    const xOffset = (pageWidth - newWidth) / 2;
+                    const yOffset = (pageHeight - newHeight) / 2;
+    
+                    doc.addPage({ layout: newWidth <= newHeight ? "portrait" : "landscape", size: [210, 297] });
+                    doc.image(imgBuffer, xOffset, yOffset, { width: newWidth, height: newHeight });
+                });
+    
+                doc.end();
+            }catch(error){
+                reject("Error generating PDF: " + error.message);
+            }
+        });
+    },
     mergeListToString: (singleImgBin) => {
         if (!Array.isArray(singleImgBin)) {
             throw new Error("Input must be an array");
         }
         return singleImgBin.join('');
+    },
+    margeListToArray: (multipleImgBin) => {
+        if (!Array.isArray(multipleImgBin)) {
+            throw new Error("Input must be an array");
+        }
+        for(let i=0; i<multipleImgBin.length; i++){
+            multipleImgBin[i] = multipleImgBin[i].join('');
+        }
+        return multipleImgBin;
     },
     foo:() => {
         return 0;
