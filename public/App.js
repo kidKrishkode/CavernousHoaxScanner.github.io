@@ -317,14 +317,22 @@ System.prototype.downloadImage = function(id, name){
     link.download = fileName;
     link.click();
 }
-System.prototype.download_pdf = function(filePath, fileName){
+System.prototype.download_pdf = function(base64String, fileName){
+    const byteCharacters = atob(base64String.split(",")[1]);
+    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "application/pdf" });
+
     const link = document.createElement("a");
-    link.href = filePath;
-    link.download = fileName || '1.pdf';
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(link.href); 
 }
+
 System.prototype.themeToggle = function(id){
     if(theme == 0){
         for(let i=0; i<themeSet[1].length; i++){
