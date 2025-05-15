@@ -370,7 +370,6 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         }else{
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
-            console.log("Limit of bin: "+limit);
         }
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
@@ -381,7 +380,6 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin.length = 0;
-                // console.log(result);
                 res.status(200).json(result);
                 // if(response_bin!=[]){
                 //     console.log(result);
@@ -400,6 +398,37 @@ app.get('/compressor', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('compressor',{header, services, feed, faq, footer});
     });
+});
+
+app.post('/compressor/process', upload.single('file'), async (req, res) => {
+    try{
+        const quality = req.body.quality;
+        let imageData;
+        let limit;
+        if(req.body.load!='true'){
+            imageData = req.body.imageData;
+            limit = 2;
+        }else{
+            imageData = hex.mergeListToString(single_img_bin);
+            limit = single_img_bin.length;
+        }
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+            if(web.noise_detect(connection)) return web.handle_error(res, connection);
+            hex.chsAPI(`${API_LINK}/api/imageCompressor`, {
+                quality: quality,
+                img: '',
+                load: 'true',
+                key: varchar.API_KEY
+            }).then((result) => {
+                single_img_bin.length = 0;
+                res.status(200).json(result);
+            });
+        }).catch((error) => {
+            console.log("Error sending parts:", error);
+        });
+    }catch(e){
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
 });
 
 app.get('/imgEditor', (req, res) => {
@@ -490,10 +519,10 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    // Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-    //     res.status(200).render('about',{header, services, feed, faq, footer});
-    // });
-    res.status(200).redirect('https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/#about-us');
+    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
+        res.status(200).render('about',{header, services, feed, faq, footer});
+    });
+    // res.status(200).redirect('https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/#about-us');
 });
 
 app.get('/docs', (req, res) => {
