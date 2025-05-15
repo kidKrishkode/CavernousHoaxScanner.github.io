@@ -110,58 +110,42 @@
     document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
-    let response_set=[];
-    function process(){
+    async function process(){
         if(document.getElementById('media-acc').textContent === 'Accepted' && pdf.imgSet.length!=0){
-            let fileInput = document.getElementById('file-input');
-            const files = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
+            let progress = document.querySelector('.progress');
+            progress.textContent = "Image evaluate start...";
             for(let i=0; i<pdf.imgSet.length; i++){
-                splitImage_data(pdf.imgSet[i],i);
+                progress.textContent = "Image no "+(i+1)+" compressing..";
+                pdf.imgSet[i] = await compressBase64Image(pdf.imgSet[i]);
+                if(pdf.imgSet.length==i+1){
+                    sendToAPI(pdf);
+                }
             }
-            setTimeout(()=>{
-                fetch('/imgToPdf/process', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({limit: pdf.imgSet.length})
-                }).then(response => response.json()).then(data => {
-                    console.log(data);
-                    const filePath = (data.path).toString();
-                    const name = 'chs'+'_'+(new Date().getTime())+'.pdf';
-                    system.download_pdf(filePath, name);
-                    afterResponce(data);
-                }).catch(e=>console.log(e));
-            },2000);
+            
         }
     }
-    function splitImage_data(file, i){
-        const imageData = file;
-        const halfIndex = Math.floor(imageData.length / 2);
-        const firstHalf = imageData.slice(0, halfIndex);
-        const secondHalf = imageData.slice(halfIndex);
-        sendImagePart(firstHalf, i, 1);
-        sendImagePart(secondHalf, i, 2);
-    }
-    function sendImagePart(imagePart, index, part){
-        const formData = new FormData();
-        setTimeout(() => {
-            formData.append('filePart', imagePart);
-            formData.append('part', part);
-            formData.append('i', index);
-            formData.append('limit', pdf.imgSet.length);
-            console.log(formData.part, formData.i, formData.limit);
-            fetch('/imgToPdf/upload', {
+    function sendToAPI(pdf){
+        let progress = document.querySelector('.progress');
+        const MultiPartsAPI = eval(config.hex.MultiPartsAPI);
+        progress.textContent = "All images sending to process..";
+        MultiPartsAPI('/load/multiple', pdf.imgSet, getMultiImageLimit(pdf.imgSet)).then((result) => {
+            progress.textContent = "Pdf file evaluate start.."
+            fetch('/imgToPdf/process', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    total_no: pdf.imgSet.length,
+                    load: 'true'
+                })
             }).then(response => response.json()).then(data => {
-                if(typeof data.error !== "undefined"){
-                    return system.handelPyError(data.error);
-                }
-                response_set.push(JSON.stringify(data.ack));
-            }).catch(e => console.log(e));
-        },1000);
+                afterResponce(data);
+            });
+        }).catch((error) => {
+            console.log("Error sending parts:", error);
+        });
     }
     function afterResponce(data){
         if(typeof data.error !== "undefined"){
@@ -169,21 +153,15 @@
         }
         document.querySelector('.preview').innerHTML = `<img src='../images/s2.png' alt='loading' id="dimg"/>`;
         document.getElementById('op1').innerHTML = `
-            <div class="btn btn-process" onclick="route('');">Back</div>
-            <div class="btn btn-info" onclick="system.download_pdf('${data.path}','chs_${new Date().getTime()}.pdf');"><i class="fa fa-download"></i> Download</div>
+            <div class="btn btn-process" onclick="route('');"><i class="fa fa-long-arrow-left"></i> Try some another</div>
+            <div class="btn btn-info" onclick="system.download_pdf('${data}','chs_${new Date().getTime()}.pdf');"><i class="fa fa-download"></i> Download</div>
         `;
+        system.download_pdf(data, `chs_${new Date().getTime()}.pdf`);
         document.getElementById('op2').style.display = 'none';
         document.getElementById('op3').style.display = 'none';
         document.querySelector('.placeholder').innerHTML = '';
         document.getElementById('file-input').disabled = true;
         document.querySelector('.progress-status').style.display = 'none';
-        fetch('/imgToPdf/delete', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"task": "delete"})
-        }).catch(e => console.log(e));
     }
 </script>
 </html>
