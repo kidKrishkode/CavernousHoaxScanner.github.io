@@ -2,9 +2,8 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
-const jimp = require('jimp');
 const bodyParser = require('body-parser');
-const {spawn} = require('child_process');
+const PDFDocument = require("pdfkit");
 const querystring = require('querystring');
 const ejs = require('ejs');
 const jsonfile = require('jsonfile');
@@ -44,7 +43,7 @@ let web = new WEB(PORT);
 let memory;
 let API_LINK = '';
 let single_img_bin = [];
-let response_bin = [];
+let multiple_img_bin = [];
 const pdf_imgPath = [];
 let editor_img_path;
 let pdf_limit;
@@ -163,6 +162,7 @@ app.get('/varchar', async (req, res) => {
         trafficAnalyser: hex.trafficAnalyser.toString(),
         popularityTest: hex.popularityTest.toString(),
         singlePartsAPI: hex.singlePartsAPI.toString(),
+        MultiPartsAPI: hex.MultiPartsAPI.toString(),
         alphaCall: hex.alphaCall.toString(),
         alphaLink: API_LINK
     }, security: {
@@ -262,73 +262,19 @@ app.get('/imgToPdf', (req, res) => {
     });
 });
 
-let imageParts = {};
-app.post('/imgToPdf/upload', upload.single('file'), async (req, res) => {
-    try{
-        if(!hex.isHosted(req)){
-            const index = parseInt(req.body.i);
-            const part = req.body.part;
-            const imagePart = req.body.filePart;
-            const limit = parseInt(req.body.limit);
-            if(!imageParts[index]) imageParts[index] = ['', ''];
-            imageParts[index][part - 1] = imagePart;
-            if(imageParts[index][0] && imageParts[index][1]){
-                const completeImageData = imageParts[index][0] + imageParts[index][1];
-                const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
-                const tempFilePath = path.join(__dirname, `/assets/pdfhouse/imgs/${index + 1}.png`);
-                await image.writeAsync(`${tempFilePath}`);
-                pdf_imgPath.push(tempFilePath.toString().replaceAll('\\', '/'));
-                pdf_limit = limit;
-                delete imageParts[index];
-            }
-            const ack = part;
-            res.status(200).json({"ack": ack});
-        }else{
-            hex.reward(res);
-        }
-    }catch(e){
-        res.status(403).render('notfound', {error: 403, message: "Failed to process most recent task, Try again later"});
-    }
-});
-
 app.post('/imgToPdf/process', async (req, res) => {
     try{
-        if(!hex.isHosted(req)){
-            if(pdf_limit!=0 && pdf_imgPath.length!=0){
-                const listOfInput = pdf_imgPath;
-                await callPythonProcess(listOfInput, 'imgToPdf').then(path => {
-                    if(web.noise_detect(path)) return web.handle_error(res, path);
-                    res.status(200).json({path});
-                }).catch(error => {
-                    console.error('Error:', error);
-                });
-            }else{
-                res.status(200).json({error: 404, message: "Image not found to build your pdf!"});
+        const load = req.body.load;
+        if(load=='true'){
+            let imageList = hex.margeListToArray(multiple_img_bin);
+            multiple_img_bin = [];
+            try{
+                let pdfBase64 = await hex.createPDFBase64(imageList, PDFDocument);
+                res.status(200).json(pdfBase64);
+            }catch(e){
+                console.log("New Error occure from pdf: "+e);
+                return web.handle_error(res, 1);
             }
-        }else{
-            hex.reward(res);
-        }
-    }catch(e){
-        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
-    }
-});
-
-app.post('/imgToPdf/delete', async (req, res) => {
-    try{
-        pdf_imgPath.length = 0;
-        if(!hex.isHosted(req)){
-            const dir_img = fs.readdirSync(path.join(__dirname, `/assets/pdfhouse/imgs/`));
-            if(dir_img.length > 1){
-                for(let i=1; i<dir_img.length; i++){
-                    fs.unlink(path.join(__dirname, `/assets/pdfhouse/imgs/${dir_img[i]}`), (err) => {
-                        if(err){
-                            console.log('Problem to delete: ./assets/pdfhouse/imgs/',dir_img[i]);
-                        }
-                    });
-                }
-            }
-        }else{
-            hex.reward(res);
         }
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
@@ -340,16 +286,21 @@ app.post('/load/single', (req, res) => {
         single_img_bin.push(req.body.img);
         res.status(200).json({"ack": req.body.index, "time": (new Date).getTime()});
     }else{
-        console.log("Error to upload arrive for frontend mistack");
+        res.status(200).json({"error": 400, "message": "UploadException: Upload failed due to wrong argument value pass from frontend side"});
     }
 });
 
-app.post('/load/response', (req, res) => {
-    if(req.body.index <= req.body.limit && req.body.index > 0){
-        response_bin.push(req.body.img);
-        res.status(200).json({"ack": req.body.index, "time": (new Date).getTime()});
-    }else{
-        console.log("Error to upload arrive for frontend mistack");
+app.post('/load/multiple', (req, res) => {
+    if(req.body.no <= req.body.total_no && req.body.no >= 0){
+        if(req.body.index <= req.body.limit && req.body.index >= 0){
+            if(!multiple_img_bin[req.body.no*1]){
+                multiple_img_bin[req.body.no*1] = [];
+            }
+            multiple_img_bin[req.body.no*1][req.body.index*1] = req.body.img;
+            res.status(200).json({"ack": [req.body.no, req.body.index], "time": (new Date).getTime()});
+        }else{
+            res.status(200).json({"error": 400, "message": "UploadException: Upload failed due to wrong argument value pass from frontend side"});
+        }
     }
 });
 
@@ -435,20 +386,20 @@ app.get('/imgEditor', (req, res) => {
 
 app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
     try{
-        const index = parseInt(req.body.i);
-        const imagePart = req.body.filePart;
-        if(!imageParts[index]) imageParts[index] = ['', ''];
-        imageParts[index][part - 1] = imagePart;
-        if(imageParts[index][0] && imageParts[index][1]){
-            const completeImageData = imageParts[index][0] + imageParts[index][1];
-            const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
-            const tempFilePath = path.join(__dirname, `/assets/editor/${index + 1}.png`);
-            await image.writeAsync(`${tempFilePath}`);
-            editor_img_path = tempFilePath.toString().replaceAll('\\','/');
-            delete imageParts[index];
-        }
-        const ack = part;
-        res.status(200).json({"ack": ack});
+        // const index = parseInt(req.body.i);
+        // const imagePart = req.body.filePart;
+        // if(!imageParts[index]) imageParts[index] = ['', ''];
+        // imageParts[index][part - 1] = imagePart;
+        // if(imageParts[index][0] && imageParts[index][1]){
+        //     const completeImageData = imageParts[index][0] + imageParts[index][1];
+        //     const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
+        //     const tempFilePath = path.join(__dirname, `/assets/editor/${index + 1}.png`);
+        //     await image.writeAsync(`${tempFilePath}`);
+        //     editor_img_path = tempFilePath.toString().replaceAll('\\','/');
+        //     delete imageParts[index];
+        // }
+        // const ack = part;
+        // res.status(200).json({"ack": ack});
     }catch(e){
         res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
     }
@@ -567,31 +518,6 @@ WEB.prototype.handle_error = function(res, code){
     }catch(e){
         console.log("Error found to handle error\n",e);
     }
-}
-
-function callPythonProcess(list, functionValue){
-    return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('python', ['./model/main.py', list, functionValue]);
-        let resultData = '';
-        pythonProcess.stdout.on('data', (data) => {
-            resultData += data.toString();
-        });
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
-        pythonProcess.on('close', (code) => {
-            if(code !== 0){
-                console.log(`Python script exited with code ${code}`);
-            }
-            try{
-                const result = JSON.parse(resultData);
-                resolve(result);
-            }catch(error){
-                console.error(`Error parsing JSON: ${error.message}`);
-                reject(new Error("Error parsing JSON from Python script"));
-            }
-        });
-    });
 }
 
 app.get('*', (req, res) => {
