@@ -43,7 +43,8 @@
         {"code": 19, "desc": "Video formatting failed: unable to format video"},
         {"code": 20, "desc": "Image optimization failed: unable to optimize image"},
         {"code": 21, "desc": "Video optimization failed: unable to optimize video"},
-        {"code": 22, "desc": "Image size under conditions: unsble to resize image"},
-        {"code": 23, "desc": "Failed to process most recent task, You are in hosted mode but CHS API not connected with system, Try again later or report it"}
+        {"code": 22, "desc": "Image size under conditions: unable to resize image"},
+        {"code": 23, "desc": "Failed to process most recent task, You are in hosted mode but CHS API not connected with system, Try again later or report it"},
+        {"code": 24, "desc": "Failed to process most recent task, CHS API refused to connected with this system, Try again later or Check CHS API is working or not manually"}
     ]
 }
