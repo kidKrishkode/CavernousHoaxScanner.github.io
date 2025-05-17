@@ -277,9 +277,9 @@
                 let data = {'result': result};
                 afterResponce(data, videoData);
             });
-
         }
     }
+    
     function afterResponce(data, mediaData){
         if(typeof data.error !== "undefined"){
             return system.handelPyError(data.error);
