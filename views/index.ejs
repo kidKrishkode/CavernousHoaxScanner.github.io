@@ -233,6 +233,7 @@
                 let prediction_list = [];
                 let responce_tree = [];
                 video_first_frame = frames[0].image;
+                let first_failer = 0;
                 for (let i = 0; i < frames.length; i++) {
                     let image_data = frames[i].image;
                     progress.textContent = "Frame "+(i+1)+" start compressing...";
@@ -261,6 +262,12 @@
                         responce_tree.push(data?.result?.responce_tree);
                     } catch (error) {
                         console.error(`Error on frame ${i}:`, error);
+                        progress.textContent = "Frame "+(i+1)+" are fail to rech API";
+                        if(first_failer==0){
+                            i--;
+                        }else{
+                            responce_tree.push(loosParameterRecover());
+                        }
                     }
                 }
                 progress.textContent = "Response data analysing...";
@@ -278,6 +285,13 @@
             return system.handelPyError(data.error);
         }
         console.log(data);
+        if(data?.result?.error=="No valid classification data" || data.result == undefined || data.result == "undefined"){
+            error = {
+                "code": 417,
+                "message": "Processing failed due to some of parameters of the media is missing or not reaching API for week network, Try again with strong connection!"
+            }
+            return system.handelPyError(error);
+        }
         if(document.getElementById('media-type').textContent=='Video'){
             document.querySelector('.preview').innerHTML = `<video autoplay="true" controls="true"><source src=${mediaData} type="video/mp4"></video>`;
         }else{
