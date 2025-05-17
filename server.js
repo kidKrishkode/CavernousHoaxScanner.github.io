@@ -44,9 +44,7 @@ let memory;
 let API_LINK = '';
 let single_img_bin = [];
 let multiple_img_bin = [];
-const pdf_imgPath = [];
 let editor_img_path;
-let pdf_limit;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -469,7 +467,6 @@ app.get('/about', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('about',{header, services, feed, faq, footer});
     });
-    // res.status(200).redirect('https://whitelotus4.github.io/weatherbyWHITELOTUS.github.io/#about-us');
 });
 
 app.get('/docs', (req, res) => {
@@ -491,12 +488,12 @@ app.post('/cdn_raw', async (req, res) => {
         jsonReponse = codefork[21].code;
         ejs.renderFile(__dirname+'/views/cdnLanding.ejs', { header, services, feed, faq, footer, reactCode, htmlCode, jsCode, jsonReponse }, (err, html) => {
             if(err){
-              console.error("Error to send raw cdn page "+err);
-              res.status(500).send('Error to rendering cdn page template');
+                console.error("Error to send raw cdn page "+err);
+                res.status(500).send('Error to rendering cdn page template');
             }else{
-              res.set("Content-Disposition", "attachment;filename=\"cdnLanding.html\"");
-              res.set("Content-Type", "text/html");
-              res.send(html);
+                res.set("Content-Disposition", "attachment;filename=\"cdnLanding.html\"");
+                res.set("Content-Type", "text/html");
+                res.send(html);
             }
         });
     });
