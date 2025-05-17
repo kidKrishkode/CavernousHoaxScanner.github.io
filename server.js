@@ -44,7 +44,6 @@ let memory;
 let API_LINK = '';
 let single_img_bin = [];
 let multiple_img_bin = [];
-let editor_img_path;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -146,10 +145,6 @@ app.get('/', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('index',{header, services, feed, faq, footer});
     });
-});
-
-app.get('/index', (req, res) => {
-    res.redirect('/');
 });
 
 app.get('/varchar', async (req, res) => {
@@ -328,7 +323,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 load: 'true',
                 key: varchar.API_KEY
             }).then((result) => {
-                single_img_bin.length = 0;
+                single_img_bin = [];
                 res.status(200).json(result);
             });
         }).catch((error) => {
@@ -365,7 +360,7 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
                 load: 'true',
                 key: varchar.API_KEY
             }).then((result) => {
-                single_img_bin.length = 0;
+                single_img_bin = [];
                 res.status(200).json(result);
             });
         }).catch((error) => {
@@ -376,31 +371,8 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
     }
 });
 
-app.get('/imgEditor', (req, res) => {
-    Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('imgEditor',{header, services, feed, faq, footer});
-    });
-});
-
-app.post('/imgEditor/upload', upload.single('file'), async (req, res) => {
-    try{
-        // const index = parseInt(req.body.i);
-        // const imagePart = req.body.filePart;
-        // if(!imageParts[index]) imageParts[index] = ['', ''];
-        // imageParts[index][part - 1] = imagePart;
-        // if(imageParts[index][0] && imageParts[index][1]){
-        //     const completeImageData = imageParts[index][0] + imageParts[index][1];
-        //     const image = await jimp.read(Buffer.from(completeImageData.split(',')[1], 'base64'));
-        //     const tempFilePath = path.join(__dirname, `/assets/editor/${index + 1}.png`);
-        //     await image.writeAsync(`${tempFilePath}`);
-        //     editor_img_path = tempFilePath.toString().replaceAll('\\','/');
-        //     delete imageParts[index];
-        // }
-        // const ack = part;
-        // res.status(200).json({"ack": ack});
-    }catch(e){
-        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
-    }
+app.get('/index', (req, res) => {
+    res.redirect('/');
 });
 
 app.post('/index/process', upload.single('file'), async (req, res) => {
@@ -431,9 +403,8 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY,
                 heatmap: heatmap
             }).then((result) => {
-                single_img_bin.length = 0;
+                single_img_bin = [];
                 if(web.noise_detect(result)) return web.handle_error(res, result);
-                // console.log(result);
                 res.status(200).json(result);
             });
         }).catch((error) => {
