@@ -234,11 +234,11 @@
                 let responce_tree = [];
                 video_first_frame = frames[0].image;
                 let first_failer = 0;
-                for (let i = 0; i < frames.length-1; i++) {
+let i=0;
+                while(i < frames.length-1) {
                     let image_data = frames[i].image;
                     progress.textContent = "Frame "+(i+1)+" start compressing...";
                     image_data = await compressBase64Image(image_data);
-if(image_data==undefined || image_data==""){alert("blank_input");}
                     let limit = Math.floor(getBase64SizeKB(image_data) / 900) + 2;
                     try{
                         progress.textContent = "Frame "+(i+1)+" sending to detect...";
@@ -261,6 +261,7 @@ if(image_data==undefined || image_data==""){alert("blank_input");}
                             ...data?.result
                         });
                         responce_tree.push(data?.result?.responce_tree);
+i++;
                     } catch (error) {
                         console.error(`Error on frame ${i}:`, error);
                         progress.textContent = "Frame "+(i+1)+" are fail to rech API";
