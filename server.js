@@ -377,6 +377,7 @@ app.get('/index', (req, res) => {
     res.redirect('/');
 });
 
+const isBase64 = require("is-base64");
 app.post('/index/process', upload.single('file'), async (req, res) => {
     try{
         const extension = req.body.extension;
@@ -395,6 +396,11 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
             }else{
                 heatmap = req.body.heatmap;
             }
+        }
+        if(isBase64(mediaData.split(",")[1], { mime: true })){
+            console.log("Valid Image");
+        }else{
+            console.log("Corrupt Image");
         }
         await hex.singlePartsAPI(`${API_LINK}/load/single`, mediaData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
