@@ -264,7 +264,6 @@ module.exports = {
             for(let i = 0; i < single_limit; i++){
                 parts.push(mainString_list[j].slice(i * partLength, (i + 1) * partLength));
             }
-            // console.log(j, partLength);
             async function sendPart(part, index, limit){
                 let attempts = 0;
                 while(attempts < 3){
@@ -304,14 +303,27 @@ module.exports = {
         }
         return "true";
     },
-    createPDFBase64: async (imageList, PDFDocument) => {
+    createPDFBase64: async (imageList, layout="combine", paper_size="A4", PDFDocument) => {
         function base64ToBuffer(base64){
             return Buffer.from(base64.split(",")[1], "base64");
+        }
+        const size_rules = {
+            "A3": [297 , 420],
+            "A4": [210 , 297],
+            "A5": [148 , 210],
+            "Letter": [215.9 , 279.4],
+            "Legal": [216 , 356],
+            "B5": [176 , 250],
+            "B4": [250 , 353],
         }
     
         return new Promise((resolve, reject) => {
             try{
-                const doc = new PDFDocument({ autoFirstPage: false, size: [210, 297] });
+                paper_size = size_rules[paper_size]==undefined?size_rules['A4']:size_rules[paper_size];
+                const doc = new PDFDocument({ 
+                    autoFirstPage: false, 
+                    size: paper_size
+                });
                 const buffers = [];
     
                 doc.on("data", (chunk) => buffers.push(chunk));
@@ -325,8 +337,8 @@ module.exports = {
                     const imgBuffer = base64ToBuffer(imgBase64);
                     const img = doc.openImage(imgBuffer);
                     
-                    const pageWidth = 210;
-                    const pageHeight = 297;
+                    const pageWidth = Number(paper_size[0]);
+                    const pageHeight = Number(paper_size[1]);
                     
                     const imgAspect = img.width / img.height;
                     const pageAspect = pageWidth / pageHeight;
@@ -342,8 +354,8 @@ module.exports = {
     
                     const xOffset = (pageWidth - newWidth) / 2;
                     const yOffset = (pageHeight - newHeight) / 2;
-    
-                    doc.addPage({ layout: newWidth <= newHeight ? "portrait" : "landscape", size: [210, 297] });
+                    
+                    doc.addPage({ layout: layout=="combine"?(newWidth <= newHeight ? "portrait" : "landscape"):layout, size: paper_size });
                     doc.image(imgBuffer, xOffset, yOffset, { width: newWidth, height: newHeight });
                 });
     
