@@ -19,6 +19,21 @@
     <link rel="stylesheet" href="../public/App.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
+<style>
+    .containers-option{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .view-image{
+            display: none;
+        }
+    }
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px){
+        .view-image, .process-btn{
+            margin: 10px auto 0px auto;
+        }
+    }
+</style>
 <body onload="pdf.engine_start();">
     <header id="header">
         <%= header %>
@@ -37,9 +52,26 @@
         <div class="progress-status">
             <div class="progress">Please wait a little..</div>
         </div>
-        <div class="flx containers-option" id="op1">
-            <div class="view-image">
+        <div class="containers-option" id="op1">
+             <div class="selecter">
+                <select class="form-control" id="layout-input" onchange="" name="layout-input">
+                    <option selected="true">Combine mode</option>
+                    <option>Landscap only</option>
+                    <option>Portrait only</option>
+                </select>
             </div>
+            <div class="selecter">
+                <select class="form-control" id="szie-input" onchange="" name="szie-input">
+                    <option>A3 size</option>
+                    <option selected="true">A4 size</option>
+                    <option>A3 size</option>
+                    <option>Letter size</option>
+                    <option>Legal size</option>
+                    <option>B5 size</option>
+                    <option>B4 size</option>
+                </select>
+            </div>
+            <div class="view-image"></div>
             <div class="process-btn">
                 <div class="btn btn-process" onclick="process();">Process</div>
             </div>
@@ -112,6 +144,16 @@
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
     async function process(){
         if(document.getElementById('media-acc').textContent === 'Accepted' && pdf.imgSet.length!=0){
+            let layout = document.getElementById('layout-input').value;
+            if(layout == 'Combine mode'){
+                layout = "combine";
+            }else if(layout == 'Landscap only'){
+                layout = "landscap";
+            }else if(layout == 'Portrait only'){
+                layout = 'portrait';
+            }
+            let size = document.getElementById('szie-input').value;
+            szie = size.replace(' size','');
             document.querySelector('.progress-status').style.display = 'block';
             let progress = document.querySelector('.progress');
             progress.textContent = "Image evaluate start...";
@@ -119,13 +161,13 @@
                 progress.textContent = "Image no "+(i+1)+" compressing..";
                 pdf.imgSet[i] = await compressBase64Image(pdf.imgSet[i]);
                 if(pdf.imgSet.length==i+1){
-                    sendToAPI(pdf);
+                    sendToAPI(pdf, layout, size);
                 }
             }
             
         }
     }
-    function sendToAPI(pdf){
+    function sendToAPI(pdf, layout, size){
         let progress = document.querySelector('.progress');
         const MultiPartsAPI = eval(config.hex.MultiPartsAPI);
         progress.textContent = "All images sending to process..";
@@ -137,6 +179,8 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    paper_size: size,
+                    layout: layout,
                     total_no: pdf.imgSet.length,
                     load: 'true'
                 })
