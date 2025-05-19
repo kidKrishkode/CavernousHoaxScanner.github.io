@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chsweb.vercel.app/public/App.css"/>
     <link rel="stylesheet" href="https://chsweb.vercel.app/public/index.css"/>
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet"/>
+    <link href="https://chsweb.vercel.app/assets/style/bootstrap_slug.css" rel="stylesheet"/>
     <link rel="icon" href="https://chsweb.vercel.app/public/favicon.ico"/>
 </head>
 <style>
@@ -33,6 +33,10 @@
         --bs-border-color: #dee2e6;
         --bs-body-color: #212529;
         --bd-pre-bg: #f8f9fa;
+    }
+    body{
+        /* font-size: 14px; */
+        font-weight: normal;
     }
     .intro{
         padding-top: 80px;
@@ -93,8 +97,16 @@
     .btn-clipboard i{
         font-size: 20px!important;
     }
-    .highlight pre{
-        scrollbar-width: none;
+    .highlight{
+        background: var(--code-color);
+        transition: 1s ease-in-out;
+        pre{
+            scrollbar-width: none;
+            font-size: 14px;
+        }
+        pre, code{
+            color: var(--revers-white)!important;
+        }
     }
     .fw-normal{
         font-weight: 400 !important;
@@ -105,6 +117,15 @@
     }
     .cgrn{
         color: green;
+    }
+    h1, h2, h3, h4, h5, h6{
+        color: var(--revers-white);
+    }
+    p{
+        color: grey;
+    }
+    .masthead-followup-icon{
+        mix-blend-mode: unset;
     }
     @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px) {
         .api-container h5{
@@ -148,6 +169,11 @@
         }
         .bd-clipboard{
             display: block;
+            position: absolute;
+            right: 15px;
+        }
+        .highlight pre{
+            width: 100%;
         }
         .swbt, .cmapi{
             padding: 20px;
@@ -168,8 +194,6 @@
     </header>
     <section class="workspace" id="apiLandingPage">
         <img src="../images/glow1.png" onerror="this.src='https:/\/chsweb.vercel.app/images/glow1.png';" alt="chs" class="left-middle-des"/>
-        <!-- <img src="../images/3d_atom.png" onerror="this.src='https:/\/chsweb.vercel.app/images/3d_atom.png';" alt="chs" class="right-middle-des"/>
-        <img src="../images/arrow_circle.png" onerror="this.src='https:/\/chsweb.vercel.app/images/arrow_circle.png';" alt="chs" class="left-bottom-des"/> -->
         <div class="intro">
             <div class="apiLand">
                 <div class="api-left api-container">
@@ -227,7 +251,7 @@
                         </button>
                     </div>
                     <div class="highlight">
-                        <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh" id="pmcdp1"><span class="line"><span class="cl"><span class="org">pip</span> <span class="gry">install</span> https://chscdn.vercel.app/download/zip/v1</span></span></code></pre>
+                        <pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh" id="pmcdp1"><span class="line"><span class="cl"><span class="org">pip</span> <span class="gry">install</span> https://chscdn.vercel.app/install/pip/chscdn</span></span></code></pre>
                     </div>
                 </div>
                 <div class="bd-code-snippet">
@@ -293,7 +317,7 @@
                                 <i class="fa fa-clone"></i>    
                             </button>  
                         </div>
-                        <div class="highlight" style="background-color: #ebf0f4;">
+                        <div class="highlight" >
                             <pre tabindex="5" class="chroma"><code class="language-html" data-lang="html" id="hccp"><%= htmlCode %></code></pre>
                         </div>
                     </div>
@@ -307,7 +331,7 @@
                                 <i class="fa fa-clone"></i>
                             </button>  
                         </div>
-                        <div class="highlight" style="background-color: #ebf0f4;">
+                        <div class="highlight" >
                             <pre tabindex="6" class="chroma"><code class="language-javascript" data-lang="javascript" id="rccp"><%= reactCode %></code></pre>
                         </div>
                     </div>
@@ -347,7 +371,7 @@
                                 <i class="fa fa-clone"></i>    
                             </button>  
                         </div>
-                        <div class="highlight" style="background-color: #ebf0f4;">
+                        <div class="highlight" >
                             <pre tabindex="5" class="chroma"><code class="language-html" data-lang="html" id="jccu"><%= jsCode %></code></pre>
                         </div>
                     </div>
@@ -361,7 +385,7 @@
                                 <i class="fa fa-clone"></i>
                             </button>  
                         </div>
-                        <div class="highlight" style="background-color: #ebf0f4;">
+                        <div class="highlight" >
                             <pre tabindex="6" class="chroma"><code class="language-javascript" data-lang="javascript" id="ajr"><%= jsonReponse %></code></pre>
                         </div>
                     </div>
@@ -408,6 +432,7 @@
     currentPage.push('api');
     setTimeout(()=>{
         document.getElementById('header').style.display = "none";
+        try{themeSet[0][14][1] = "#fff";system.setTheme();}catch(e){console.warn("Theme Warning:\nIDE backgraund not setted due to poor os quality, Please use it manually\n\n")};
     },2000);
 </script>
 <script>
