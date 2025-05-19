@@ -258,11 +258,13 @@ app.get('/imgToPdf', (req, res) => {
 app.post('/imgToPdf/process', async (req, res) => {
     try{
         const load = req.body.load;
+        const layout = req.body.layout;
+        const paper_size = req.body.paper_size;
         if(load=='true'){
             let imageList = hex.margeListToArray(multiple_img_bin);
             multiple_img_bin = [];
             try{
-                let pdfBase64 = await hex.createPDFBase64(imageList, PDFDocument);
+                let pdfBase64 = await hex.createPDFBase64(imageList, layout, paper_size, PDFDocument);
                 res.status(200).json(pdfBase64);
             }catch(e){
                 console.log("New Error occure from pdf: "+e);
@@ -447,7 +449,7 @@ app.get('/docs', (req, res) => {
 });
 
 app.get('/blogs', (req, res) => {
-    res.status(200).redirect('https://www.youtube.com/@whitelotus4');
+    res.status(200).redirect('https://cavernoushoaxscanner.blogspot.com/');
 });
 
 app.post('/cdn_raw', async (req, res) => {
