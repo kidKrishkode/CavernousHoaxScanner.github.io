@@ -406,7 +406,6 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 heatmap: heatmap
             }).then((result) => {
                 single_img_bin = [];
-                if(web.noise_detect(result)) return web.handle_error(res, result);
                 res.status(200).json(result);
             });
         }).catch((error) => {
