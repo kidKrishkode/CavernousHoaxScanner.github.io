@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Cavernous Hoax Scanner">
+    <meta property="og:image" content="../images/side-img.png" name="og:image">
+    <meta itemprop="image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
+    <meta property="og:site_name" content="Cavernous Hoax Scanner">
+    <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Cavernous Hoax Scanner">
+    <meta content="CHS is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <title version="1.0">Image Generator - Cavernous Hoax Scanner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/App.css"/>
+    <link rel="icon" href="../public/favicon.ico"/>
+</head>
+<style>
+    .containers{
+        padding: 2px !important;
+        border-radius: 18px !important;
+        background: linear-gradient(45deg, purple, blue)!important;
+    }
+    #prompt-input{
+        min-height: 300px;
+        height: 300px;
+        max-height: 300px;
+        background: var(--bg-color);
+        border-radius: 16px;
+        color: var(--revers-white);
+        font-size: 16px;
+        font-family: consolas;
+        outline: none;
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+    }
+    #prompt-input::placeholder{
+        color: var(--charm);
+        text-align: center;
+        line-height: 250px;
+    }
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px){
+        #prompt-input::placeholder{
+            line-height: 50px;
+        }
+    }
+</style>
+<body>
+    <header id="header">
+        <%= header %>
+    </header>
+    <section class="workspace" id="generatorPage">
+        <img src="../images/3d_donut.png" alt="chs" class="right-top-des"/>
+        <h2>Image Generator</h2>
+        <div class="underline"></div>
+        <div class="containers">
+            <textarea class="form-control" id="prompt-input" rows="5" placeholder="Describe anything that comes in your mind, for example: a happy cat in the garden"></textarea>
+        </div>
+        <div class="progress-status">
+            <div class="progress">Please wait a little..</div>
+        </div>
+        <div class="flx containers-option" id="op1">
+            <div class="selecter">
+                <select class="form-control" id="style-input" onchange="" name="style-input" title="choose style of your imagenation to plot in an image">
+                    <option>Comic</option>
+                    <option>Mistries</option>
+                    <option selected="true">Cinematic</option>
+                    <option>Funny</option>
+                    <option>Fan art</option>
+                    <option>Painting</option>
+                </select>
+            </div>
+            <div class="process-btn">
+                <div class="btn btn-process" onclick="process();">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
+                        <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+                    </svg>
+                    Generate
+                </div>
+            </div>
+        </div>
+        <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
+        <img src="../images/3d_atom.png" alt="chs" class="right-middle-des"/>
+        <img src="../images/arrow_circle.png" alt="chs" class="left-bottom-des"/>
+        <div class="htsi appear hide" id="op4">
+            <h2>How to Use it.</h2>
+            <div class="underline"></div>
+            <div class="card-group flo">
+                <div class="card">
+                    <h4 class="card-title"><span>1</span> Drop your Image</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+                <div class="card">
+                    <h4 class="card-title"><span>2</span> Media Get Permite</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+            </div>
+            <div class="card-group flo">
+                <div class="card">
+                    <h4 class="card-title"><span>3</span> Hit The Process</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+                <div class="card">
+                    <h4 class="card-title"><span>4</span> Download New Image</h4>
+                    <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas excepturi facilis libero natus ipsam neque expedita soluta ipsum assumenda unde?</p>
+                </div>
+            </div>
+        </div>
+        <div id="moreProduct" class="appear hide">
+            <%= services %>
+        </div>
+        <div id="customerFeed">
+            <%= feed %>
+        </div>
+    </section>
+    <aside id="faq-help" class="appear hide">
+        <%= faq %>
+    </aside>
+    <footer id="footer">
+        <%= footer %>
+    </footer>
+</body>
+<script src="../public/App.js"></script>
+<script src="../public/default.min.js"></script>
+<script>
+    pageSet.push('header','generatorPage','moreProduct', 'faq-help', 'footer');
+    appearSet.push(['.htsi',80],['#moreProduct',580], ['#faq-help', 980]);
+    currentPage.push('converter');
+    document.getElementById('header').innerHTML = document.getElementById('header').textContent;
+    document.getElementById('footer').innerHTML = document.getElementById('footer').textContent;
+    document.getElementById('moreProduct').innerHTML = document.getElementById('moreProduct').textContent;
+    document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
+    document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
+    
+    function directUpload(file){
+        let extension = document.getElementById('extension-input').value.toLowerCase();
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(){
+            const imageData = reader.result;
+            fetch('/converter/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({extension, imageData})
+            }).then(response => response.json()).then(data => {
+                afterResponce(data, extension);
+            }).catch(e=>console.log(e));
+        }
+    }
+    function process(){
+        return;
+        let fileInput = document.getElementById('file-input');
+        if(fileInput.files.length!=0){
+            const file = fileInput.files[0];
+            document.querySelector('.progress-status').style.display = 'block';
+            system.block_resource({input: "file-input", selector: ["extension-input"]});
+            if(document.getElementById('media-size').textContent.replace('Kb','')*1 > 900){
+                compressAndUpload(file, document.getElementById('media-size').textContent.replace('Kb','')*1);
+            }else{
+                directUpload(file);
+            }
+        }
+    }
+    
+    function afterResponce(data, extension){
+        if(typeof data.error !== "undefined"){
+            return system.handelPyError(data.error);
+        }
+        if(required_size!=0){
+            increaseBase64Size(data.result, Math.floor(required_size), extension).then((increased_ImageData)=>{
+                document.querySelector('.preview').innerHTML = `<img src=${increased_ImageData} alt='loading' id="dimg"/>`;
+                system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
+            }).catch((error) => {
+                console.log("Image increasing failed!");
+            });
+        }else{
+            document.querySelector('.preview').innerHTML = `<img src=${JSON.stringify(data.result,null,2)} alt='loading' id="dimg"/>`;
+            system.downloadImage('dimg','chs'+'_'+(new Date().getTime())+'.'+extension);
+        }
+        document.getElementById('op1').innerHTML = `
+            <div class="btn btn-process" onclick="route('');"><i class="fa fa-long-arrow-left"></i> Try with another</div>
+            <div class="btn btn-info" onclick="system.downloadImage('dimg','chs'+'_'+(${new Date().getTime()})+'.'+'${extension}');"><i class="fa fa-download"></i> Download</div>
+        `;
+        document.getElementById('op2').style.display = 'none';
+        document.getElementById('op3').style.display = 'none';
+        document.getElementById('op4').style.display = 'none';
+        document.getElementById('file-input').disabled = true;
+        document.querySelector('.progress-status').style.display = 'none';
+    }
+</script>
+</html>
