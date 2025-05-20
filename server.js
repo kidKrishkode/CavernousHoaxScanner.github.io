@@ -418,9 +418,9 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
     }
 });
 
-app.get('/imgEditor/open_editior', (req, res) => {
+app.get('/imgGenerator', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('imgEditor',{header, services, feed, faq, footer, editor_img_path});
+        res.status(200).render('imgGenerator',{header, services, feed, faq, footer});
     });
 });
 
