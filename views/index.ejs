@@ -11,8 +11,9 @@
     <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Cavernous Hoax Scanner">
-    <meta content="CHS is a web-based platform for deepfake detection that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner (CHS) is a cutting-edge deepfake image & video detection platform also feature image compresser, image converter, image to pdf to ensure AI-powered media processing." lang="en-us" name="description"/>
     <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <meta name="google-site-verification" content="s30Z0opKABJMHsTOIT6f6iSoYSQel63Iln-BPe81Ov4" />
     <title version="1.0">Cavernous Hoax Scanner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -29,7 +30,7 @@
         <%= header %>
     </header>
     <section class="workspace" id="dfdPage">
-        <img src="../images/3d_donut.png" alt="chs" class="right-top-des"/>
+        <img src="../images/3d_donut.png" alt="chs" class="right-top-des" loading="lazy"/>
         <h2>DeepFake Detector</h2>
         <div class="underline"></div>
         <div class="containers">
@@ -51,9 +52,9 @@
                 <div class="btn btn-process" onclick="process();">Process</div>
             </div>
         </div>
-        <img src="../images/glow1.png" alt="chs" class="left-middle-des"/>
-        <img src="../images/3d_atom.png" alt="chs" class="right-middle-des"/>
-        <img src="../images/arrow_circle.png" alt="chs" class="left-bottom-des"/>
+        <img src="../images/glow1.png" alt="chs" class="left-middle-des" loading="lazy"/>
+        <img src="../images/3d_atom.png" alt="chs" class="right-middle-des" loading="lazy"/>
+        <img src="../images/arrow_circle.png" alt="chs" class="left-bottom-des" loading="lazy"/>
         <div class="glass-status flx" id="op2">
             <span class="head">Media Accepted:</span><span class="data" id="media-acc">No Media Found!</span>
         </div>
@@ -140,6 +141,13 @@
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "description": "Cavernous Hoax Scanner helps detect deepfake images and video using AI-driven models. Ensure authenticity with advanced media processing algorithms."
+  }
+</script>
 <script>
     pageSet.push('header','dfdPage','moreProduct','faq-help','footer');
     appearSet.push(['.htsi',380],['#moreProduct',580],['#faq-help', 1180]);
@@ -234,7 +242,7 @@
                 let responce_tree = [];
                 video_first_frame = frames[0].image;
                 let first_failer = 0;
-                for(let i=0; i < frames.length-1; i++) {
+                for (let i = 0; i < frames.length; i++) {
                     let image_data = frames[i].image;
                     progress.textContent = "Frame "+(i+1)+" start compressing...";
                     image_data = await compressBase64Image(image_data);

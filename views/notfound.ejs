@@ -11,8 +11,9 @@
     <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Cavernous Hoax Scanner">
-    <meta content="CHS is a web-based platform that leverages JPEN stack technology to implement deep learning algorithms, specifically CNN, GANs, Logistic regression." lang="en-us" name="description">
+    <meta content="Cavernous Hoax Scanner (CHS) is a cutting-edge deepfake image & video detection platform also feature image compresser, image converter, image to pdf to ensure AI-powered media processing." lang="en-us" name="description"/>
     <meta content="Cavernous Hoax Scanner, Deepfake Detector, DFD, Image tool, deepfake, image editor, project, CNN, WHITE LOTUS" lang="en-us" name="keywords">
+    <meta name="google-site-verification" content="s30Z0opKABJMHsTOIT6f6iSoYSQel63Iln-BPe81Ov4" />
     <title version="1.0">Cavernous Hoax Scanner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -22,23 +23,38 @@
 <style>
     body{
         overflow: hidden!important;
+        background-image: url('https://bsaeu.net.in/bedactivity/assets/images/error-texture.png');
     }
     small{
+        display: none;
+        width: 70%;
         padding: 5px 10px;
         background: #fe6e6e8a;
         color: #fff;
         border: 2px solid red;
         border-radius: 5px;
+        margin: 0px auto 24px auto;
     }
 </style>
 <body>
     <section class="workspace" id="e404">
         <img src="../images/shape1.png" class="l-img" alt="load"/>
         <img src="../images/shape1.png" class="r-img" alt="load"/>
-        <h1><%= error %>!</h1>
+        <h1>ERROR <span><%= error %></span></h1>
+        <h2>Something <u>went</u> wrong!</h2>
         <h4><%= message %></h4>
-        <small class="text-muted"><%= typeof statement !== 'undefined' ? statement : "Please contact the developers" %></small>
+        <small id="statement"><%= typeof statement !== 'undefined' ? statement : "" %></small>
+        <div class="mt-4">
+            <a href="javascript:void();" onclick="window.history.back(-1)" class="btn btn-outline-process btn-round m-1 waves-effect waves-themed">Previous Page </a>
+        </div>
     </section>
 </body>
 <script src="../public/App.js"></script>
+<script>
+    setTimeout(()=>{
+        if(document.getElementById('statement').textContent!=''){
+            document.getElementById('statement').style.display = "block";
+        }
+    },1000);
+</script>
 </html>
