@@ -317,6 +317,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
         }
+        // let encrypted_imageData = await web.encryptMedia(imageData);
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
@@ -488,9 +489,33 @@ WEB.prototype.handle_error = function(res, code){
         console.log("Error found to handle error\n",e);
     }
 }
+WEB.prototype.encryptMedia = async function(media){
+    try{
+        let encrypted_body = await security.substitutionEncoder(media, varchar.API_KEY);
+        let encrypted_media = 'encrypted::'+encrypted_body;
+        console.log("server side:  "+encrypted_media.slice(0, 40));
+        return encrypted_media;
+    }catch(e){
+        console.log("Error to encrypt the provided media!\n",e);
+        return media;
+    }
+}
+
+WEB.prototype.dicryptMedia = async function(media){
+    try{
+        let data = media.split('encrypted::')[1];
+        let plain_body = await security.substitutionDecoder(data, varchar.API_KEY);
+        let plain_media = plain_body;
+        console.log("server side:  "+plain_media.slice(0, 40));
+        return plain_media;
+    }catch(e){
+        console.log("Error to encrypt the provided media!\n",e);
+        return media;
+    }
+}
 
 app.get('*', (req, res) => {
-    res.status(404).render('notfound',{error: 404, message: "Page not found on this url, check the source or report it", statement: ""});
+    res.status(404).render('notfound',{error: 404, message: "Sorry an error has occured, Requested page not found, check the source or report it!"});
 });
 
 server.listen(PORT, (err) => {
@@ -500,19 +525,3 @@ server.listen(PORT, (err) => {
     console.log("\n\x1b[32mNode web compiled!\x1b[0m \n");
 });
 
-/*
-1. image upload
-2. image to pixel data
-3. identify foreground & background
-4. identify face
-5. compare face
-6. detect goal
-7. pint statement
-
-git status
-git add .
-git commit -m "Your commit message here"
-
-git fetch origin
-git pull
-*/
