@@ -31,6 +31,42 @@ module.exports = {
         }
         return str.toString();
     },
+    substitutionEncoder: async (plain_txt, key) => {
+        // vigenere encoding
+        const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+=#%$&^,|?";
+        let cipher = "";
+        key = key.repeat(Math.ceil(plain_txt.length / key.length));
+
+        for(let i = 0; i < plain_txt.length; i++){
+            let plain_txtIndex = vocabulary.indexOf(plain_txt[i]);
+            let keyIndex = vocabulary.indexOf(key[i]);
+            if(plain_txtIndex !== -1 && keyIndex !== -1){
+                let newIndex = (plain_txtIndex + keyIndex) % vocabulary.length;
+                cipher += vocabulary[newIndex];
+            } else {
+                cipher += plain_txt[i];
+            }
+        }
+        return cipher;
+    },
+    substitutionDecoder: async (cipher, key) => {
+        // vigenere decoding
+        const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+=#%$&^,|?";
+        let plain_txt = "";
+        key = key.repeat(Math.ceil(cipher.length / key.length));
+
+        for(let i = 0; i < cipher.length; i++){
+            let cipherIndex = vocabulary.indexOf(cipher[i]);
+            let keyIndex = vocabulary.indexOf(key[i]);
+            if (cipherIndex !== -1 && keyIndex !== -1) {
+                let newIndex = (cipherIndex - keyIndex + vocabulary.length) % vocabulary.length;
+                plain_txt += vocabulary[newIndex];
+            } else {
+                plain_txt += cipher[i];
+            }
+        }
+        return plain_txt;
+    },
     browser: (navigator) => { 
         var browserAgent = navigator['user-agent']; 
         var browserName, browserVersion, browserMajorVersion; 

@@ -185,8 +185,13 @@ module.exports = {
     },
     singlePartsAPI: async (url, mainString, limit) => {
         const parts = [];
+        let encoded=false;
         if(mainString==undefined){
             mainString='';
+        }
+        if(mainString.startsWith('encrypted::')){
+            mainString = mainString.split('encrypted::')[1];
+            encoded=true;
         }
         const partLength = Math.ceil(mainString.length / limit);
         for(let i = 0; i < limit; i++){
@@ -194,6 +199,9 @@ module.exports = {
             // console.log(parts[parts.length-1]);
         }
         async function sendPart(part, index, limit){
+            if(encoded){
+                part = 'encrypted::'+part;
+            }
             let attempts = 0;
             while(attempts < 3){
                 attempts++;
