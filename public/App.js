@@ -59,6 +59,14 @@ document.addEventListener("DOMContentLoaded",() => {
     system.setUp();
     security = new Security();
     // window.addEventListener("load", system.isOnline);
+    let searchBar = document.querySelector('.form-control');
+    if(searchBar!=null){
+        document.querySelector('.form-control').addEventListener('keydown', (e)=>{
+            if(e.key == 'Enter' && searchBar.value!=''){
+                route('/docs?search='+searchBar.value);
+            }
+        });
+    }
 });
 function navbar_toggle(){
     if(nav==0){

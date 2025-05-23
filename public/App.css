@@ -194,15 +194,41 @@ li .active{
     height: 100vh;
     text-align: center;
     font-family: sans-serif;
-    padding-top: 100px;
     color: grey;
     overflow: hidden;
 }
 #e404 h1{
     font-weight: 600;
-    color: var(--charm);
-    font-family: Consolas;
+    color: #505050;
+    font-size: 84px;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
     cursor: pointer;
+    span{
+        font-size: 86px;
+        background: linear-gradient(180deg, #6e4e9e 25%, #62468d 50%, #0c7cd5 75%, #0960a5 100%);
+        color: #886ab5;
+        background-clip: text;
+        text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: none;
+        font-family: Consolas;
+    }
+}
+#e404 h2{
+    color: #505050;
+    font-size: 32px;
+    font-weight: bolder;
+    margin: 2px auto 24px auto;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
+    user-select: none;
+}
+#e404 h4{
+    font-size: 20px;
+    font-weight: 500px;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
+    margin: 0px auto 32px auto;
+    text-transform: uppercase;
 }
 #e404 .l-img{
     filter: hue-rotate(45deg);
@@ -210,6 +236,7 @@ li .active{
     position: relative;
     top: -20%;
     right: -47%;
+    user-select: none;
 }
 #e404 .r-img{
     filter: hue-rotate(45deg);
@@ -217,6 +244,7 @@ li .active{
     position: absolute;
     bottom: -80px;
     left: -100px;
+    user-select: none;
 }
 .loader{
     position: absolute;
@@ -686,28 +714,28 @@ footer .svg1 path,footer .svg2 path{
     position: relative;
     width: 100%;
 }
-footer .top-component,footer .middle-component,footer .bottom-component{
+footer .footer-top-component,footer .middle-component,footer .bottom-component{
     width: 100%;
     padding: 4px 20px;
 }
-footer .top-component h3{
+footer .footer-top-component h3{
     color: var(--revers-lavender);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 2px;
 }
-footer .top-component h6{
+footer .footer-top-component h6{
     margin: 20px 0px 2px 0px;
     font-family: cursive;
     color: #a5a5a5;
     font-size: 14px;
 }
-footer .top-component button{
+footer .footer-top-component button{
     color: var(--revers-lavender);
     border-color: var(--revers-lavender);
 }
-footer .top-component button:hover{
+footer .footer-top-component button:hover{
     background: var(--revers-lavender);
     color: var(--simple-color);
 }
@@ -2031,6 +2059,18 @@ footer .bottom-component .right-side a{
     }
     #e404{
         padding-top: 10%;
+        h1{
+            font-size: 42px;
+            span{
+                font-size: 43px;
+            }
+        }
+        h2{
+            font-size: 16px;
+        }
+        h4{
+            font-size: 12px;
+        }
     }
     .searchBar{
         width: 95%;
