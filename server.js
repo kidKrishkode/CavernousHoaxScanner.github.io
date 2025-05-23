@@ -317,7 +317,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
         }
-        // let encrypted_imageData = await web.encryptMedia(imageData);
+        let encrypted_imageData = await web.encryptMedia(imageData);
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
@@ -327,6 +327,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 key: varchar.API_KEY
             }).then((result) => {
                 single_img_bin = [];
+                console.log(result);
                 res.status(200).json(result);
             });
         }).catch((error) => {
@@ -345,7 +346,7 @@ app.get('/compressor', (req, res) => {
 
 app.post('/compressor/process', upload.single('file'), async (req, res) => {
     try{
-        const quality = req.body.quality;
+        const quality = req.body.quality!=undefined?req.body.quality:70;
         let imageData;
         let limit;
         if(req.body.load!='true'){
@@ -358,7 +359,9 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageCompressor`, {
-                quality: quality,
+                quality: quality*1,
+                height: null,
+                width: null,
                 img: '',
                 load: 'true',
                 key: varchar.API_KEY
@@ -501,7 +504,7 @@ WEB.prototype.encryptMedia = async function(media){
     }
 }
 
-WEB.prototype.dicryptMedia = async function(media){
+WEB.prototype.decryptMedia = async function(media){
     try{
         let data = media.split('encrypted::')[1];
         let plain_body = await security.substitutionDecoder(data, varchar.API_KEY);
