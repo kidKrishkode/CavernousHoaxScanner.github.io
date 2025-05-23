@@ -138,14 +138,16 @@
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
 
-    let tab = new TAB();
-    tab.open();
-    tab.innerContext(`
-        <div style="padding: 20px 5%;">
-            <h1 style="color: var(--charm); font-family: consolas;">Version 1.0.0</h1>
-            <p class="text-muted" style="margin-bottom: 30px; text-align: justify;">This particular feature is not available in version 1.0 or any prior releases. To access this functionality, we recommend waiting for a higher version update, where it will be officially supported. Alternatively, if immediate access is required, you can integrate our CDN models into your local system, which may provide a suitable workaround until the enhanced version is released.</p>
-            <div class="btn btn-outline-process" onclick="route('.docs?search=release')">Release Notes</div>
-        </div>`);
+    setTimeout(() => {
+        let tab = new TAB();
+        tab.open();
+        tab.innerContext(`
+            <div style="padding: 20px 5%;">
+                <h1 style="color: var(--charm); font-family: consolas;">Version 1.0.0</h1>
+                <p class="text-muted" style="margin-bottom: 30px; text-align: justify;">This particular feature is not available in version 1.0 or any prior releases. To access this functionality, we recommend waiting for a higher version update, where it will be officially supported. Alternatively, if immediate access is required, you can integrate our CDN models into your local system, which may provide a suitable workaround until the enhanced version is released.</p>
+                <div class="btn btn-outline-process" onclick="route('.docs?search=release')">Release Notes</div>
+            </div>`);
+    }, 2000);
     
     function directUpload(file){
         let extension = document.getElementById('extension-input').value.toLowerCase();
