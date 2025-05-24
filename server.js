@@ -73,19 +73,19 @@ app.use((req, res, next) => {
         const baseURL = req.protocol + '://' + req.get('host');
         const params = new URL(url, baseURL).searchParams;
         const public_key = varchar.duplex;
-        if(params.has('encode')){
-            if(query!=undefined){
-                const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
-                req.url = `${url.split('?')[0]}?${decodedUrl}`;
-                req.query = querystring.parse(decodedUrl);
-            }
-        }else{
-            if(query!=undefined){
-                const encodedUrl = security.encodedURI(query, public_key);
-                req.url = `${url}?encode=${encodedUrl}`;
-                req.query = querystring.parse(encodedUrl);
-            }
-        }
+        // if(params.has('encode')){
+        //     if(query!=undefined){
+        //         const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
+        //         req.url = `${url.split('?')[0]}?${decodedUrl}`;
+        //         req.query = querystring.parse(decodedUrl);
+        //     }
+        // }else{
+        //     if(query!=undefined){
+        //         const encodedUrl = security.encodedURI(query, public_key);
+        //         req.url = `${url}?encode=${encodedUrl}`;
+        //         req.query = querystring.parse(encodedUrl);
+        //     }
+        // }
         if(security.secure_access(req.originalUrl)) return next();
         const my_browser = security.browser(req.headers);
         if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data) && hex.isHosted(req)){
@@ -473,6 +473,29 @@ app.post('/cdn_raw', async (req, res) => {
             }
         });
     });
+});
+
+app.get("/proxy", async (req, res) => {
+    try{
+        res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+        const imageUrl = req.query.url;
+        if(!imageUrl){
+            return res.status(400).send("Error: No URL provided");
+        }
+        const response = await fetch(imageUrl);
+        if(!response.ok){
+            throw new Error("Failed to fetch the image");
+        }
+        const contentType = response.headers.get("content-type");
+        const buffer = await response.arrayBuffer();
+        res.set("Content-Type", contentType);
+        res.send(Buffer.from(buffer));
+    }catch(error){
+        res.status(500).send("Error fetching image");
+    }
 });
 
 WEB.prototype.noise_detect = function(data){
