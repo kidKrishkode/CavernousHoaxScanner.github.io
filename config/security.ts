@@ -33,7 +33,7 @@ module.exports = {
     },
     substitutionEncoder: async (plain_txt, key) => {
         // vigenere encoding
-        const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+=#%$&^,|?";
+        const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+#%$&^,|?/";
         let cipher = "";
         key = key.repeat(Math.ceil(plain_txt.length / key.length));
 
@@ -51,7 +51,7 @@ module.exports = {
     },
     substitutionDecoder: async (cipher, key) => {
         // vigenere decoding
-        const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+=#%$&^,|?";
+        const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+#%$&^,|?/";
         let plain_txt = "";
         key = key.repeat(Math.ceil(cipher.length / key.length));
 
