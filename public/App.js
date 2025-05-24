@@ -586,6 +586,34 @@ System.prototype.verifyCaptcha = function(){
         }
     }
 }
+System.prototype.openGoogleURL = function(){
+  let tab = new TAB();
+  tab.open();
+  tab.innerContext(`
+    <div style="padding: 20px 5%;">
+        <h2 style="color: var(--charm);">Google Image URL</h2>
+        <p class="text-muted">Please enter the image url in the following link box, the url must be for an supported image type and public accesable, an example url structure is - <code>https://images2.alphacoders.com/716/71660.jpg</code> , after provide the image url click the GET Image button and wait few second.</p>
+        <div class="input-group mb-3">
+            <input type="url" class="form-control" id="google-url" placeholder="Enter Image URL here" aria-label="Enter Image URL here" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-process" onclick="system.getInterImage();">GET Image</button>
+            </div>
+        </div>
+        <div class="btn btn-process" style="margin-top: 20px;"onclick="system.closeGoogleURL();">Close</div>
+    </div>
+    `);
+}
+System.prototype.closeGoogleURL = function(){
+    new TAB().close();
+}
+System.prototype.getInterImage = async function(){
+    let link = document.getElementById('google-url').value;
+    if(link){
+        await getInerImage(link);
+    }else{
+        alert('Please fillout the url field for Image fetching, Empty field is not acceptable!');
+    }
+}
 System.prototype.sendMemory = function(){
     fetch('/memory', {
         method: 'POST',
