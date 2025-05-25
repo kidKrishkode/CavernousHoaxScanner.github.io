@@ -450,10 +450,9 @@ System.prototype.handelPyError = function(error){
 }
 System.prototype.closePyError = function(){
     try{
-        new TAB().closeAll();
-    }catch(e){
-        console.log("Py Error close not possible due to:  "+e);
-    }
+        let tab = new TAB();
+        tab.closeAll();
+    }catch(e){console.log("New error comes when close the py error due to:  "+e);}
     document.body.removeChild(document.getElementById('errorPreview'));
     window.location.reload();
 }

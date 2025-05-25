@@ -633,6 +633,38 @@ li .active{
     border-bottom: none;
     padding: 5px 0px 0px 0px;
 }
+.sample-dfd{
+    width: 60%;
+    margin: 10px auto;
+    padding: 4px 8px;
+    color: var(--charm);
+    font-weight: 600;
+    font-family: sans-serif;
+    transition: 1s ease-in-out;
+    .sample-grid{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .sample{
+            width: 15%;
+            height: 80px;
+            margin: 10px 0px;
+            background: var(--mit-color);
+            border-radius: 10px;
+            cursor: pointer;
+            .img{
+                width: fit-content;
+                height: 80px;
+                margin: 2px auto;
+                img{
+                    position: relative;
+                    width: max-content;
+                    height: inherit;
+                }
+            }
+        }
+    }
+}
 .htsi{
     margin: 80px auto;
     position: relative;
@@ -2091,11 +2123,14 @@ footer .bottom-component .right-side a{
     .drop{
         width: 100%;
     }
-    #dfdPage .containers,#dfdPage .containers-option,.glass-status, #converterPage .containers, #converterPage .containers-option, #pdfPage .containers, #pdfPage .containers-option, .workspace .progress-status,#generatorPage .containers, #generatorPage .containers-option{
+    #dfdPage .containers,#dfdPage .containers-option,.glass-status, .sample-dfd, #converterPage .containers, #converterPage .containers-option, #pdfPage .containers, #pdfPage .containers-option, .workspace .progress-status,#generatorPage .containers, #generatorPage .containers-option{
         width: 90%;
     }
     #dfdPage .containers .drop-box, #converterPage .containers .drop-box,#pdfPage .containers .drop-box, #generatorPage .containers .drop-box{
         height: 300px;
+    }
+    .sample-dfd .sample-grid .sample{
+        width: 45%;
     }
     .right-middle-des{
         position: absolute;
