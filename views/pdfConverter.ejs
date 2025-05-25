@@ -62,7 +62,7 @@
                 </select>
             </div>
             <div class="selecter">
-                <select class="form-control" id="szie-input" onchange="" name="szie-input">
+                <select class="form-control" id="size-input" onchange="" name="size-input">
                     <option>A3 size</option>
                     <option selected="true">A4 size</option>
                     <option>A3 size</option>
@@ -158,11 +158,12 @@
             }else if(layout == 'Portrait only'){
                 layout = 'portrait';
             }
-            let size = document.getElementById('szie-input').value;
+            let size = document.getElementById('size-input').value;
             szie = size.replace(' size','');
             document.querySelector('.progress-status').style.display = 'block';
             let progress = document.querySelector('.progress');
             progress.textContent = "Image evaluate start...";
+            system.block_resource({input: "file-input", selector: ['layout-input', 'size-input']});
             for(let i=0; i<pdf.imgSet.length; i++){
                 progress.textContent = "Image no "+(i+1)+" compressing..";
                 pdf.imgSet[i] = await compressBase64Image(pdf.imgSet[i]);

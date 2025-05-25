@@ -80,6 +80,26 @@
                 <span class="head">Media Dimantion:</span><span class="data" id="media-diamention">Not Selected!</span>
             </div>
         </div>
+        <div class="sample-dfd">
+            <div class="sample-head">Sample Image: </div>
+            <div class="sample-grid">
+                <div class="sample" onclick="dfd.sampledfd(1);">
+                    <div class="img"><img src="../assets/bin/3.png" alt="chs" loading="lazy"/></div>
+                </div>
+                <div class="sample" onclick="dfd.sampledfd(2);">
+                    <div class="img"><img src="../assets/bin/4.png" alt="chs" loading="lazy"/></div>
+                </div>
+                <div class="sample" onclick="dfd.sampledfd(3);">
+                    <div class="img"><img src="../assets/bin/5.png" alt="chs" loading="lazy"/></div>
+                </div>
+                <div class="sample" onclick="dfd.sampledfd(4);">
+                    <div class="img"><img src="../assets/bin/6.png" alt="chs" loading="lazy"/></div>
+                </div>
+                <div class="sample" onclick="dfd.sampledfd(5);">
+                    <div class="img"><img src="../assets/bin/7.png" alt="chs" loading="lazy"/></div>
+                </div>
+            </div>
+        </div>
         <div class="glass-status" id="ou1">
             <div class="flx">
                 <span class="head">Result:</span><span class="data" id="output-result">Not Selected!</span>
@@ -188,6 +208,7 @@
             const file = fileInput.files[0];
             document.querySelector('.progress-status').style.display = 'block';
             system.block_resource({input: "file-input", selector: []});
+            document.querySelector('.sample-dfd').style.display = 'none';
             if(document.getElementById('media-type').textContent=='Video'){
                 videoUpload(file);
             }else{
@@ -293,6 +314,23 @@
                 afterResponce(data, videoData);
             });
         }
+    }
+    function sampleUpload(index){
+        document.querySelector('.progress-status').style.display = 'block';
+        system.block_resource({input: "file-input", selector: []});
+        const preview = document.querySelector('.preview');
+        document.querySelector('.sample-dfd').style.display = 'none';
+        setTimeout(()=>{
+            fetch('/index/sample', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'index': index-1,})
+            }).then(response => response.json()).then(data => {
+                afterResponce(data, preview.childNodes[0].src);
+            }).catch(e=>console.log(e));
+        },4000);
     }
     
     function afterResponce(data, mediaData){
