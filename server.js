@@ -421,6 +421,17 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
     }
 });
 
+app.post('/index/sample', async (req, res) => {
+    try{
+        let index = req.body.index;
+        let analysis = await jsonfile.readFile('./assets/bin/analysis.json');
+        res.status(200).json(analysis[index]);
+    }catch(e){
+        console.log(e);
+        res.status(403).render('notfound',{error: 403, message: "Failed to process most recent task, Try again later"});
+    }
+});
+
 app.get('/imgGenerator', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
         res.status(200).render('imgGenerator',{header, services, feed, faq, footer});
