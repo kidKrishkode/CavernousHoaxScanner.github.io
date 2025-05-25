@@ -1,0 +1,127 @@
+[
+    {
+        "metadata": {
+            "version": "1.0.0",
+            "request_id": null,
+            "header": {
+                "Content-Type": "application/json"
+            },
+            "processing_time": "2s"
+        },
+        "network": {
+            "url": "https://chsapi.vercel.app/api/",
+            "kernel": "inphant api",
+            "provider": "chsapi"
+        },
+        "source": "WHITE LOTUS Community",
+        "result": {
+            "class": "Fake", "accuracy": 69.77,
+            "responce_tree": {
+                "prototype_1": {"class": "Fake", "accuracy": 88.53},
+                "prototype_2": {"class": "Real", "accuracy": 61.83},
+                "prototype_3": {"class": "Fake", "accuracy": 58.96}
+            }
+        },
+        "status": {"code": 200, "message": "Image processed successfully"}
+    },
+    {
+        "metadata": {
+            "version": "1.0.0",
+            "request_id": null,
+            "header": {
+                "Content-Type": "application/json"
+            },
+            "processing_time": "2s"
+        },
+        "network": {
+            "url": "https://chsapi.vercel.app/api/",
+            "kernel": "inphant api",
+            "provider": "chsapi"
+        },
+        "source": "WHITE LOTUS Community",
+        "result": {
+            "class": "Fake", "accuracy": 60.37,
+            "responce_tree": {
+                "prototype_1": {"class": "Real", "accuracy": 96.16},
+                "prototype_2": {"class": "Fake", "accuracy": 34.3},
+                "prototype_3": {"class": "Fake", "accuracy": 50.66}
+            }
+        },
+        "status": {"code": 200, "message": "Image processed successfully"}
+    },
+    {
+        "metadata": {
+            "version": "1.0.0",
+            "request_id": null,
+            "header": {
+                "Content-Type": "application/json"
+            },
+            "processing_time": "2s"
+        },
+        "network": {
+            "url": "https://chsapi.vercel.app/api/",
+            "kernel": "inphant api",
+            "provider": "chsapi"
+        },
+        "source": "WHITE LOTUS Community",
+        "result": {
+            "class": "Fake", "accuracy": 60.44,
+            "responce_tree": {
+                "prototype_1": {"class": "Fake", "accuracy": 52.86},
+                "prototype_2": {"class": "Fake", "accuracy": 34.3},
+                "prototype_3": {"class": "Real", "accuracy": 94.17}
+            }
+        },
+        "status": {"code": 200, "message": "Image processed successfully"}
+    },
+    {
+        "metadata": {
+            "version": "1.0.0",
+            "request_id": null,
+            "header": {
+                "Content-Type": "application/json"
+            },
+            "processing_time": "2s"
+        },
+        "network": {
+            "url": "https://chsapi.vercel.app/api/",
+            "kernel": "inphant api",
+            "provider": "chsapi"
+        },
+        "source": "WHITE LOTUS Community",
+        "result": {
+            "class": "Real", "accuracy": 85.89,
+            "responce_tree": {
+                "prototype_1": {"class": "Fake", "accuracy": 92.24},
+                "prototype_2": {"class": "Real", "accuracy": 75.91},
+                "prototype_3": {"class": "Real", "accuracy": 89.52}
+            }
+        },
+        "status": {"code": 200, "message": "Image processed successfully"}
+    },
+    {
+        "metadata": {
+            "version": "1.0.0",
+            "request_id": null,
+            "header": {
+                "Content-Type": "application/json"
+            },
+            "processing_time": "2s"
+        },
+        "network": {
+            "url": "https://chsapi.vercel.app/api/",
+            "kernel": "inphant api",
+            "provider": "chsapi"
+        },
+        "source": "WHITE LOTUS Community",
+        "result": {
+            "class": "Real", "accuracy": 86.63,
+            "responce_tree": {
+                "prototype_1": {"class": "Real", "accuracy": 99.98},
+                "prototype_2": {"class": "Real", "accuracy": 75.91},
+                "prototype_3": {"class": "Real", "accuracy": 84.01}
+            }
+        },
+        "status": {"code": 200, "message": "Image processed successfully"}
+    }
+]
