@@ -27,8 +27,44 @@
         width: 95%;
         border-radius: 5px;
     }
+    .desktop-view .s-img{
+        width: 55%;
+        position: relative;
+        left: 15%;
+    }
+    .cool-table{
+        width: 100%;
+        border-collapse: collapse;
+        overflow-x: auto;
+        display: block;
+        border-radius: 6px;
+        th, td {
+            border: 1px solid slategray;
+            padding: 2px 4px;
+            text-align: left;
+        }
+        thead {
+            background-color: var(--charm);
+            color: var(--venda);
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            overflow: none;
+        }
+    }
+    .flx .cool-table{
+        width: 45%;
+    }
+    /* .info { background-color: #511f1f; color: white; }
+    .success { background-color: #313172; color: white; }
+    .redirect { background-color: #507e2f; color: white; }
+    .client-error { background-color: #2c2c91; color: white; }
+    .server-error { background-color: #2f7e73; color: white; } */
+    @media only screen and (max-width: 900px), only screen and (min-width: 900px) and (max-width: 1200px){
+        .flx .cool-table{
+            width: 100%;
+        }
+    }
 </style>
-
 <body>
     <header id="header">
         <%= header %>
@@ -191,7 +227,7 @@
                         </p>
                     </div>
                     <div class="right-web">
-                        <span class="desktop-view"><img src="../images/s3.png" style="width: 75%;" alt="chs"></span>
+                        <span class="desktop-view"><img src="../images/s3.png" class="s-img" alt="chs"></span>
                     </div>
                 </div>
                 <div class="btn btn-process" onclick="route('/converter')">Try Now!</div>
@@ -199,7 +235,7 @@
             <li class="drop">
                 <div class="flx">
                     <div class="right-web">
-                        <span class="desktop-view"><img src="../images/s6.png" alt="chs" style="width: 75%;"></span>
+                        <span class="desktop-view"><img src="../images/s6.png" alt="chs" class="s-img"></span>
                     </div>
                     <div class="left-web">
                         <h2>Media <span>Format</span> Policy: What You Need to Know Before Uploading</h2>
@@ -262,7 +298,7 @@
                         </p>
                     </div>
                     <div class="right-web">
-                        <span class="desktop-view"><img src="../images/s3.png" style="width: 75%;" alt="chs"></span>
+                        <span class="desktop-view"><img src="../images/s3.png" class="s-img" alt="chs"></span>
                     </div>
                 </div>
 
@@ -304,153 +340,229 @@
             <li class="drop"></li>
             <li class="drop">
                 <div class="flx">
-                    <div class="left-web">
-                        <h2>CHS: <span>ERROR LOGs</span>& Solution</h2>
+                    <div class="center-web">
+                        <h2>CHS: <span>ERROR LOGs</span> & Solution</h2>
                         <p>An error log records issues encountered during a process. It includes two types:
                             <strong>custom errors</strong>, which are predefined by the CHS for specific issues, and
                             <strong>standard errors</strong>, which are default system-generated messages that indicate
                             common, expected issues.
                         </p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Description</th>
-                                    <th>Solution</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>0</td>
-                                    <td>Invalid user input: empty field detected</td>
-                                    <td>Retry with the Media</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Unsupported media format</td>
-                                    <td>Please try valid file type according to <a href="/docs?search='media format'">CHS</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Image too large: maximum size exceeded</td>
-                                    <td>Try with Media size according to <a href="/docs?search='media format'">CHS</a></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Failed to compress image: unknown compression error</td>
-                                    <td></td>
-                                </tr>
-                                <!-- <tr>
-                                    <td>4</td>
-                                    <td>Watermarking failed: unable to overlay text/image</td>
-                                    <td></td>
-                                </tr> -->
-                                <tr>
-                                    <td>5</td>
-                                    <td>Face detection failed: no faces detected in image/video</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Video processing failed: unsupported video code</td>
-                                    <td>Provided video file is corrupted </td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Image to PDF conversion failed: unable to generate PDF</td>
-                                    <td>Please try again</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Invalid video format: only MP4, AVI, and MOV are supported</td>
-                                    <td>Try with Video Format according to <a href="/docs?search='media format'">CHS</a></td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Video too large: maximum size exceeded</td>
-                                    <td>Try with Video size according to <a href="/docs?search='media format'">CHS</a></td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Failed to extract frames from video: unknown error</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>Object detection failed: unable to detect objects in image/video</td>
-                                    <td>Please give image with object</td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>Image upload failed: unable to upload image to server</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>13</td>
-                                    <td>Video upload failed: unable to upload video to server</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>14</td>
-                                    <td>Image resizing failed: unable to resize image</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>15</td>
-                                    <td>Video trimming failed: unable to trim video</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>16</td>
-                                    <td>Image cropping failed: unable to crop image</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>17</td>
-                                    <td>Video rotation failed: unable to rotate video</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>18</td>
-                                    <td>Image filtering failed: unable to apply filter</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>19</td>
-                                    <td>Video formatting failed: unable to format video</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>20</td>
-                                    <td>Image optimization failed: unable to optimize image</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>21</td>
-                                    <td>Video optimization failed: unable to optimize video</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>22</td>
-                                    <td>Image size under conditions: unable to resize image</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>23</td>
-                                    <td>Failed to process most recent task, You are in hosted mode but CHS API not
-                                        connected with system, Try again later or report it</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="flx">
+                            <table class="cool-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Solution</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>0</td>
+                                        <td>Invalid user input: empty field detected</td>
+                                        <td>Retry with the Media</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Unsupported media format</td>
+                                        <td>Please try valid file type according to <a href="/docs?search='media format'">CHS</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Image too large: maximum size exceeded</td>
+                                        <td>Try with Media size according to <a href="/docs?search='media format'">CHS</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Failed to compress image: unknown compression error</td>
+                                        <td></td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>4</td>
+                                        <td>Watermarking failed: unable to overlay text/image</td>
+                                        <td></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Face detection failed: no faces detected in image/video</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Video processing failed: unsupported video code</td>
+                                        <td>Provided video file is corrupted </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Image to PDF conversion failed: unable to generate PDF</td>
+                                        <td>Please try again</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Invalid video format: only MP4, AVI, and MOV are supported</td>
+                                        <td>Try with Video Format according to <a href="/docs?search='media format'">CHS</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Video too large: maximum size exceeded</td>
+                                        <td>Try with Video size according to <a href="/docs?search='media format'">CHS</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Failed to extract frames from video: unknown error</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>Object detection failed: unable to detect objects in image/video</td>
+                                        <td>Please give image with object</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>Image upload failed: unable to upload image to server</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>Video upload failed: unable to upload video to server</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>Image resizing failed: unable to resize image</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>Video trimming failed: unable to trim video</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>Image cropping failed: unable to crop image</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>Video rotation failed: unable to rotate video</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>18</td>
+                                        <td>Image filtering failed: unable to apply filter</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>Video formatting failed: unable to format video</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>Image optimization failed: unable to optimize image</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>21</td>
+                                        <td>Video optimization failed: unable to optimize video</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>22</td>
+                                        <td>Image size under conditions: unable to resize image</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>23</td>
+                                        <td>Failed to process most recent task, You are in hosted mode but CHS API not
+                                            connected with system, Try again later or report it</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="cool-table">
+                                <thead>
+                                    <tr><th>Code</th><th>Description</th><th>Category</th></tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 1XX Informational -->
+                                    <tr class="info"><td>100</td><td>Continue</td><td>Informational</td></tr>
+                                    <tr class="info"><td>101</td><td>Switching Protocols</td><td>Informational</td></tr>
+                                    <tr class="info"><td>102</td><td>Processing</td><td>Informational</td></tr>
+
+                                    <!-- 2XX Success -->
+                                    <tr class="success"><td>200</td><td>OK <span style="opacity: 0;">OKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOK</span></td><td>Success</td></tr>
+                                    <tr class="success"><td>201</td><td>Created</td><td>Success</td></tr>
+                                    <tr class="success"><td>202</td><td>Accepted</td><td>Success</td></tr>
+                                    <tr class="success"><td>203</td><td>Non-authoritative Information</td><td>Success</td></tr>
+                                    <tr class="success"><td>204</td><td>No Content</td><td>Success</td></tr>
+                                    <tr class="success"><td>205</td><td>Reset Content</td><td>Success</td></tr>
+                                    <tr class="success"><td>206</td><td>Partial Content</td><td>Success</td></tr>
+                                    <tr class="success"><td>207</td><td>Multi-Status</td><td>Success</td></tr>
+                                    <tr class="success"><td>208</td><td>Already Reported</td><td>Success</td></tr>
+                                    <tr class="success"><td>226</td><td>IM Used</td><td>Success</td></tr>
+
+                                    <!-- 3XX Redirection -->
+                                    <tr class="redirect"><td>300</td><td>Multiple Choices</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>301</td><td>Moved Permanently</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>302</td><td>Found</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>303</td><td>See Other</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>304</td><td>Not Modified</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>305</td><td>Use Proxy</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>307</td><td>Temporary Redirect</td><td>Redirection</td></tr>
+                                    <tr class="redirect"><td>308</td><td>Permanent Redirect</td><td>Redirection</td></tr>
+
+                                    <!-- 4XX Client Error -->
+                                    <tr class="client-error"><td>400</td><td>Bad Request</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>401</td><td>Unauthorized</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>402</td><td>Payment Required</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>403</td><td>Forbidden</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>404</td><td>Not Found</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>405</td><td>Method Not Allowed</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>406</td><td>Not Acceptable</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>407</td><td>Proxy Authentication Required</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>408</td><td>Request Timeout</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>409</td><td>Conflict</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>410</td><td>Gone</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>411</td><td>Length Required</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>412</td><td>Precondition Failed</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>413</td><td>Payload Too Large</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>414</td><td>Request-URI Too Long</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>415</td><td>Unsupported Media Type</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>416</td><td>Requested Range Not Satisfiable</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>417</td><td>Expectation Failed</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>418</td><td>I'm a teapot</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>421</td><td>Misdirected Request</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>422</td><td>Unprocessable Entity</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>423</td><td>Locked</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>424</td><td>Failed Dependency</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>426</td><td>Upgrade Required</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>428</td><td>Precondition Required</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>429</td><td>Too Many Requests</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>431</td><td>Request Header Fields Too Large</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>444</td><td>Connection Closed Without Response</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>451</td><td>Unavailable For Legal Reasons</td><td>Client Error</td></tr>
+                                    <tr class="client-error"><td>499</td><td>Client Closed Request</td><td>Client Error</td></tr>
+
+                                    <!-- 5XX Server Error -->
+                                    <tr class="server-error"><td>500</td><td>Internal Server Error</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>501</td><td>Not Implemented</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>502</td><td>Bad Gateway</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>503</td><td>Service Unavailable</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>504</td><td>Gateway Timeout</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>505</td><td>HTTP Version Not Supported</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>506</td><td>Variant Also Negotiates</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>507</td><td>Insufficient Storage</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>508</td><td>Loop Detected</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>510</td><td>Not Extended</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>511</td><td>Network Authentication Required</td><td>Server Error</td></tr>
+                                    <tr class="server-error"><td>599</td><td>Network Connect Timeout Error</td><td>Server Error</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
-                    <div class="right-web">
-                        <span class="desktop-view"><iframe src="/" alt="chs" class="desktop-view"
-                                aria-disabled="true"></iframe></span>
-                    </div>
                 </div>
-                <div class="btn btn-process">Try Now!</div>
             </li>
         </ol>
         <div class="search-not-found" id="searchData-docsDOD">
