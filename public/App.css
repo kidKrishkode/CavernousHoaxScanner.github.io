@@ -654,7 +654,7 @@ li .active{
             cursor: pointer;
             .img{
                 width: fit-content;
-                height: 80px;
+                height: -webkit-fill-available;
                 margin: 2px auto;
                 img{
                     position: relative;
@@ -1845,6 +1845,13 @@ footer .bottom-component .right-side a{
 #docsPage #docsList .drop{
     margin: 20px auto;
 }
+#docsPage #docsList .drop .flx .center-web{
+    width: 100%;
+    padding: 4px 20px;
+    font-size: 14px;
+    color: grey;
+    text-align: justify;
+}
 #docsPage #docsList .drop .flx .left-web, #docsPage #docsList .drop .flx .right-api{
     width: 60%;
     padding: 4px 20px;
@@ -1855,19 +1862,19 @@ footer .bottom-component .right-side a{
 #docsPage #docsList .drop .flx .right-web, #docsPage #docsList .drop .flx .left-api{
     width: 40%;
 }
-#docsPage #docsList .drop .flx .left-web h2, #docsPage #docsList .drop .flx .right-api h2{
+#docsPage #docsList .drop .flx .left-web h2, #docsPage #docsList .drop .flx .right-api h2, #docsPage #docsList .drop .flx .center-web h2{
     color: var(--revers-white);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: left;
 }
-#docsPage #docsList .drop .flx .left-web h2 span, #docsPage #docsList .drop .flx .right-api h2 span{
+#docsPage #docsList .drop .flx .left-web h2 span, #docsPage #docsList .drop .flx .right-api h2 span, #docsPage #docsList .drop .flx .center-web h2 span{
     font-weight: bold;
     color: var(--charm);
 }
 #docsPage #docsList .drop .btn{
     margin: 0px 10px 20px auto;
 }
-#docsPage #docsList .drop .flx .left-web ul, #docsPage #docsList .drop .flx .right-api ul{
+#docsPage #docsList .drop .flx .left-web ul, #docsPage #docsList .drop .flx .right-api ul, #docsPage #docsList .drop .flx .center-web ul{
     margin: 2px auto 10px auto;
 }
 #docsPage #docsList .drop .flx .left-api .code-editor{
@@ -1887,6 +1894,7 @@ footer .bottom-component .right-side a{
     cursor: pointer;
 }
 #docsPage #docsList .drop .flx .right-web .desktop-view{
+    display: block;
     width: 100%;
     height: 100%;
     cursor: pointer;
