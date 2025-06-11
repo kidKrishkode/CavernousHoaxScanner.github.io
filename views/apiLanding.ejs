@@ -160,7 +160,7 @@
         try{
             setTimeout(()=>{
                 appointCode = eval(compiler.appointCode);
-                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler, method);
+                document.getElementById('apiInSnipPython').innerText = appointCode(name, lang, compiler, method).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','');
                 // updateLine = eval(compiler.updateLineNumbers);
                 pyInterpreter = eval(compiler.pyInterpreter);
                 ideDeploy = eval(compiler.ideDeploy);
