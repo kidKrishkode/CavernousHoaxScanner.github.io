@@ -25,6 +25,10 @@
     .api-container small{
         text-align: justify;
     }
+    #apikeyValidation{
+        margin-top: 10%;
+        text-align: center;
+    }
 </style>
 <body>
     <header id="header">
@@ -89,14 +93,17 @@
                         <hr/>
                         <div class="form-group left">
                             <label for="apikey">API Key</label>
-                            <input type="password" class="form-control" id="apikey" aria-describedby="apikey" readonly/>
+                            <input type="password" class="form-control" id="apikey" aria-describedby="apikey" readonly onkeyup="system.validateApiKey('apikey', 'apikeyValidation');"/>
                             <small id="apikey" class="form-text text-muted">Enter the unique authentication key for secure access. This ensures authorized usage and protects API interactions when selecting private access.</small>
+                        </div>
+                        <div class="form-group">
+                            <smal class="form-text" id="apikeyValidation"></smal>
                         </div>
                     </form>
                 </div>
                 <hr/>
                 <div class="flx head">
-                    <div class="btn btn-process">Generate API</div>
+                    <div class="btn btn-process" onclick="selectLang();">Generate API</div>
                 </div>
             </div>
             <div class="api-right api-container">
@@ -195,10 +202,14 @@
     
     function codeset(name, lang){
         setTimeout(()=>{
+            let code = 0;
             appointCode = eval(compiler.appointCode);
-            console.log(name, lang);
-            document.getElementById('apiInSnipVanillaHtml').innerText = appointCode(name, lang, compiler);
-            // document.getElementById('apiInSnipVanillaHtml').innerHTML += `<div class="btn btn_copy">Copy</div>`;
+            if(!system.validapiKey('apikey')){
+                code = appointCode(name, lang, compiler).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','');
+            }else{
+                code = appointCode(name, lang, compiler).replace('<|api_key|>', "s'"+document.getElementById('apikey').value+"'n");
+            }
+            document.getElementById('apiInSnipVanillaHtml').innerText = code;
             updateLine = eval(compiler.updateLineNumbers);
             jsCompiler = eval(compiler.jsCompiler);
             ideDeploy = eval(compiler.ideDeploy);
