@@ -534,7 +534,7 @@ System.prototype.codeset = function(...args){
         let appointCode, pyInterpreter, jsCompiler;
         setTimeout(()=>{
             appointCode = eval(compiler.appointCode);
-            document.getElementById(id).innerText = appointCode(name, lang, compiler, method);
+            document.getElementById(id).innerText = appointCode(name, lang, compiler, method).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','');
             if(lang == 'Python'){
                 pyInterpreter = eval(compiler.pyInterpreter);
                 pyInterpreter(`#${id}`);
