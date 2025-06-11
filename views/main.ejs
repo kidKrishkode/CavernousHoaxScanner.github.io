@@ -325,7 +325,7 @@
                     text: "Visitor density according to Time flow"
                 },
                 scales: {
-                    yAxes: [{ticks: {min: 0, max: 60}}],
+                    yAxes: [{ticks: {min: 0, max: Math.ceil(Math.max(...yValues) / 10) * 10}}],
                 }
             }
         });

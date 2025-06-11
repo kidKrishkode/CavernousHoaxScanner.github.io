@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="../public/index.css"/>
     <link rel="icon" href="../public/favicon.ico"/>
 </head>
+<style>
+    .api-container small{
+        text-align: justify;
+    }
+</style>
 <body>
     <header id="header">
         <%= header %>
@@ -44,14 +49,14 @@
                             <select class="form-control" id="apiname" aria-describedby="apiname" onchange="selectLang();">
                                 <option>Image Compressor</option>
                                 <option>Deepfake Detector</option>
-                                <option>Image to Pdf Converter</option>
+                                <option>Image to PDF</option>
                                 <option selected="true">Image Converter</option>
                             </select>
                             <small id="apiname" class="form-text text-muted">Choose your API route endpoint to ensure correct request routing. This selection guides interactions with the right AI service.</small>
                         </div>
                         <div class="form-group">
                             <label for="apitype">API Type</label>
-                            <select class="form-control" id="apitype" aria-describedby="apitype">
+                            <select class="form-control" id="apitype" aria-describedby="apitype" onchange="apitypeChange();">
                                 <option>Private</option>
                                 <option selected="true">Public</option>
                             </select>
@@ -59,11 +64,11 @@
                         </div>
                         <div class="form-group">
                             <label for="apimethod">Method</label>
-                            <select class="form-control" id="apimethod" aria-describedby="apimethod">
+                            <select class="form-control" id="apimethod" aria-describedby="apimethod" disabled="true">
                                 <option>GET</option>
                                 <option selected="true">POST</option>
                             </select>
-                            <small id="apimethod" class="form-text text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus vitae maiores aspernatur. Quos, debitis.</small>
+                            <small id="apimethod" class="form-text text-muted">Define the request approach for API communication. This selection ensures proper data transmission, interaction accuracy, and seamless integration within workflows.</small>
                         </div>
                         <div class="form-group">
                             <label for="apilevel">Level Data</label>
@@ -71,21 +76,21 @@
                                 <option>Custom</option>
                                 <option selected="true">CHS</option>
                             </select>
-                            <small id="apilevel" class="form-text text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus vitae maiores aspernatur. Quos, debitis.</small>
+                            <small id="apilevel" class="form-text text-muted">Choose the structured dataset used in processing and analysis. This selection ensures efficient integration within API agent workflows.</small>
                         </div>
                         <div class="form-group left">
                             <label for="apioperation">Operations</label>
                             <select class="form-control" id="apioperation" aria-describedby="apioperation">
-                                <option>Advanced</option>
-                                <option selected="true">Basic</option>
+                                <option selected="true">Advanced</option>
+                                <option>Basic</option>
                             </select>
-                            <small id="apioperation" class="form-text text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus vitae maiores aspernatur. Quos, debitis.</small>
+                            <small id="apioperation" class="form-text text-muted">Choose between Basic for standard API defining language, or Advanced for ES Module support and serverless activities. Optimize the complexity and time.</small>
                         </div>
                         <hr/>
                         <div class="form-group left">
                             <label for="apikey">API Key</label>
                             <input type="password" class="form-control" id="apikey" aria-describedby="apikey" readonly/>
-                            <small id="apikey" class="form-text text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus vitae maiores aspernatur. Quos, debitis.</small>
+                            <small id="apikey" class="form-text text-muted">Enter the unique authentication key for secure access. This ensures authorized usage and protects API interactions when selecting private access.</small>
                         </div>
                     </form>
                 </div>
@@ -101,7 +106,7 @@
                 </div>
                 <hr/>
                 <div class="body">
-                    <small class="form-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta maiores, nam natus voluptatibus sit quo minima expedita atque excepturi ipsam!</small>
+                    <small class="form-text text-muted">This code snippet is generated by CHS Agent to help configure API properties seamlessly. Use it in your project for efficient integration.</small>
                     <br>
                     <form>
                         <div class="form-group">
@@ -176,10 +181,22 @@
         let name = document.getElementById('apiname').value;
         codeset(name, lang);
     }
+
+    function apitypeChange(){
+        let type = document.getElementById('apitype').value;
+        let key = document.getElementById('apikey'); 
+        if(type=='Private'){
+            key.removeAttribute("readonly");
+        }else{
+            key.value = "";
+            key.setAttribute("readonly", true);
+        }
+    }
     
     function codeset(name, lang){
         setTimeout(()=>{
             appointCode = eval(compiler.appointCode);
+            console.log(name, lang);
             document.getElementById('apiInSnipVanillaHtml').innerText = appointCode(name, lang, compiler);
             // document.getElementById('apiInSnipVanillaHtml').innerHTML += `<div class="btn btn_copy">Copy</div>`;
             updateLine = eval(compiler.updateLineNumbers);
