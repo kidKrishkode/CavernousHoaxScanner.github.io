@@ -4,21 +4,21 @@
         "lang": "Node Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = f|require|n(s'chscdn'n).default;\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the desire image extension//n\nlet@ s|desire_extension|n = s'png'n;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
+        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = f|require|n(s'chscdn'n).default;\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the desire image extension//n\nlet@ s|desire_extension|n = s'png'n;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image convort 'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 1,
         "lang": "React Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "0"
+        "code": "import@ s|React|n, { f|useState|n } from@ s'react'n;\nimport@ s|CHSCDN|n from@ s'chscdn'n; // Import CHSCDN module//n\n\nconst@ f|ImageConverter|n = () => {\n\n\t// Function to convert image using CHS API//n\n\tconst@ f|convertImage|n = async@ () => {\n\t\ttry@{\n\t\t\t// Connect the CHSCDN plugin//n\n\t\t\t// Create an instance of the CHSCDN class//n\n\t\t\tlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n\t\t\t// Define the local image path//n\n\t\t\tlet@ s|image|n = f|require|n(s'../assets/example.png'n);\n\n\t\t\t// Convert the local image to a base64 string//n\n\t\t\tlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n\t\t\t// Define the desired image format//n\n\t\t\tlet@ s|desire_extension|n = s'jpg'n;\n\n\t\t\t// Set up API parameters//n\n\t\t\tlet@ s|api_value|n = { s|task:|n s'image convert'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n\t\t\t// Receive the API response//n\n\t\t\tlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n\t\t\t// Check for errors from the user side//n\n\t\t\tif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\t\t\t\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n\t\t\t}else@{\n\t\t\t\t// Display the result in the developer console//n\n\t\t\t\tconsole@|.log(s|response|n?.s|result|n);\n\t\t\t}\n\t\t}catch@(s|e|n){\n\t\t\tconsole@|.log(s'Conversion failed: 'n, s|e|n);\n\t\t}\n\t};\n\n\treturn@ (\n\t\t<>\n\t\t.....\n\t\t</>\n\t);\n};\n\nexport@ default@ f|ImageConverter|n;\n"
     },
     {
         "id": 2,
         "lang": "Vanilla Js",
         "name": "Image Converter",
         "method": "POST",
-        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the desire image extension//n\nlet@ s|desire_extension|n = s'jpg'n;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image convert'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the desire image extension//n\nlet@ s|desire_extension|n = s'jpg'n;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image convert'n, s|media|n: s|base64_image|n, s|extension|n: s|desire_extension|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 3,
@@ -32,7 +32,7 @@
         "lang": "Node Js",
         "name": "Image Compressor",
         "method": "POST",
-        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = f|require|n(s'chscdn'n).default;\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the compress/quality parcentage//n\nlet@ s|quality|n = 70;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|quality|n: s|desire_quality|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
+        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = f|require|n(s'chscdn'n).default;\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the compress/quality parcentage//n\nlet@ s|quality|n = 70;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|quality|n: s|desire_quality|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 5,
@@ -46,7 +46,7 @@
         "lang": "Vanilla Js",
         "name": "Image Compressor",
         "method": "POST",
-        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the compress/quality parcentage//n\nlet@ s|quality|n = 70;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|quality|n: s|desire_quality|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Describe the compress/quality parcentage//n\nlet@ s|quality|n = 70;\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image compress 'n, s|media|n: s|base64_image|n, s|quality|n: s|desire_quality|n};\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 7,
@@ -60,21 +60,21 @@
         "lang": "Node Js",
         "name": "Deepfake Detector",
         "method": "POST",
-        "code": "0"
+        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = f|require|n(s'chscdn'n).default;\n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'http:/|/127.0.0.1:3000/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'deepfake detect'n, s|media|n: s|base64_image|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s'Detection Result:'n, s|response|n?.s|result|n?.s|class |n);\n}\n\n"
     },
     {
         "id": 9,
         "lang": "React Js",
         "name": "Deepfake Detector",
         "method": "POST",
-        "code": "0"
+        "code": "import@ s|React|n from@ s'react'n;\nimport@ s|CHSCDN|n from@ s'chscdn'n; // Import CHSCDN module//n\n\nconst@ f|DeepfakeDetector|n = () => {\n\n\t// Function to detect deepfake using CHS API//n\n\tconst@ f|detectDeepfake|n = async@ () => {\n\t\ttry@{\n\t\t\t// Connect the CHSCDN plugin//n\n\t\t\t// Create an instance of the CHSCDN class//n\n\t\t\tlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n\t\t\t// Define the local image path//n\n\t\t\tlet@ s|image|n = f|require|n(s'../public/example.png'n);\n\n\t\t\t// Convert the local image to a base64 string//n\n\t\t\tlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n\t\t\t// Set up API parameters//n\n\t\t\tlet@ s|api_value|n = { s|task:|n s'deepfake detect'n, s|media|n: s|base64_image|n };\n\n\t\t\t// Receive the API response//n\n\t\t\tlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n\t\t\t// Check for errors from the user side//n\n\t\t\tif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\t\t\t\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n\t\t\t}else@{\n\t\t\t\t// Display the result in the developer console//n\n\t\t\t\tconsole@|.log(s'Detection Result:'n, s|response|n?.s|result|n?.s|class |n);\n\t\t\t}\n\t\t}catch@(s|e|n){\n\t\t\tconsole@|.log(s'Detection failed: 'n, s|e|n);\n\t\t}\n\t};\n\n\treturn@ (\n\t\t<>\n\t\t.......\n\t\t</>\n\t);\n};\n\nexport@ default@ f|DeepfakeDetector|n;\n"
     },
     {
         "id": 10,
         "lang": "Vanilla Js",
         "name": "Deepfake Detector",
         "method": "POST",
-        "code": "0"
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'deepfake detect'n, s|media|n: s|base64_image|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n?.s|class |n);\n}\n\n"
     },
     {
         "id": 11,
@@ -88,21 +88,21 @@
         "lang": "Node Js",
         "name": "Image to PDF",
         "method": "POST",
-        "code": "0"
+        "code": "// Import the CHSCDN plugin using npm//n\nconst@ s|CHSCDN|n = f|require|n(s'chscdn'n).default;\n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image paths//n\nlet@ s|image_list|n = [s'http:/|/127.0.0.1:3000/example1.png'n, s'http:/|/127.0.0.1:3000/example2.png'n, s'http:/|/127.0.0.1:3000/example3.png'n];\n\n// Convert the local images to a base64 string list//n\nlet@ s|base64_image_list|n = await@ s|chscdn|n.f|imagelist2base64|n(s|image_list|n); // Alternative: image_list_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image to pdf'n, s|media|n: s|base64_image_list|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 13,
         "lang": "React Js",
         "name": "Image to PDF",
         "method": "POST",
-        "code": "0"
+        "code": "import@ s|React|n from@ s'react'n;\nimport@ s|CHSCDN|n from@ s'chscdn'n; // Import CHSCDN module//n\n\nconst@ f|ImageToPDF|n = () => {\n\n\t// Function to convert images to a PDF using CHS API//n\n\tconst@ f|convertToPDF|n = async@ () => {\n\t\ttry@{\n\t\t\t// Connect the CHSCDN plugin//n\n\t\t\t// Create an instance of the CHSCDN class//n\n\t\t\tlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n\t\t\t// Define the local image paths//n\n\t\t\tlet@ s|image_list|n = [f|require|n(s'../public/example1.png'n), f|require|n(s'../public/example2.png'n), f|require|n(s'../public/example3.png'n)];\n\n\t\t\t// Convert the local images to a base64 string list//n\n\t\t\tlet@ s|base64_image_list|n = await@ s|chscdn|n.f|imagelist2base64|n(s|image_list|n); // Alternative: image_list_to_base64//n\n\n\t\t\t// Set up API parameters//n\n\t\t\tlet@ s|api_value|n = { s|task:|n s'image to pdf'n, s|media|n: s|base64_image_list|n };\n\n\t\t\t// Receive the API response//n\n\t\t\tlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n\t\t\t// Check for errors from the user side//n\n\t\t\tif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\t\t\t\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n\t\t\t}else@{\n\t\t\t\t// Display the result in the developer console//n\n\t\t\t\tconsole@|.log(s'PDF Created:'n, s|response|n?.s|result|n);\n\t\t\t}\n\t\t}catch@(s|e|n){\n\t\t\tconsole@|.error(s'PDF conversion failed:'n, s|e|n);\n\t\t}\n\t};\n\n\treturn@ (\n\t\t<>\n\t\t.......\n\t\t</>\n\t);\n};\n\nexport@ default@ f|ImageToPDF|n;\n"
     },
     {
         "id": 14,
         "lang": "Vanilla Js",
         "name": "Image to PDF",
         "method": "POST",
-        "code": "0"
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image_list|n = [s'C:/Users/Pictures/example1.png'n, s'C:/Users/Pictures/example2.png'n, s'C:/Users/Pictures/example3.png'n];\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image_list|n = await@ s|chscdn|n.f|imagelist2base64|n(s|image_list|n); // Alternative: image_list_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'image to pdf'n, s|media|n: s|base64_image_list|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n);\n}\n\n"
     },
     {
         "id": 15,
@@ -144,7 +144,7 @@
         "lang": "Vanilla Js",
         "name": "CDN Use",
         "method": "POST",
-        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/dp.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'deepfake detect'n, s|media|n: s|base64_image|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n?.s|class |n);\n}\n\n"
+        "code": "// Connect the CHSCDN plugin//n\n// Create an instance of the CHSCDN class//n\nlet@ s|chscdn |n = new@ g|CHSCDN|n();\n\n// Define the local image path//n\nlet@ s|image|n = s'C:/Users/Pictures/example.png'n;\n\n// Convert the local image to a base64 string//n\nlet@ s|base64_image|n = await@ s|chscdn|n.f|image2base64|n(s|image|n); // Alternative: image_to_base64//n\n\n// Set up API parameters//n\nlet@ s|api_value|n = { s|task:|n s'deepfake detect'n, s|media|n: s|base64_image|n };\n\n// Receive the API response//n\nlet@ s|response|n = await@ s|chscdn|n.f|APICaller|n(s|api_value|n);\n\n// Check for errors from the user side//n\nif@(s|chscdn|n.f|error_detect|n(s|response|n, s'mute'n)){\n\tconsole@|.error(s'Error occurred while calling CHS API!'n);\n}else@{\n\t// Display the result in the developer console//n\n\tconsole@|.log(s|response|n?.s|result|n?.s|class |n);\n}\n\n"
     },
     {
         "id": 21,
