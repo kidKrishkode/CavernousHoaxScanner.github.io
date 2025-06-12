@@ -32,6 +32,7 @@ class WEB{
         this.appInfo = jsonfile.readFileSync('./public/manifest.json');
         this.isVerified = false;
         this.originalUrl = false;
+        this.private_key = '';
     }
 }
 
@@ -66,26 +67,26 @@ app.use(
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     try{
         const url = req.originalUrl;
         const query = url.split('?')[1];
         const baseURL = req.protocol + '://' + req.get('host');
         const params = new URL(url, baseURL).searchParams;
         const public_key = varchar.duplex;
-        // if(params.has('encode')){
-        //     if(query!=undefined){
-        //         const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
-        //         req.url = `${url.split('?')[0]}?${decodedUrl}`;
-        //         req.query = querystring.parse(decodedUrl);
-        //     }
-        // }else{
-        //     if(query!=undefined){
-        //         const encodedUrl = security.encodedURI(query, public_key);
-        //         req.url = `${url}?encode=${encodedUrl}`;
-        //         req.query = querystring.parse(encodedUrl);
-        //     }
-        // }
+        if(params.has('encode')){
+            if(query!=undefined){
+                const decodedUrl = security.decodedURI(query.replace('encode=',''), public_key);
+                req.url = `${url.split('?')[0]}?${decodedUrl}`;
+                req.query = querystring.parse(decodedUrl);
+            }
+        }else{
+            if(query!=undefined){
+                const encodedUrl = security.encodedURI(query, public_key);
+                req.url = `${url}?encode=${encodedUrl}`;
+                req.query = querystring.parse(encodedUrl);
+            }
+        }
         if(security.secure_access(req.originalUrl)) return next();
         const my_browser = security.browser(req.headers);
         if(!security.validBrowser([my_browser[0], my_browser[1].split('.')[0]*1], varchar.browser_data) && hex.isHosted(req)){
@@ -96,6 +97,8 @@ app.use((req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
+        let key = await hex.keyExchange(hex.isHosted(req)==true?'https://chscdn.vercel.app':'http://127.0.0.1:8080');
+        web.private_key = {'secret': await security.substitutionDecoder(key.secret, String(public_key)), 'public': key.public};
         if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
             return next();
         }
@@ -126,6 +129,7 @@ app.use((req, res, next) => {
         res.status(401).render('notfound',{error: 401, message: "Unauthorize entry not allow, check the source or report it", statement: e});
     }
 });
+
 
 const promises = [
     ejs.renderFile('./views/header.ejs'),
@@ -318,16 +322,19 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
             limit = single_img_bin.length;
         }
         let encrypted_imageData = await web.encryptMedia(imageData);
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+        limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, encrypted_imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
                 form: extension,
                 img: '',
                 load: 'true',
                 key: varchar.API_KEY
-            }).then((result) => {
+            }).then(async (result) => {
                 single_img_bin = [];
-                console.log(result);
+                if(result?.result){
+                    result.result = await security.substitutionDecoder(result.result, varchar.API_KEY);
+                }
                 res.status(200).json(result);
             });
         }).catch((error) => {
