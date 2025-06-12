@@ -200,6 +200,7 @@ module.exports = {
         }
         async function sendPart(part, index, limit){
             if(encoded){
+                console.log(part.substring(0, 30));
                 part = 'encrypted::'+part;
             }
             let attempts = 0;
@@ -311,6 +312,63 @@ module.exports = {
         }
         return "true";
     },
+    keyExchange: async (url) => {
+        function isPrime(n){
+            if (n < 2) return false;
+            if (n === 2 || n === 3) return true;
+            if (n % 2 === 0) return false;
+
+            for (let i = 3; i <= Math.sqrt(n); i += 2) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+        function getRandomPrimes(count, min, max){
+            const primes = [];
+            for(let i = min; i <= max; i++){
+                if (isPrime(i)) primes.push(i);
+            }
+            const selectedPrimes = [];
+            while(selectedPrimes.length < count){
+                const randomPrime = primes[Math.floor(Math.random() * primes.length)];
+                if (!selectedPrimes.includes(randomPrime)) selectedPrimes.push(randomPrime);
+            }
+
+            return selectedPrimes;
+        }
+        const smallPrimes = getRandomPrimes(1, 3, 10);
+        let num = smallPrimes.reduce((prod, prime) => prod * prime, 1);
+
+        while(!isPrime(num)){
+            num += 1;
+        }
+        async function key_exchange(id){
+            try{
+                const response = await fetch(`${url}/key_exchange?a=${num}`, {
+                    method: 'GET'
+                });
+                if(!response.ok){
+                    const errorDetails = await response.json();
+                    return errorDetails;
+                }
+                const result = await response.json();
+                return result;
+            }catch(error){
+                if(error.cause.errno==-4078 || error.cause.code=='ECONNREFUSED'){
+                    if(id>0){
+                        return key_exchange(id-1);
+                    }
+                }
+                return {'secret': 'iinmhjjjhnnkn', 'public': 5};
+            }
+        }
+        let result = await key_exchange(1);
+        if(typeof(result)!='object'){
+            return '1441';
+        }else{
+            return result;
+        }
+    },
     createPDFBase64: async (imageList, layout="combine", paper_size="A4", PDFDocument) => {
         function base64ToBuffer(base64){
             return Buffer.from(base64.split(",")[1], "base64");
@@ -387,6 +445,13 @@ module.exports = {
             multipleImgBin[i] = multipleImgBin[i].join('');
         }
         return multipleImgBin;
+    },
+    stringSizeInKB: (str) => {
+        const encoder = new TextEncoder();
+        const uint8Array = encoder.encode(str);
+        const sizeInBytes = uint8Array.byteLength;
+        const sizeInKB = sizeInBytes/1024;
+        return Math.floor(sizeInKB);
     },
     foo:() => {
         return 0;
