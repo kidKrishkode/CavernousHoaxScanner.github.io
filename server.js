@@ -324,7 +324,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
         let encrypt_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
         
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, encrypted_imageData, limit).then((connection) => {
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
                 form: extension,
