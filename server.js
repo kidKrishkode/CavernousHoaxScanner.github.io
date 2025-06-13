@@ -334,7 +334,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 form: extension,
                 img: '',
                 load: 'true',
-                key: encrypted_key
+                key: varchar.API_KEY
             }).then(async (result) => {
                 single_img_bin = [];
                 if(result?.result){
@@ -380,7 +380,7 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
                 width: null,
                 img: '',
                 load: 'true',
-                key: encrypted_key
+                key: varchar.API_KEY
             }).then(async (result) => {
                 single_img_bin = [];
                 if(result?.result){
@@ -429,7 +429,7 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 ext: extension,
                 media: '',
                 load: 'true',
-                key: encrypted_key,
+                key: varchar.API_KEY,
                 heatmap: heatmap
             }).then((result) => {
                 single_img_bin = [];
