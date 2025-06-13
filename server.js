@@ -429,7 +429,7 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 ext: extension,
                 media: '',
                 load: 'true',
-                key: varchar.API_KEY,
+                key: encrypted_key,
                 heatmap: heatmap
             }).then((result) => {
                 single_img_bin = [];
