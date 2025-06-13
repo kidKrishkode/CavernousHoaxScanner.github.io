@@ -67,6 +67,61 @@ module.exports = {
         }
         return plain_txt;
     },
+    keyEncryption: async (private_key, API_key, key) => {
+        let secret = private_key.secret;
+        let public = private_key.public;
+
+        async function decoder(cipher, key){
+            const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+#%$&^,|?/";
+            let plain_txt = "";
+            key = key.repeat(Math.ceil(cipher.length / key.length));
+            for(let i = 0; i < cipher.length; i++){
+                let cipherIndex = vocabulary.indexOf(cipher[i]);
+                let keyIndex = vocabulary.indexOf(key[i]);
+                if (cipherIndex !== -1 && keyIndex !== -1) {
+                    let newIndex = (cipherIndex - keyIndex + vocabulary.length) % vocabulary.length;
+                    plain_txt += vocabulary[newIndex];
+                } else {
+                    plain_txt += cipher[i];
+                }
+            }
+            return plain_txt
+        }
+        async function encoder(plain_txt, key){
+            const vocabulary = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!*+#%$&^,|?/";
+            let cipher = "";
+            key = key.repeat(Math.ceil(plain_txt.length / key.length));
+
+            for(let i = 0; i < plain_txt.length; i++){
+                let plain_txtIndex = vocabulary.indexOf(plain_txt[i]);
+                let keyIndex = vocabulary.indexOf(key[i]);
+                if(plain_txtIndex !== -1 && keyIndex !== -1){
+                    let newIndex = (plain_txtIndex + keyIndex) % vocabulary.length;
+                    cipher += vocabulary[newIndex];
+                } else {
+                    cipher += plain_txt[i];
+                }
+            }
+            return cipher;
+        }
+        
+        let p = await decoder(secret, String(key));
+        let q = 7;
+        let fn = (p-1)*(q-1);
+        let e = public*1;
+        let d = '.';
+        let i = 2;
+        while(String(d).indexOf('.')>=0){
+            d = (((fn)*i)+1)/e;
+            i++;
+            if (e>20) return 1;
+        }
+        if(d==1){
+            return 'mipjGMkkmRQQpMsefNglorqooINlIJgr'+secret;
+        }
+        let encrypted_key = await encoder(API_key, String(d));
+        return encrypted_key+secret;
+    },
     browser: (navigator) => { 
         var browserAgent = navigator['user-agent']; 
         var browserName, browserVersion, browserMajorVersion; 

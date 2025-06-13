@@ -200,7 +200,7 @@ module.exports = {
         }
         async function sendPart(part, index, limit){
             if(encoded){
-                console.log(part.substring(0, 30));
+                // console.log(part.substring(0, 30));
                 part = 'encrypted::'+part;
             }
             let attempts = 0;
