@@ -97,8 +97,7 @@ app.use(async (req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
-        let key = await hex.keyExchange(hex.isHosted(req)==true?'https://chscdn.vercel.app':'http://127.0.0.1:8080');
-        web.private_key = {'secret': await security.substitutionDecoder(key.secret, String(public_key)), 'public': key.public};
+        web.private_key = await hex.keyExchange(hex.isHosted(req)==true?'https://chscdn.vercel.app':'http://127.0.0.1:8080');
         if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
             return next();
         }
@@ -323,13 +322,15 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         }
         let encrypted_imageData = await web.encryptMedia(imageData);
         limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, encrypted_imageData, limit).then((connection) => {
+        let encrypt_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
                 form: extension,
                 img: '',
                 load: 'true',
-                key: varchar.API_KEY
+                key: encrypt_key
             }).then(async (result) => {
                 single_img_bin = [];
                 if(result?.result){
@@ -537,7 +538,7 @@ WEB.prototype.encryptMedia = async function(media){
     try{
         let encrypted_body = await security.substitutionEncoder(media, varchar.API_KEY);
         let encrypted_media = 'encrypted::'+encrypted_body;
-        console.log("server side:  "+encrypted_media.slice(0, 40));
+        // console.log("server side:  "+encrypted_media.slice(0, 40));
         return encrypted_media;
     }catch(e){
         console.log("Error to encrypt the provided media!\n",e);
@@ -550,7 +551,7 @@ WEB.prototype.decryptMedia = async function(media){
         let data = media.split('encrypted::')[1];
         let plain_body = await security.substitutionDecoder(data, varchar.API_KEY);
         let plain_media = plain_body;
-        console.log("server side:  "+plain_media.slice(0, 40));
+        // console.log("server side:  "+plain_media.slice(0, 40));
         return plain_media;
     }catch(e){
         console.log("Error to encrypt the provided media!\n",e);
