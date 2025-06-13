@@ -167,6 +167,7 @@ module.exports = {
         frog = frog.replaceAll(`from@`, `<span class='prp'>from</span>`);
         frog = frog.replaceAll(`export@`, `<span class='prp'>export</span>`);
         frog = frog.replaceAll(`default@`, `<span class='prp'>default</span>`);
+        frog = frog.replaceAll(`print@`, `<span class='prp'>print</span>`);
         frog = frog.replaceAll(`try@`, `<span class='prp'>try</span>`);
         frog = frog.replaceAll(`catch@`, `<span class='prp'>catch</span>`);
         frog = frog.replaceAll(`str@`, `<span class='grn'>str</span>`);
@@ -179,9 +180,11 @@ module.exports = {
         frog = frog.replaceAll(`s'`, `<span class='gld'>'`);
         frog = frog.replaceAll(`'n`, `'</span>`);
         frog = frog.replaceAll(`//n`, `</span>`);
-        frog = frog.replaceAll(`//`, `<span class='grn'>//`);
-        frog = frog.replaceAll(`/*`, `<span class='grn'>/*`);
+        frog = frog.replaceAll(`//`, `<span class='cgrn'>//`);
+        frog = frog.replaceAll(`/*`, `<span class='cgrn'>/*`);
         frog = frog.replaceAll(`*/`, `*/</span>`);
+        frog = frog.replaceAll(`#n`, `</span>`);
+        frog = frog.replaceAll(`#`, `<span class='cgrn'>#`);
         frog = frog.replaceAll(`new@`, `<span class='prp'>new</span>`);
         frog = frog.replaceAll(`Date@`, `<span class='prp'>Date</span>`);
         frog = frog.replaceAll(`Array@`, `<span class='prp'>Array</span>`);
