@@ -330,7 +330,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 form: extension,
                 img: '',
                 load: 'true',
-                key: encrypt_key
+                key: varchar.API_KEY
             }).then(async (result) => {
                 single_img_bin = [];
                 if(result?.result){
