@@ -529,12 +529,17 @@ System.prototype.block_resource = function(ids){
     document.getElementById(ids.input).disabled = true;
 }
 System.prototype.codeset = function(...args){
-    let [name, lang, id, method] = args;
+    let [name, lang, id, method, apikey] = args;
     try{
         let appointCode, pyInterpreter, jsCompiler;
         setTimeout(()=>{
             appointCode = eval(compiler.appointCode);
-            document.getElementById(id).innerText = appointCode(name, lang, compiler, method).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','');
+            if(!this.validapiKey(apikey)){
+                document.getElementById(id).innerText = appointCode(name, lang, compiler, method).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','').replace('# Define your api key directly or using hidden formate #n\ns|chscdn |n.s|key|n = <|api_key|>\n\n','');
+            }else{
+                document.getElementById(id).innerText = appointCode(name, lang, compiler, method).replace('<|api_key|>', "s'"+document.getElementById(apikey).value+"'n");
+            }
+            // document.getElementById(id).innerText = appointCode(name, lang, compiler, method).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','');
             if(lang == 'Python'){
                 pyInterpreter = eval(compiler.pyInterpreter);
                 pyInterpreter(`#${id}`);
