@@ -204,16 +204,9 @@
         setTimeout(()=>{
             let code = 0;
             appointCode = eval(compiler.appointCode);
-            if(!system.validapiKey('apikey')){
-                code = appointCode(name, lang, compiler).replace('// Define your api key directly or using hidden formate//n\ns|chscdn |n.s|key|n = <|api_key|>;\n\n','').replace('// Define your api key directly or using hidden formate//n\n\t\t\ts|chscdn |n.s|key|n = <|api_key|>;\n\n\t\t\t','');
-            }else{
-                code = appointCode(name, lang, compiler).replace('<|api_key|>', "s'"+document.getElementById('apikey').value+"'n");
-            }
-            document.getElementById('apiInSnipVanillaHtml').innerText = code;
+            system.codeset(name, lang, 'apiInSnipVanillaHtml', 'POST', 'apikey');
             updateLine = eval(compiler.updateLineNumbers);
-            jsCompiler = eval(compiler.jsCompiler);
             ideDeploy = eval(compiler.ideDeploy);
-            jsCompiler('#apiInSnipVanillaHtml');
             ideDeploy('#apiInSnipVanillaHtml','#apiInSnipVanillaHtml-line', updateLine);
         },1000);
     }
