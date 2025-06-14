@@ -97,11 +97,11 @@ app.use(async (req, res, next) => {
         }else{
             API_LINK = 'https://chsapi.vercel.app';
         }
-        hex.keyExchange(hex.isHosted(req)==true?'https://chscdn.vercel.app':'http://127.0.0.1:8080').then((key) => {
-            web.private_key = key;
-        }).catch((error) => {
-            console.error("Error to exchange key via CDN: ", error);
-        });
+        // hex.keyExchange(hex.isHosted(req)==true?'https://chscdn.vercel.app':'http://127.0.0.1:8080').then((key) => {
+        //     web.private_key = key;
+        // }).catch((error) => {
+        //     console.error("Error to exchange key via CDN: ", error);
+        // });
         if(security.nonAuthPage(req.path) || !hex.isHosted(req)){
             return next();
         }
@@ -324,9 +324,9 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
         }
-        let encrypted_imageData = await web.encryptMedia(imageData);
-        limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
-        let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        // let encrypted_imageData = await web.encryptMedia(imageData);
+        // limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
+        // let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
         
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
@@ -334,12 +334,9 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
                 form: extension,
                 img: '',
                 load: 'true',
-                key: encrypted_key
-            }).then(async (result) => {
+                key: varchar.API_KEY
+            }).then((result) => {
                 single_img_bin = [];
-                if(result?.result){
-                    result.result = await security.substitutionDecoder(result.result, varchar.API_KEY);
-                }
                 res.status(200).json(result);
             });
         }).catch((error) => {
@@ -368,9 +365,9 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
             imageData = hex.mergeListToString(single_img_bin);
             limit = single_img_bin.length;
         }
-        let encrypted_imageData = await web.encryptMedia(imageData);
-        limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
-        let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        // let encrypted_imageData = await web.encryptMedia(imageData);
+        // limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
+        // let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
 
         await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
@@ -380,12 +377,9 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
                 width: null,
                 img: '',
                 load: 'true',
-                key: encrypted_key
-            }).then(async (result) => {
+                key: varchar.API_KEY
+            }).then((result) => {
                 single_img_bin = [];
-                if(result?.result){
-                    result.result = await security.substitutionDecoder(result.result, varchar.API_KEY);
-                }
                 res.status(200).json(result);
             });
         }).catch((error) => {
@@ -419,9 +413,9 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 heatmap = req.body.heatmap;
             }
         }
-        let encrypted_mediaData = await web.encryptMedia(mediaData);
-        limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_mediaData)/900)+2);
-        let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        // let encrypted_mediaData = await web.encryptMedia(mediaData);
+        // limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_mediaData)/900)+2);
+        // let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
 
         await hex.singlePartsAPI(`${API_LINK}/load/single`, mediaData, limit).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
@@ -429,7 +423,7 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
                 ext: extension,
                 media: '',
                 load: 'true',
-                key: encrypted_key,
+                key: varchar.API_KEY,
                 heatmap: heatmap
             }).then((result) => {
                 single_img_bin = [];
