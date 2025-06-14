@@ -212,6 +212,7 @@
             document.querySelector('.progress-status').style.display = 'block';
             system.block_resource({input: "file-input", selector: []});
             document.querySelector('.sample-dfd').style.display = 'none';
+            document.querySelector('.social-opener').innerHTML = ' ';
             if(document.getElementById('media-type').textContent=='Video'){
                 videoUpload(file);
             }else{
