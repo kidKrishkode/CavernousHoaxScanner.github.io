@@ -642,6 +642,7 @@ System.prototype.validateApiKey = function(id1, id2){
     }
 }
 System.prototype.validapiKey = function(id){
+    if(id==undefined) return false;
     const apiKey = document.getElementById(id).value;
     const regex = /^[a-z0-9]{32}$/;
     return regex.test(apiKey);
