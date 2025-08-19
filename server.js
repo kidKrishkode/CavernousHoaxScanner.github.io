@@ -124,6 +124,10 @@ app.use(helmet.contentSecurityPolicy({
             "https://chsapi.vercel.app",
             "https://chscdn.vercel.app"
         ],
+        frameSrc: [
+            "'self'",
+            "https://vercel.live"
+        ],
     },
 }));
 
@@ -680,4 +684,5 @@ server.listen(PORT, (err) => {
     console.info(`\thttp://localhost:${PORT}`);
     console.log("\n\x1b[32mNode web compiled!\x1b[0m \n");
 });
+
 
