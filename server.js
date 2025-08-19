@@ -54,10 +54,10 @@ let multiple_img_bin = [];
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use('/assets',express.static(path.join(__dirname,'assets')));
-app.use('/config',express.static(path.join(__dirname,'config')));
-app.use('/images',express.static(path.join(__dirname,'images')));
-app.use('/public',express.static(path.join(__dirname,'public')));
+app.use('/assets',express.static(path.join(__dirname,'assets'), { maxAge: '30d' }));
+app.use('/config',express.static(path.join(__dirname,'config'), { maxAge: '30d' }));
+app.use('/images',express.static(path.join(__dirname,'images'), { maxAge: '30d' }));
+app.use('/public',express.static(path.join(__dirname,'public'), { maxAge: '30d' }));
 
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
@@ -94,6 +94,8 @@ app.use(helmet.contentSecurityPolicy({
             "'unsafe-hashes'",
             "'unsafe-eval'",
             "https://cdnjs.cloudflare.com",
+            "https://vercel.live",
+            "https://vercel.com",
             (req, res) => `'nonce-${res.locals.nonce}'`
         ],
         "script-src-attr": ["'unsafe-inline'"],
