@@ -9,6 +9,11 @@ const ejs = require('ejs');
 const jsonfile = require('jsonfile');
 const multer = require('multer');
 const session = require('express-session');
+const rateLimit = require('express-rate-limit');
+const { ipKeyGenerator } = require('express-rate-limit');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const crypto = require('crypto');
 let varchar, security, hex, compiler;
 try{
     varchar = require('./config/env-variables');
@@ -66,6 +71,101 @@ app.use(
 
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
+
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 100,
+    keyGenerator: (req) => ipKeyGenerator({ ip: req.headers['x-forwarded-for'] || req.ip }),
+    skipSuccessfulRequests: true,
+    message: 'Too many requests hit the server, please try again later or check our fair use policy',
+});
+
+app.use((req, res, next) => {
+    res.locals.nonce = crypto.randomBytes(16).toString('base64');
+    next();
+});
+
+app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+        "default-src": ["'self'"],
+        "script-src": [
+            "'self'",
+            "'unsafe-hashes'",
+            "'unsafe-eval'",
+            "https://cdnjs.cloudflare.com",
+            (req, res) => `'nonce-${res.locals.nonce}'`
+        ],
+        "script-src-attr": ["'unsafe-inline'"],
+        "style-src": [
+            "'self'",
+            "https://fonts.googleapis.com",
+            "https://maxcdn.bootstrapcdn.com",
+            "https://stackpath.bootstrapcdn.com",
+            "'unsafe-inline'" 
+        ],
+        "font-src": [
+            "'self'",
+            "https://fonts.googleapis.com",
+            "https://maxcdn.bootstrapcdn.com",
+            "https://stackpath.bootstrapcdn.com",
+            "https://fonts.gstatic.com",
+            "data:"
+        ],
+        "img-src": ["'self'", "data:", "https://avatars.githubusercontent.com"],
+        "connect-src": [
+            "'self'",
+            "http://127.0.0.1:8000",
+            "http://127.0.0.1:5000",
+            "http://127.0.0.1:8080",
+            "https://chsweb.vercel.app",
+            "https://chsapi.vercel.app",
+            "https://chscdn.vercel.app"
+        ],
+    },
+}));
+
+app.use([
+    xss(),
+    limiter,
+    express.json(),
+    express.urlencoded({ extended: true }),
+    (req, res, next) => {
+        const BLOCK_DURATION_MS = 60 * 1000;
+        const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip;
+        if(varchar.blockedIPs.includes(clientIP)){
+            console.warn(`Blocked IP attempt to attack: ${clientIP}`);
+            return req.destroy() || res.connection.destroy();
+        }
+        if(varchar.tempBlockedIPs.has(clientIP)){
+            const blockedAt = varchar.tempBlockedIPs.get(clientIP);
+            const now = Date.now();
+            if(now - blockedAt < BLOCK_DURATION_MS){
+                return res.status(403).send('Your IP is temporarily blocked due to excessive requests. Try again later.');
+            }else{
+                varchar.tempBlockedIPs.delete(clientIP);
+                varchar.ipHits[clientIP] = 0;
+            }
+        }
+        if(Object.keys(varchar.ipHits).length >= 10000 && !varchar.ipHits[clientIP]){
+            console.warn(`Max users limit reached. Dropping new user with IP: ${clientIP}`);
+            return res.status(429).send('Server is too busy now, Because to many user is present in the lobby. Please try again some time later or report us');
+        }
+        varchar.ipHits[clientIP] = (varchar.ipHits[clientIP] || 0) + 1;
+        if(varchar.ipHits[clientIP] > 100 && varchar.ipHits[clientIP] < 200){
+            varchar.tempBlockedIPs.set(clientIP, Date.now());
+            delete varchar.ipHits[clientIP];
+            return res.status(403).send('Your IP has been temporarily blocked due to exceed the request limit. Please check our fair use policy.');
+        }
+        if(varchar.ipHits[clientIP] >= 200){
+            varchar.blockedIPs.push(clientIP);
+            varchar.tempBlockedIPs.delete(clientIP);
+            delete varchar.ipHits[clientIP];
+            return res.status(403).send('Access denied, client ip is blocked due to past history of mal-practices!');
+        }
+        next();
+    }
+]);
 
 app.use(async (req, res, next) => {
     try{
@@ -144,13 +244,13 @@ const promises = [
 
 app.get('/main', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('main',{header, services, feed, faq, footer});
+        res.status(200).render('main',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
 app.get('/', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('index',{header, services, feed, faq, footer});
+        res.status(200).render('index',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
@@ -258,7 +358,7 @@ app.get('/heatmap', (req, res) => {
 
 app.get('/imgToPdf', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('pdfConverter',{header, services, feed, faq, footer});
+        res.status(200).render('pdfConverter',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
@@ -308,7 +408,7 @@ app.post('/load/multiple', (req, res) => {
 
 app.get('/converter', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('converter',{header, services, feed, faq, footer});
+        res.status(200).render('converter',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
@@ -349,7 +449,7 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
 
 app.get('/compressor', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('compressor',{header, services, feed, faq, footer});
+        res.status(200).render('compressor',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
@@ -451,31 +551,31 @@ app.post('/index/sample', async (req, res) => {
 
 app.get('/imgGenerator', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('imgGenerator',{header, services, feed, faq, footer});
+        res.status(200).render('imgGenerator',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
 app.get('/apiPlug', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('apiPlug',{header, services, feed, faq, footer});
+        res.status(200).render('apiPlug',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
 app.get('/api', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('apiLanding',{header, services, feed, faq, footer});
+        res.status(200).render('apiLanding',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
 app.get('/about', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('about',{header, services, feed, faq, footer});
+        res.status(200).render('about',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
 app.get('/docs', (req, res) => {
     Promise.all(promises).then(([header, footer, services, feed, faq]) => {
-        res.status(200).render('docs',{header, services, feed, faq, footer});
+        res.status(200).render('docs',{header, services, feed, faq, footer, nonce: res.locals.nonce });
     });
 });
 
