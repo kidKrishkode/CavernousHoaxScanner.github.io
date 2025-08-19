@@ -259,7 +259,7 @@
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script>
+<script nonce="<%= nonce %>">
     pageSet.push('header', 'docsPage', 'moreProduct', 'faq-help', 'footer');
     appearSet.push(['.message', 80], ['.api-workflow', 180], ['#moreProduct', 180],['.product-list-a', 120], ['.product-list-b', 1280], ['#customerFeed', 20], ['#faq-help', 1280]); 
     currentPage.push('main');
@@ -269,7 +269,7 @@
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
 </script>
-<script>
+<script nonce="<%= nonce %>">
     document.addEventListener("DOMContentLoaded", () => {
         const messages = [
             "Image Converter",
@@ -299,7 +299,7 @@
         system.codeset('CDN Use', 'Vanilla Js', 'apiInSnipVanilla02');
     },1000);
 </script>
-<script>
+<script nonce="<%= nonce %>">
     setTimeout(()=>{
         const trafficAnalyser = eval(config.hex.trafficAnalyser);
         const line_graph = trafficAnalyser();

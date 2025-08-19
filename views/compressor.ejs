@@ -40,7 +40,7 @@
         outline: none;
     }
 </style>
-<body onload="compressor.engine_start();">
+<body>
     <header id="header">
         <%= header %>
     </header>
@@ -133,7 +133,12 @@
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
-<script>
+<script nonce="<%= nonce %>">
+    window.addEventListener('load', function () {
+        compressor.engine_start();
+    });
+</script>
+<script nonce="<%= nonce %>">
     pageSet.push('header','converterPage','moreProduct', 'faq-help', 'footer');
     appearSet.push(['.htsi',380],['#moreProduct',580], ['#faq-help', 980]);
     currentPage.push('compressor');

@@ -470,7 +470,7 @@
 <script src='https://chsweb.vercel.app/public/App.js'></script>
 <script src="https://chsweb.vercel.app/public/default.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script>
+<script nonce="<%= nonce %>">
     pageSet.push('apiLandingPage');
     appearSet.push(['.product-list-a', 120], ['.product-list-b', 780]); 
     currentPage.push('api');
@@ -479,7 +479,7 @@
         try{themeSet[0][14][1] = "#fff";system.setTheme();}catch(e){console.warn("Theme Warning:\nIDE backgraund not setted due to poor os quality, Please use it manually\n\n")};
     },2000);
 </script>
-<script>
+<script nonce="<%= nonce %>">
     setTimeout(()=>{
         system.compilerSetUp();
     },1000);

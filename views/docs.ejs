@@ -582,7 +582,7 @@
 </body>
 <script src="../public/App.js"></script>
 <script src="../public/default.min.js"></script>
-<script>
+<script nonce="<%= nonce %>">
     pageSet.push('header', 'docsPage', 'faq-help', 'footer');
     appearSet.push(['.message', 80], ['#customerFeed', 20], ['#faq-help', 1280]);
     currentPage.push('api');
@@ -591,7 +591,7 @@
     document.getElementById('faq-help').innerHTML = document.getElementById('faq-help').textContent;
     document.getElementById('customerFeed').innerHTML = document.getElementById('customerFeed').textContent;
 </script>
-<script>
+<script nonce="<%= nonce %>">
     document.addEventListener("DOMContentLoaded", () => {
         const messages = [
             "Image Converter",
@@ -622,7 +622,7 @@
     }, 1000);
 
 </script>
-<script>
+<script nonce="<%= nonce %>">
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     if (searchParam != null) {

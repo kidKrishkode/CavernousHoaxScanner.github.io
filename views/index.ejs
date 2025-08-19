@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Cavernous Hoax Scanner">
     <meta property="og:image" content="../images/side-img.png" name="og:image">
-    <!-- <meta property="og:image" content="https://chsweb.vercel.app/public/favicon.ico" name="og:image"> -->
     <meta itemprop="image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
-    <!-- <meta itemprop="image" content="https://chsweb.vercel.app/public/favicon.ico">-->
     <meta property="og:site_name" content="Cavernous Hoax Scanner">
     <meta property="twitter:image" content="https://kidKrishkode.github.io/CavernousHoaxScanner.github.io/images/side-img.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -28,7 +26,7 @@
         display: none;
     }
 </style>
-<body onload="dfd.engine_start();">
+<body>
     <header id="header">
         <%= header %>
     </header>
@@ -176,7 +174,12 @@
     "description": "Cavernous Hoax Scanner helps detect deepfake images and video using AI-driven models. Ensure authenticity with advanced media processing algorithms."
   }
 </script>
-<script>
+<script nonce="<%= nonce %>">
+    window.addEventListener('load', function () {
+        dfd.engine_start();
+    });
+</script>
+<script nonce="<%= nonce %>">
     pageSet.push('header','dfdPage','moreProduct','faq-help','footer');
     appearSet.push(['.htsi',380],['#moreProduct',580],['#faq-help', 1180]);
     currentPage.push('index');
@@ -384,7 +387,7 @@
     }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
+<script nonce="<%= nonce %>">
 function session_key(){
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@/*#!|^%$&';
     let result = '';
@@ -437,7 +440,7 @@ function generatePDF(){
     html2pdf().from(element).save();
 }
 </script>
-<script>
+<script nonce="<%= nonce %>">
     function getHeatmap(realImage, heatmapImage){
         fetch('/heatmap', {
             method: 'GET',
