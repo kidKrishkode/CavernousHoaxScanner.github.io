@@ -144,11 +144,19 @@ module.exports = {
         }
     },
     isHosted: (req) => {
-        const host = req.hostname;
-        if(host === 'localhost' || host === '127.0.0.1'){
-            return false;
+        if(req != Number){
+            const host = req.hostname;
+            if(host === 'localhost' || host === '127.0.0.1'){
+                return false;
+            }else{
+                return true;
+            }
         }else{
-            return true;
+            if(req == 6100){
+                return false;
+            }else{
+                return true;
+            }
         }
     },
     reward: (res) => {
