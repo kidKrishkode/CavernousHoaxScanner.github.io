@@ -191,7 +191,7 @@ module.exports = {
             return error;
         }
     },
-    singlePartsAPI: async (url, mainString, limit) => {
+    singlePartsAPI: async (url, mainString, limit, Api_key) => {
         const parts = [];
         let encoded=false;
         if(mainString==undefined){
@@ -224,7 +224,7 @@ module.exports = {
                             img: part,
                             limit: limit,
                             index: index,
-                            key: "3045dd712ffe6e702e3245525ac7fa38"
+                            key: Api_key
                         })
                     });
                     const data = await response.json();
@@ -460,6 +460,35 @@ module.exports = {
         const sizeInBytes = uint8Array.byteLength;
         const sizeInKB = sizeInBytes/1024;
         return Math.floor(sizeInKB);
+    },
+    setBlockCookie: (res, type) => {
+        const timestamp = Date.now();
+        const value = `${type}${timestamp}`;
+        const encoded = Buffer.from(value).toString('base64');
+
+        res.cookie('blockState', encoded, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Strict',
+            maxAge: type === 'blocked' ? 24 * 60 * 60 * 1000 : 60 * 1000
+        });
+    },
+    isClientBlockedByCookie: (req) => {
+        const cookie = req?.cookies?.['blockState'];
+        if (!cookie) return null;
+
+        try{
+            const decoded = Buffer.from(cookie, 'base64').toString();
+            const type = decoded.startsWith('blocked') ? 'blocked' : decoded.startsWith('temp') ? 'temp' : null;
+            const timestamp = parseInt(decoded.replace(String(type), ''), 10);
+            const now = Date.now();
+
+            if (type === 'blocked' && now - timestamp < 24 * 60 * 60 * 1000) return 'blocked';
+            if (type === 'temp' && now - timestamp < 60 * 1000) return 'temp';
+        }catch(err){
+            return null;
+        }
+        return null;
     },
     foo:() => {
         return 0;
