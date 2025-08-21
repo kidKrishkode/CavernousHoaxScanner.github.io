@@ -14,6 +14,7 @@ const { ipKeyGenerator } = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 let varchar, security, hex, compiler;
 try{
     varchar = require('./config/env-variables');
@@ -38,6 +39,7 @@ class WEB{
         this.isVerified = false;
         this.originalUrl = false;
         this.private_key = '';
+        this.API_KEY = process.env.KEY || '';
     }
 }
 
@@ -61,6 +63,7 @@ app.use('/public',express.static(path.join(__dirname,'public'), { maxAge: '30d' 
 
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+app.use(cookieParser());
 app.use(
     session({
         secret: security.sessionKey(),
@@ -138,15 +141,17 @@ app.use([
     express.urlencoded({ extended: true }),
     (req, res, next) => {
         const BLOCK_DURATION_MS = 60 * 1000;
-        const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip;
-        if(varchar.blockedIPs.includes(clientIP)){
+        const clientIP = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.headers['x-vercel-forwarded-for'] || req.connection.remoteAddress || req.ip;
+        const cookieBlock = hex.isClientBlockedByCookie(req);
+        
+        if(varchar.blockedIPs.includes(clientIP) || cookieBlock === 'blocked'){
             console.warn(`Blocked IP attempt to attack: ${clientIP}`);
             return req.destroy() || res.connection.destroy();
         }
-        if(varchar.tempBlockedIPs.has(clientIP)){
+        if(varchar.tempBlockedIPs.has(clientIP) || cookieBlock === 'temp'){
             const blockedAt = varchar.tempBlockedIPs.get(clientIP);
             const now = Date.now();
-            if(now - blockedAt < BLOCK_DURATION_MS){
+            if(now - blockedAt < BLOCK_DURATION_MS || cookieBlock === 'temp'){
                 return res.status(403).send('Your IP is temporarily blocked due to excessive requests. Try again later.');
             }else{
                 varchar.tempBlockedIPs.delete(clientIP);
@@ -161,12 +166,14 @@ app.use([
         if(varchar.ipHits[clientIP] > 100 && varchar.ipHits[clientIP] < 200){
             varchar.tempBlockedIPs.set(clientIP, Date.now());
             delete varchar.ipHits[clientIP];
+            hex.setBlockCookie(res, 'temp');
             return res.status(403).send('Your IP has been temporarily blocked due to exceed the request limit. Please check our fair use policy.');
         }
         if(varchar.ipHits[clientIP] >= 200){
             varchar.blockedIPs.push(clientIP);
             varchar.tempBlockedIPs.delete(clientIP);
             delete varchar.ipHits[clientIP];
+            hex.setBlockCookie(res, 'blocked');
             return res.status(403).send('Access denied, client ip is blocked due to past history of mal-practices!');
         }
         next();
@@ -432,15 +439,15 @@ app.post('/converter/process', upload.single('file'), async (req, res) => {
         }
         // let encrypted_imageData = await web.encryptMedia(imageData);
         // limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
-        // let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        // let encrypted_key = await security.keyEncryption(web.private_key, web.API_KEY, varchar.duplex);
         
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit, web.API_KEY).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageConverter`, {
                 form: extension,
                 img: '',
                 load: 'true',
-                key: varchar.API_KEY
+                key: web.API_KEY
             }).then((result) => {
                 single_img_bin = [];
                 res.status(200).json(result);
@@ -473,9 +480,9 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
         }
         // let encrypted_imageData = await web.encryptMedia(imageData);
         // limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_imageData)/900)+2);
-        // let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        // let encrypted_key = await security.keyEncryption(web.private_key, web.API_KEY, varchar.duplex);
 
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit).then((connection) => {
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, imageData, limit, web.API_KEY).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/imageCompressor`, {
                 quality: quality*1,
@@ -483,7 +490,7 @@ app.post('/compressor/process', upload.single('file'), async (req, res) => {
                 width: null,
                 img: '',
                 load: 'true',
-                key: varchar.API_KEY
+                key: web.API_KEY
             }).then((result) => {
                 single_img_bin = [];
                 res.status(200).json(result);
@@ -521,15 +528,15 @@ app.post('/index/process', upload.single('file'), async (req, res) => {
         }
         // let encrypted_mediaData = await web.encryptMedia(mediaData);
         // limit = Math.max(limit, Math.floor(hex.stringSizeInKB(encrypted_mediaData)/900)+2);
-        // let encrypted_key = await security.keyEncryption(web.private_key, varchar.API_KEY, varchar.duplex);
+        // let encrypted_key = await security.keyEncryption(web.private_key, web.API_KEY, varchar.duplex);
 
-        await hex.singlePartsAPI(`${API_LINK}/load/single`, mediaData, limit).then((connection) => {
+        await hex.singlePartsAPI(`${API_LINK}/load/single`, mediaData, limit, web.API_KEY).then((connection) => {
             if(web.noise_detect(connection)) return web.handle_error(res, connection);
             hex.chsAPI(`${API_LINK}/api/dfdScanner`, {
                 ext: extension,
                 media: '',
                 load: 'true',
-                key: varchar.API_KEY,
+                key: web.API_KEY,
                 heatmap: heatmap
             }).then((result) => {
                 single_img_bin = [];
@@ -651,7 +658,7 @@ WEB.prototype.handle_error = function(res, code){
 }
 WEB.prototype.encryptMedia = async function(media){
     try{
-        let encrypted_body = await security.substitutionEncoder(media, varchar.API_KEY);
+        let encrypted_body = await security.substitutionEncoder(media, web.API_KEY);
         let encrypted_media = 'encrypted::'+encrypted_body;
         // console.log("server side:  "+encrypted_media.slice(0, 40));
         return encrypted_media;
@@ -664,7 +671,7 @@ WEB.prototype.encryptMedia = async function(media){
 WEB.prototype.decryptMedia = async function(media){
     try{
         let data = media.split('encrypted::')[1];
-        let plain_body = await security.substitutionDecoder(data, varchar.API_KEY);
+        let plain_body = await security.substitutionDecoder(data, web.API_KEY);
         let plain_media = plain_body;
         // console.log("server side:  "+plain_media.slice(0, 40));
         return plain_media;
@@ -684,5 +691,4 @@ server.listen(PORT, (err) => {
     console.info(`\thttp://localhost:${PORT}`);
     console.log("\n\x1b[32mNode web compiled!\x1b[0m \n");
 });
-
 
