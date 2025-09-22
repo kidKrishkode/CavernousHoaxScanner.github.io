@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": false,
+        "noEmit": true,
+        "module": "commonjs",
+        "target": "ES2020",
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": [
+        "config/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
