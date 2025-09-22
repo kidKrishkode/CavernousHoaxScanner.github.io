@@ -1,3 +1,4 @@
+// @ts-nocheck
 module.exports = {
     encodedURI: (url, key) => {
         let hash = [["0","*z"],["1","*y"],["2","*x"],["3","*w"],["4","*v"],["5","*u"],["6","*t"],["7","*s"],["8","*r"],["9","*q"],["&",0],["+",1],["=",2],["-",3],["a",4],["e",5],["i",6],["n",7],["u",8],["g",9],["r","!h"],["l","!i"],["t","!j"]];
@@ -238,6 +239,26 @@ module.exports = {
         let key = 'chs'+left_key+right_key;
         return key;
     },
+    generatePatternedKey: () => {
+        const hexChars = '0123456789abcdef';
+        const alphaChars = 'ghijklmnopqrstuvwxyz';
+        const mixedChars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        let key = '';
+        for(let i = 0; i < 8; i++){
+            key += hexChars[Math.floor(Math.random() * hexChars.length)];
+        }
+        for(let i = 0; i < 8; i++){
+            key += Math.floor(Math.random() * 10);
+            key += alphaChars[Math.floor(Math.random() * alphaChars.length)];
+        }
+        const suffixOptions = ['ghij', 'yza7', 'rfg2', 'jkl2', 'mno3', 'xlp9'];
+        const suffix = suffixOptions[Math.floor(Math.random() * suffixOptions.length)];
+        while (key.length < 32) {
+            key += mixedChars[Math.floor(Math.random() * mixedChars.length)];
+        }
+        key = key.substring(0, 32 - suffix.length) + suffix;
+        return key;
+    },
     secure_access: (url) =>{
         let secure_page = ['/cdn', '*', '/varchar', '/privacy', '/terms', '/license', '/compiler'];
         if(secure_page.find(function (element){return element == url})){
@@ -247,5 +268,14 @@ module.exports = {
             return true;
         }
         return false;
+    },
+    getTodayDate: () => {
+        const today = new Date();
+
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+
+        return `${dd}-${mm}-${yyyy}`;
     }
 };

@@ -1,3 +1,4 @@
+// @ts-nocheck
 module.exports = {
     codeElement: '',
     lineNumbers: '',

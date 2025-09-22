@@ -1,3 +1,4 @@
+// @ts-nocheck
 module.exports = {
     pyerrorscanner: function pyerrorscanner(data){
         if((data*1) - (data*1) == 0){
