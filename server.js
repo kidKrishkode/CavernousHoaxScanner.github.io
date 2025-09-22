@@ -21,13 +21,13 @@ try{
     security = require('./config/security');
     hex = require('./config/hex');
     compiler = require('./config/compiler');
-    DataBase = require('./config/memory');
+    //DataBase = require('./config/memory');
 }catch(e){
     varchar = require('./config/env-variables');
     security = require('./config/security');
     hex = require('./config/hex');
     compiler = require('./config/compiler');
-    DataBase = require('./config/memory');
+    //DataBase = require('./config/memory');
 }
 require('./public/App.test.js');
 require('dotenv').config();
@@ -712,5 +712,6 @@ server.listen(PORT, (err) => {
     console.info(`\thttp://localhost:${PORT}`);
     console.log("\n\x1b[32mNode web compiled!\x1b[0m \n");
 });
+
 
 
