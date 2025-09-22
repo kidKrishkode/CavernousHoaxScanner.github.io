@@ -15,17 +15,19 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
-let varchar, security, hex, compiler;
+let varchar, security, hex, compiler, DataBase;
 try{
     varchar = require('./config/env-variables');
     security = require('./config/security');
     hex = require('./config/hex');
     compiler = require('./config/compiler');
+    DataBase = require('./config/memory');
 }catch(e){
     varchar = require('./config/env-variables.ts');
     security = require('./config/security.ts');
     hex = require('./config/hex.ts');
     compiler = require('./config/compiler.ts');
+    DataBase = require('./config/memory.ts');
 }
 require('./public/App.test.js');
 require('dotenv').config();
@@ -57,7 +59,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use('/assets',express.static(path.join(__dirname,'assets'), { maxAge: '30d' }));
-app.use('/config',express.static(path.join(__dirname,'config'), { maxAge: '30d' }));
+app.use('/config',express.static(path.join(__dirname,'config')));
 app.use('/images',express.static(path.join(__dirname,'images'), { maxAge: '30d' }));
 app.use('/public',express.static(path.join(__dirname,'public'), { maxAge: '30d' }));
 
@@ -117,7 +119,7 @@ app.use(helmet.contentSecurityPolicy({
             "https://fonts.gstatic.com",
             "data:"
         ],
-        "img-src": ["'self'", "data:", "https://avatars.githubusercontent.com"],
+        "img-src": ["'self'", "data:", "https://avatars.githubusercontent.com", "https://vercel.com"],
         "connect-src": [
             "'self'",
             "http://127.0.0.1:8000",
@@ -125,7 +127,9 @@ app.use(helmet.contentSecurityPolicy({
             "http://127.0.0.1:8080",
             "https://chsweb.vercel.app",
             "https://chsapi.vercel.app",
-            "https://chscdn.vercel.app"
+            "https://chscdn.vercel.app",
+            "wss://ws-us3.pusher.com",
+            "https://ws-us3.pusher.com"
         ],
         frameSrc: [
             "'self'",
@@ -156,6 +160,7 @@ app.use([
             }else{
                 varchar.tempBlockedIPs.delete(clientIP);
                 varchar.ipHits[clientIP] = 0;
+                hex.setBlockCookie(res, 'normal');
             }
         }
         if(Object.keys(varchar.ipHits).length >= 10000 && !varchar.ipHits[clientIP]){
@@ -614,6 +619,22 @@ app.post('/cdn_raw', async (req, res) => {
             }
         });
     });
+});
+
+app.post('/login', async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    if(email && password){
+        let db = new DataBase();
+        let profile = await db.find_profile(email);
+        if(profile && profile.pass == password){
+            res.status(200).json(profile);
+        }else{
+            res.status(404).json({'error': 'The system was unable to locate a user profile matching the provided credentials. If the issue persists, consider reaching out to support for further assistance.'});
+        }
+    }else{
+        res.status(400).json({'error': 'The request could not be processed because the user credentials submitted are either missing or incomplete. Please ensure that all required authentication details are properly filled before attempting to proceed.'});
+    }
 });
 
 app.get("/proxy", async (req, res) => {
